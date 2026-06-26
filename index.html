@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dwelling | Secret Place</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --text: #f5f0e8;
+            --gold: #c9a96e;
+            --gold-dim: #a68b4c;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Inter', Helvetica, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-weight: 300;
+            line-height: 1.8;
+            text-align: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            animation: fadeIn 2.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(26,26,46,0.95);
+            padding: 1rem 0;
+            z-index: 10;
+            font-size: 0.9rem; letter-spacing: 1px;
+            color: var(--gold-dim);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(201,169,110,0.15);
+        }
+        nav a {
+            color: var(--gold-dim); text-decoration: none;
+            margin: 0 0.75rem; transition: color 0.3s;
+        }
+        nav a:hover { color: var(--gold); }
+        section {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 5rem 1rem 4rem;
+            text-align: left;
+        }
+        /* First section needs top padding for fixed nav */
+        #secret-place { padding-top: 6rem; text-align: center; }
+        .verse {
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-style: italic;
+            color: var(--gold);
+            max-width: 700px;
+            margin: 0 auto 1rem;
+            line-height: 1.4;
+        }
+        .verse-ref {
+            font-size: 1rem; color: var(--gold-dim);
+            margin-bottom: 1.5rem;
+        }
+        .invitation {
+            font-size: 1.3rem;
+            margin-bottom: 4rem;
+            opacity: 0.8;
+        }
+        .divider {
+            width: 60px; height: 1px; background: var(--gold-dim);
+            margin: 2rem auto;
+        }
+        h1 {
+            font-family: var(--serif);
+            font-size: 2.8rem;
+            color: var(--gold);
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+        h2 {
+            font-family: var(--serif);
+            font-size: 2rem;
+            color: var(--text);
+            font-weight: 400;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        h3 {
+            font-family: var(--serif);
+            color: var(--gold);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+        }
+        blockquote {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-style: italic;
+            text-align: center;
+            margin: 2.5rem 0;
+        }
+        blockquote.small {
+            font-size: 1.2rem;
+        }
+        .gold-text {
+            color: var(--gold-dim);
+        }
+        a, .featured-link {
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--gold-dim);
+            transition: 0.3s;
+        }
+        a:hover, .featured-link:hover {
+            color: #fff; border-color: #fff;
+        }
+        .voice {
+            margin: 2.5rem 0;
+        }
+        .voice h3 {
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+        .voice .era {
+            font-weight: 300;
+            color: var(--gold-dim);
+            font-size: 0.9rem;
+        }
+        .voice p {
+            margin-top: 0.5rem;
+        }
+        .pullquote {
+            border-left: 2px solid var(--gold-dim);
+            padding-left: 1.5rem;
+            margin: 2.5rem 0;
+            font-style: italic;
+        }
+        .pullquote .attribution {
+            font-style: normal;
+            color: var(--gold-dim);
+            display: block;
+            margin-top: 0.5rem;
+        }
+        .faq-q {
+            font-weight: 400;
+            color: var(--gold);
+            margin: 2rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+        .faq-a {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+        .button {
+            display: inline-block;
+            margin: 1rem;
+            padding: 1rem 2rem;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
+            background: transparent;
+            font-size: 1rem;
+            font-family: var(--sans);
+        }
+        .button:hover {
+            background: var(--gold);
+            color: var(--bg);
+        }
+        footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: rgba(245,240,232,0.3);
+            border-top: 1px solid rgba(201,169,110,0.15);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        /* Hidden class for silence mode */
+        .hidden { display: none; }
+        .silence-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            font-family: var(--serif);
+            font-size: 2rem;
+            color: var(--gold-dim);
+        }
+        @media (max-width: 500px) {
+            nav a { margin: 0 0.4rem; font-size: 0.8rem; }
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="top">
+    <a href="#secret-place">Secret Place</a> ·
+    <a href="#fireplace">Fireplace</a> ·
+    <a href="#library">Library</a> ·
+    <a href="#upper-room">Upper Room</a> ·
+    <a href="#quiet">The Quiet</a>
+</nav>
+
+<!-- ==================== THE SECRET PLACE ==================== -->
+<section id="secret-place">
+    <div class="verse">
+        “He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.”
+    </div>
+    <div class="verse-ref">— Psalm 91:1</div>
+    <div class="invitation">Stay. Breathe. He is here.</div>
+
+    <div class="divider"></div>
+
+    <div style="max-width: 500px; margin: 0 auto; text-align: left;">
+        <h2 style="text-align: center;">Walking Home</h2>
+        <p style="text-align: center; color: var(--gold-dim);">A meditation on Enoch &amp; Elijah</p>
+        <p>Two men who never tasted death, because they walked with God until the world had no hold on them.</p>
+        <p style="text-align: center;"><a href="#fireplace" class="featured-link">Read slowly →</a></p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div style="max-width: 500px; margin: 0 auto; text-align: left;">
+        <h2 style="text-align: center;">From the Library</h2>
+        <p style="text-align: center;">“The soul that has learned to abide in the presence of God, not by effort but by love, has discovered the secret of a life without end.”<br>— Jeanne Guyon</p>
+        <p style="text-align: center;"><a href="#library" class="featured-link">Browse the voices →</a></p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div style="max-width: 500px; margin: 0 auto; text-align: left;">
+        <h2 style="text-align: center;">The Upper Room</h2>
+        <p style="text-align: center;">Curious about praying in the Spirit? Gentle answers for honest questions.</p>
+        <p style="text-align: center;"><a href="#upper-room" class="featured-link">Open the door →</a></p>
+    </div>
+</section>
+
+<!-- ==================== THE FIREPLACE ==================== -->
+<section id="fireplace">
+    <h1>The Fireplace</h1>
+    <p style="color: var(--gold-dim); margin-bottom: 2rem;">Meditations for the secret place.</p>
+
+    <article id="walking-home">
+        <h2>Walking Home</h2>
+        <p style="color: var(--gold-dim); font-style: italic;">A meditation on Enoch and Elijah</p>
+        <p style="text-align: center; margin: 2rem 0;">• • •</p>
+        <p><em>Pause. Breathe. Let the noise of your mind settle like dust.</em></p>
+
+        <blockquote>
+            “By faith Enoch was translated that he should not see death; and was not found, because God had translated him: for before his translation he had this testimony, that he pleased God.”
+        </blockquote>
+        <p style="text-align: center; color: var(--gold-dim); margin-bottom: 2rem;">— Hebrews 11:5</p>
+
+        <p>There is a way of walking with God that has no end.</p>
+        <p>Not a sprint. Not a religious routine. A walk. Daily. Quiet. So close that the boundary between earth and eternity becomes thin as a veil.</p>
+        <p>Enoch walked. And one day, he simply walked home. No funeral. No grave. He was not, for God took him.</p>
+
+        <p style="text-align: center; margin: 2.5rem 0;">• • •</p>
+        <p><em>What does it mean to “please God”? Not perform. Not prove. But to walk in such union that your presence becomes a pleasing fragrance to Him.</em></p>
+
+        <blockquote>
+            “And it came to pass, as they still went on, and talked, that, behold, there appeared a chariot of fire, and horses of fire, and parted them both asunder; and Elijah went up by a whirlwind into heaven.”
+        </blockquote>
+        <p style="text-align: center; color: var(--gold-dim); margin-bottom: 2rem;">— 2 Kings 2:11</p>
+
+        <p>Elijah burned. His life was a storm of fire — on Carmel, in the cave, in the wilderness. But his departure came not in battle. It came in the going on, in the talking, in the walking together.</p>
+        <p>The chariot was not a reward for his fierceness. It was the embrace of a God who would not let His prophet taste death.</p>
+
+        <p style="text-align: center; margin: 2.5rem 0;">• • •</p>
+        <p><em>Sweet fellowship of the Spirit — this is the common thread. Enoch walked with God. Elijah walked with God. And the walking itself became the chariot.</em></p>
+
+        <div class="pullquote">
+            “There is a life of intimate communion with God that is not reserved for a few, but is offered to all who will seek it with their whole heart. This is not an achievement; it is a gift received by those who make themselves available to be taken.”
+            <span class="attribution">— From the desert fathers, adapted</span>
+        </div>
+
+        <h3>The Door Is Open</h3>
+        <p>These two witnesses stand at the edges of Scripture like burning doorposts. They testify that God is not far off. That intimacy can become so real that death is only a transition, not a terror.</p>
+        <p>And the same Spirit who walked with Enoch, who sent the chariot for Elijah, is here now. He has not weakened. He has not withdrawn. He waits in the secret place.</p>
+        <p><strong>Will you walk?</strong></p>
+
+        <blockquote class="small">
+            “He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.” — Psalm 91:1
+        </blockquote>
+
+        <p style="text-align: center;"><a href="#quiet" class="featured-link">Enter The Quiet →</a></p>
+    </article>
+</section>
+
+<!-- ==================== THE LIBRARY ==================== -->
+<section id="library">
+    <h1>The Library</h1>
+    <p style="color: var(--gold-dim); margin-bottom: 1rem;">These are not theologians speculating. These are lovers of God testifying. They found the secret place, and it changed everything.</p>
+
+    <!-- Union with God -->
+    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem;">Union with God</h2>
+    <div class="voice">
+        <h3>Jeanne Guyon <span class="era">(17th century)</span></h3>
+        <p>“The soul that has learned to abide in the presence of God, not by effort but by love, has discovered the secret of a life without end. Prayer becomes not a duty but a breath.”</p>
+    </div>
+    <div class="voice">
+        <h3>Brother Lawrence <span class="era">(17th century)</span></h3>
+        <p>“The time of business does not with me differ from the time of prayer; and in the noise and clatter of my kitchen… I possess God in as great a tranquillity as if I were upon my knees at the blessed sacrament.”</p>
+    </div>
+    <div class="voice">
+        <h3>A.W. Tozer <span class="era">(20th century)</span></h3>
+        <p>“The man who has God for his treasure has all things in One, and those things he has in the only way that really matters.”</p>
+    </div>
+    <div class="voice">
+        <h3>Athanasius of Alexandria <span class="era">(4th century)</span></h3>
+        <p>“God became man so that man might become god.”<br>
+        <small style="color: var(--gold-dim);">Not deity by nature, but by grace — partakers of the divine nature (2 Peter 1:4).</small></p>
+    </div>
+
+    <!-- Prayer as Communion -->
+    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem; margin-top: 3.5rem;">Prayer as Communion, Not Ritual</h2>
+    <div class="voice">
+        <h3>John Chrysostom <span class="era">(4th century)</span></h3>
+        <p>“It is possible to offer up prayer without the hands or the voice, but with the mind and the heart alone. The only thing needed is that the mind be awake and the heart burning.”</p>
+    </div>
+    <div class="voice">
+        <h3>Watchman Nee <span class="era">(20th century)</span></h3>
+        <p>“Prayer is not the first thing; it is the second. The first thing is to abide in Him. Out of abiding comes prayer that is according to the Spirit.”</p>
+    </div>
+    <div class="voice">
+        <h3>Teresa of Ávila <span class="era">(16th century)</span></h3>
+        <p>“Mental prayer is nothing but a friendly intercourse and a frequent solitary conversation with Him who, as we know, loves us.”</p>
+    </div>
+
+    <!-- The Secret Place -->
+    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem; margin-top: 3.5rem;">The Secret Place — Dwelling, Not Visiting</h2>
+    <div class="voice">
+        <h3>Thomas à Kempis <span class="era">(15th century)</span></h3>
+        <p>“The cell, if thou dost continue in it, grows sweet; but if thou dost wander from it, it becomes wearisome.”</p>
+    </div>
+    <div class="voice">
+        <h3>Andrew Murray <span class="era">(19th century)</span></h3>
+        <p>“The secret place of the Most High is a place of rest, not strain. Our struggle is not to enter, but to remain — to abide.”</p>
+    </div>
+    <div class="voice">
+        <h3>Oswald Chambers <span class="era">(20th century)</span></h3>
+        <p>“Get into the habit of dealing with God about everything. Unless in the first waking moment of the day you learn to fling the door wide back and let God in, you will work on a wrong level all day.”</p>
+    </div>
+
+    <!-- The Fire of God -->
+    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem; margin-top: 3.5rem;">The Fire of God — Associations That Set You Ablaze</h2>
+    <div class="voice">
+        <h3>John Wesley <span class="era">(18th century)</span></h3>
+        <p>“I felt my heart strangely warmed. I felt I did trust in Christ, Christ alone for salvation.”</p>
+    </div>
+    <div class="voice">
+        <h3>Leonard Ravenhill <span class="era">(20th century)</span></h3>
+        <p>“No man is greater than his prayer life. The pastor who is not praying is playing; the people who are not praying are straying.”</p>
+    </div>
+    <div class="voice">
+        <h3>Samuel Chadwick <span class="era">(19th/20th century)</span></h3>
+        <p>“The gift of the Holy Spirit is not a luxury for the super-spiritual; it is the birthright of every child of God. To be without the Spirit is to be without power, without fire, and without the seal of the living God.”</p>
+    </div>
+</section>
+
+<!-- ==================== THE UPPER ROOM ==================== -->
+<section id="upper-room">
+    <h1>The Upper Room</h1>
+    <p style="color: var(--gold-dim); margin-bottom: 2rem;">Honest questions. Gentle answers. A river of intimate communion.</p>
+
+    <h2>What is this gift?</h2>
+    <p>You may have heard about speaking in tongues. Perhaps it was loud, confusing. But what if praying in tongues is not a performance, but a river of intimacy between the Spirit of God and your spirit?</p>
+    <blockquote>
+        “For he that speaketh in an unknown tongue speaketh not unto men, but unto God… in the spirit he speaketh mysteries.” — 1 Corinthians 14:2
+    </blockquote>
+    <p>Paul placed a high value on this gift — not as a badge of superiority, but as a means of private, profound edification: “He that speaketh in an unknown tongue edifieth himself” (1 Cor 14:4). Your spirit, by the Holy Spirit, receiving strength that bypasses your mental limitations.</p>
+    <p>This is not the mark of a superior Christian. It is a gift of a generous Father. And it is for <strong>you</strong>.</p>
+
+    <h2>Why I pray in tongues</h2>
+    <p>I share this because I’ve tasted the sweet fellowship of the Spirit in this way, and I ache for you to taste it too.</p>
+    <p>Before, my prayer life often felt dry. I would run out of words. I didn’t know how to pray for situations too deep for human language. Then I received the gift. At first, just a syllable. A whisper. But as I yielded, it became a stream. I discovered:</p>
+    <ul style="list-style: none; padding: 0;">
+        <li style="margin: 1rem 0;">🔥 Worship that transcends English — adoration my mind can’t wrap around.</li>
+        <li style="margin: 1rem 0;">🔥 Prayer when I have no words — the Spirit prays through me (Romans 8:26).</li>
+        <li style="margin: 1rem 0;">🔥 Edification in the secret place — my inner man charged from the throne.</li>
+        <li style="margin: 1rem 0;">🔥 The weight of God’s glory — times His presence became so thick, everything faded.</li>
+    </ul>
+    <blockquote>
+        “And they were all filled with the Holy Ghost, and began to speak with other tongues, as the Spirit gave them utterance.” — Acts 2:4
+    </blockquote>
+    <p>The same Spirit is alive right now. He hasn’t retired. He waits for the willing heart.</p>
+
+    <h2>Common questions, held gently</h2>
+
+    <div class="faq-q">Q: Is speaking in tongues for every believer?</div>
+    <div class="faq-a">The apostle Paul explicitly said, “I would that ye all spake with tongues” (1 Cor 14:5). Peter declared the promise of the Spirit is “unto you, and to your children, and to all that are afar off” (Acts 2:39). The gift is offered. No one should feel forced or second-class. The Lord is gentle. He leads, He does not drive.</div>
+
+    <div class="faq-q">Q: Isn’t this just emotionalism?</div>
+    <div class="faq-a">Emotion often accompanies deep encounters with God, and that is healthy, not shameful. But tongues is not an emotional crutch. Paul, a man of fierce intellect, practiced it more than anyone (1 Cor 14:18) yet also insisted on order. Emotion may be a companion; it is not the source.</div>
+
+    <div class="faq-q">Q: I’m afraid of opening myself to something counterfeit.</div>
+    <div class="faq-a">This is a holy fear. But Jesus promised: “If ye then, being evil, know how to give good gifts unto your children: how much more shall your heavenly Father give the Holy Spirit to them that ask him?” (Luke 11:13). Ask the Father, and He will not give you a serpent. The safest place is on your knees, yielding to the Holy Spirit who already dwells in you if you are born again. He will not lead you into deception.</div>
+
+    <div class="faq-q">Q: Does the Bible say tongues will cease?</div>
+    <div class="faq-a">Scripture says that in the perfect, face-to-face presence of God, certain gifts will no longer be needed (1 Corinthians 13:8-10). Until then, we have a Comforter who intercedes for and through us. Until the Bridegroom returns, we need every means of communion He provides.</div>
+
+    <div class="faq-q">Q: How do I receive this gift?</div>
+    <div class="faq-a">With simple, childlike faith. Find a quiet place. Ask the Father to fill you afresh with the Holy Spirit. Thank Him for the promise. Then, as the Spirit prompts, begin to speak — not in English, but in the syllables that rise from your spirit. It may feel like one word, repeated. That is a seed. Water it. It will grow into a river. “Out of his belly shall flow rivers of living water” (John 7:38).</div>
+</section>
+
+<!-- ==================== THE QUIET ==================== -->
+<section id="quiet" style="text-align: center;">
+    <div class="verse" style="margin-bottom: 1rem;">“Be still, and know that I am God.”</div>
+    <div class="verse-ref" style="margin-bottom: 3rem;">— Psalm 46:10</div>
+
+    <button class="button" onclick="enterSilence()">Enter Silence</button>
+    <button class="button" onclick="guidedPause()">Guided Pause</button>
+    <p style="margin-top: 3rem; color: var(--gold-dim); font-size: 0.9rem;">The Lord is in His holy temple. Let all the earth keep silence before Him.</p>
+</section>
+
+<footer>
+    The Dwelling · A place of sweet fellowship with the Spirit
+</footer>
+
+<script>
+    function enterSilence() {
+        // Hide everything except a full-screen silence message
+        document.querySelector('nav').classList.add('hidden');
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+        document.querySelector('footer').classList.add('hidden');
+        const silenceDiv = document.createElement('div');
+        silenceDiv.className = 'silence-screen';
+        silenceDiv.innerHTML = 'The Lord is in His holy temple.<br>Let all the earth keep silence before Him.';
+        silenceDiv.id = 'silence-overlay';
+        document.body.appendChild(silenceDiv);
+        // Return after 5 minutes
+        setTimeout(() => {
+            document.getElementById('silence-overlay').remove();
+            document.querySelector('nav').classList.remove('hidden');
+            document.querySelectorAll('section').forEach(s => s.classList.remove('hidden'));
+            document.querySelector('footer').classList.remove('hidden');
+        }, 300000);
+    }
+
+    function guidedPause() {
+        alert("Guided pause coming soon.\nFor now, let these words settle:\n\"The Lord is in His holy temple. Let all the earth keep silence before Him.\"\nClose your eyes. Breathe. He is here.");
+    }
+</script>
+
+</body>
+</html>
