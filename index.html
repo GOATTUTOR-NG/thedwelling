@@ -1,458 +1,3964 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Dwelling | Secret Place</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #1a1a2e;
-            --text: #f5f0e8;
-            --gold: #c9a96e;
-            --gold-dim: #a68b4c;
-            --serif: 'Cormorant Garamond', Georgia, serif;
-            --sans: 'Inter', Helvetica, sans-serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-weight: 300;
-            line-height: 1.8;
-            text-align: center;
-            padding: 2rem 1rem;
-            min-height: 100vh;
-            animation: fadeIn 2.5s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
-        }
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(26,26,46,0.95);
-            padding: 1rem 0;
-            z-index: 10;
-            font-size: 0.9rem; letter-spacing: 1px;
-            color: var(--gold-dim);
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(201,169,110,0.15);
-        }
-        nav a {
-            color: var(--gold-dim); text-decoration: none;
-            margin: 0 0.75rem; transition: color 0.3s;
-        }
-        nav a:hover { color: var(--gold); }
-        section {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 5rem 1rem 4rem;
-            text-align: left;
-        }
-        /* First section needs top padding for fixed nav */
-        #secret-place { padding-top: 6rem; text-align: center; }
-        .verse {
-            font-family: var(--serif);
-            font-size: clamp(1.8rem, 5vw, 2.6rem);
-            font-style: italic;
-            color: var(--gold);
-            max-width: 700px;
-            margin: 0 auto 1rem;
-            line-height: 1.4;
-        }
-        .verse-ref {
-            font-size: 1rem; color: var(--gold-dim);
-            margin-bottom: 1.5rem;
-        }
-        .invitation {
-            font-size: 1.3rem;
-            margin-bottom: 4rem;
-            opacity: 0.8;
-        }
-        .divider {
-            width: 60px; height: 1px; background: var(--gold-dim);
-            margin: 2rem auto;
-        }
-        h1 {
-            font-family: var(--serif);
-            font-size: 2.8rem;
-            color: var(--gold);
-            font-weight: 400;
-            margin-bottom: 0.5rem;
-        }
-        h2 {
-            font-family: var(--serif);
-            font-size: 2rem;
-            color: var(--text);
-            font-weight: 400;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        h3 {
-            font-family: var(--serif);
-            color: var(--gold);
-            font-size: 1.5rem;
-            margin-top: 2rem;
-        }
-        blockquote {
-            font-family: var(--serif);
-            font-size: 1.5rem;
-            color: var(--gold);
-            font-style: italic;
-            text-align: center;
-            margin: 2.5rem 0;
-        }
-        blockquote.small {
-            font-size: 1.2rem;
-        }
-        .gold-text {
-            color: var(--gold-dim);
-        }
-        a, .featured-link {
-            color: var(--gold);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--gold-dim);
-            transition: 0.3s;
-        }
-        a:hover, .featured-link:hover {
-            color: #fff; border-color: #fff;
-        }
-        .voice {
-            margin: 2.5rem 0;
-        }
-        .voice h3 {
-            font-size: 1.3rem;
-            color: var(--text);
-            margin-bottom: 0.3rem;
-        }
-        .voice .era {
-            font-weight: 300;
-            color: var(--gold-dim);
-            font-size: 0.9rem;
-        }
-        .voice p {
-            margin-top: 0.5rem;
-        }
-        .pullquote {
-            border-left: 2px solid var(--gold-dim);
-            padding-left: 1.5rem;
-            margin: 2.5rem 0;
-            font-style: italic;
-        }
-        .pullquote .attribution {
-            font-style: normal;
-            color: var(--gold-dim);
-            display: block;
-            margin-top: 0.5rem;
-        }
-        .faq-q {
-            font-weight: 400;
-            color: var(--gold);
-            margin: 2rem 0 0.5rem;
-            font-size: 1.2rem;
-        }
-        .faq-a {
-            margin-bottom: 1.5rem;
-            color: var(--text);
-        }
-        .button {
-            display: inline-block;
-            margin: 1rem;
-            padding: 1rem 2rem;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            text-decoration: none;
-            transition: 0.3s;
-            cursor: pointer;
-            background: transparent;
-            font-size: 1rem;
-            font-family: var(--sans);
-        }
-        .button:hover {
-            background: var(--gold);
-            color: var(--bg);
-        }
-        footer {
-            margin-top: 3rem;
-            padding: 2rem;
-            font-size: 0.8rem;
-            color: rgba(245,240,232,0.3);
-            border-top: 1px solid rgba(201,169,110,0.15);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
-        /* Hidden class for silence mode */
-        .hidden { display: none; }
-        .silence-screen {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 80vh;
-            font-family: var(--serif);
-            font-size: 2rem;
-            color: var(--gold-dim);
-        }
-        @media (max-width: 500px) {
-            nav a { margin: 0 0.4rem; font-size: 0.8rem; }
-            h1 { font-size: 2.2rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>Ibadan Life 3D — GTA Style Life Simulator</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#050914;
+  font-family:Arial,Helvetica,sans-serif;
+  touch-action:none;
+}
+
+#game{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+#loading{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 30%,#163b55 0,#07111f 45%,#03060b 100%);
+  color:white;
+}
+
+.logo{
+  font-size:34px;
+  font-weight:1000;
+  letter-spacing:-1px;
+}
+
+.logo span{color:#39e58c}
+
+.loadingText{
+  margin-top:10px;
+  opacity:.75;
+  font-size:13px;
+}
+
+.loader{
+  width:220px;
+  height:7px;
+  margin-top:22px;
+  border-radius:99px;
+  overflow:hidden;
+  background:#ffffff18;
+}
+
+.loader i{
+  display:block;
+  width:35%;
+  height:100%;
+  background:#39e58c;
+  border-radius:99px;
+  animation:load 1.2s infinite ease-in-out;
+}
+
+@keyframes load{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(650%)}
+}
+
+#hud{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
+  pointer-events:none;
+  padding:
+    max(10px,env(safe-area-inset-top))
+    10px 0;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.playerCard{
+  min-width:165px;
+  padding:9px 11px;
+  border:1px solid #ffffff18;
+  border-radius:14px;
+  background:#07111fd9;
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 30px #0005;
+}
+
+.playerName{
+  font-weight:900;
+  font-size:14px;
+}
+
+.money{
+  margin-top:2px;
+  color:#48ee99;
+  font-weight:900;
+  font-size:13px;
+}
+
+.statuses{
+  display:flex;
+  gap:5px;
+  margin-top:7px;
+  flex-wrap:wrap;
+}
+
+.stat{
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:7px;
+  background:#ffffff0c;
+  color:#dbe7ef;
+}
+
+.rightHud{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:5px;
+}
+
+.clock{
+  padding:7px 10px;
+  border-radius:10px;
+  background:#07111fd9;
+  border:1px solid #ffffff18;
+  font-size:12px;
+  font-weight:900;
+}
+
+.location{
+  padding:6px 9px;
+  border-radius:9px;
+  background:#07111fd9;
+  border:1px solid #ffffff18;
+  font-size:10px;
+  color:#8fe7ff;
+  max-width:190px;
+  text-align:right;
+}
+
+#hint{
+  position:fixed;
+  left:50%;
+  bottom:145px;
+  transform:translateX(-50%);
+  z-index:30;
+  pointer-events:none;
+  max-width:92vw;
+  padding:9px 14px;
+  border-radius:12px;
+  background:#050914df;
+  border:1px solid #ffffff20;
+  color:white;
+  font-size:12px;
+  font-weight:800;
+  text-align:center;
+  opacity:0;
+  transition:.2s;
+}
+
+#hint.show{opacity:1}
+
+#joystick{
+  position:fixed;
+  left:18px;
+  bottom:22px;
+  width:122px;
+  height:122px;
+  z-index:40;
+  border-radius:50%;
+  background:#ffffff0b;
+  border:1px solid #ffffff18;
+  box-shadow:0 10px 30px #0004;
+}
+
+#stick{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:56px;
+  height:56px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#ffffff20;
+  border:1px solid #ffffff35;
+  box-shadow:0 5px 18px #0005;
+}
+
+#actions{
+  position:fixed;
+  right:15px;
+  bottom:20px;
+  z-index:40;
+  display:grid;
+  grid-template-columns:repeat(2,62px);
+  gap:9px;
+}
+
+.action{
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  border:1px solid #ffffff25;
+  color:white;
+  background:#07111fd9;
+  box-shadow:0 8px 24px #0006;
+  font-weight:1000;
+  font-size:11px;
+}
+
+.action:active{
+  transform:scale(.93);
+  background:#16324b;
+}
+
+#phoneBtn{
+  position:fixed;
+  right:15px;
+  top:95px;
+  z-index:40;
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  border:1px solid #ffffff20;
+  background:#07111fd9;
+  color:white;
+  font-size:21px;
+}
+
+#crosshair{
+  position:fixed;
+  left:50%;
+  top:50%;
+  z-index:15;
+  transform:translate(-50%,-50%);
+  width:6px;
+  height:6px;
+  border:1px solid #ffffffaa;
+  border-radius:50%;
+  pointer-events:none;
+}
+
+#phone{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:#0008;
+}
+
+.phonePanel{
+  width:min(480px,100%);
+  min-height:58vh;
+  padding:18px;
+  border-radius:25px 25px 0 0;
+  background:
+    linear-gradient(160deg,#0d1d2c,#07111b);
+  border:1px solid #ffffff18;
+  box-shadow:0 -20px 60px #0009;
+  color:white;
+}
+
+.phoneHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.phoneTitle{
+  font-weight:1000;
+  font-size:21px;
+}
+
+.close{
+  border:0;
+  background:#ffffff10;
+  color:white;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  font-size:18px;
+}
+
+.phoneGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.phoneItem{
+  min-height:82px;
+  border:1px solid #ffffff14;
+  border-radius:16px;
+  background:#ffffff08;
+  color:white;
+  font-weight:800;
+}
+
+.phoneItem b{
+  display:block;
+  font-size:25px;
+  margin-bottom:5px;
+}
+
+#modal{
+  position:fixed;
+  inset:0;
+  z-index:150;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#0009;
+}
+
+.modalBox{
+  width:min(440px,100%);
+  max-height:80vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:20px;
+  background:#0a1724;
+  color:white;
+  border:1px solid #ffffff18;
+  box-shadow:0 20px 70px #000;
+}
+
+.modalBox h2{
+  margin-top:0;
+}
+
+.modalText{
+  color:#c6d5df;
+  line-height:1.55;
+  font-size:14px;
+}
+
+.modalBtn{
+  width:100%;
+  padding:13px;
+  margin-top:10px;
+  border:0;
+  border-radius:12px;
+  background:#1a3950;
+  color:white;
+  font-weight:900;
+}
+
+.modalBtn.primary{
+  background:#20c977;
+  color:#04120b;
+}
+
+#driveBadge{
+  position:fixed;
+  left:50%;
+  top:92px;
+  transform:translateX(-50%);
+  z-index:25;
+  display:none;
+  padding:8px 13px;
+  border-radius:12px;
+  background:#101d29dd;
+  border:1px solid #4de99955;
+  color:#8fffbf;
+  font-size:12px;
+  font-weight:1000;
+}
+
+@media(min-width:800px){
+  #actions{
+    grid-template-columns:repeat(4,62px);
+  }
+}
+</style>
 </head>
+
 <body>
 
-<nav id="top">
-    <a href="#secret-place">Secret Place</a> ·
-    <a href="#fireplace">Fireplace</a> ·
-    <a href="#library">Library</a> ·
-    <a href="#upper-room">Upper Room</a> ·
-    <a href="#quiet">The Quiet</a>
-</nav>
+<div id="game"></div>
 
-<!-- ==================== THE SECRET PLACE ==================== -->
-<section id="secret-place">
-    <div class="verse">
-        “He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.”
-    </div>
-    <div class="verse-ref">— Psalm 91:1</div>
-    <div class="invitation">Stay. Breathe. He is here.</div>
+<div id="loading">
+  <div class="logo">IBADAN <span>LIFE</span></div>
+  <div class="loadingText" id="loadingText">Loading Ibadan...</div>
+  <div class="loader"><i></i></div>
+</div>
 
-    <div class="divider"></div>
-
-    <div style="max-width: 500px; margin: 0 auto; text-align: left;">
-        <h2 style="text-align: center;">Walking Home</h2>
-        <p style="text-align: center; color: var(--gold-dim);">A meditation on Enoch &amp; Elijah</p>
-        <p>Two men who never tasted death, because they walked with God until the world had no hold on them.</p>
-        <p style="text-align: center;"><a href="#fireplace" class="featured-link">Read slowly →</a></p>
+<div id="hud">
+  <div class="topbar">
+    <div class="playerCard">
+      <div class="playerName" id="playerName">David</div>
+      <div class="money" id="money">₦50,000</div>
+      <div class="statuses">
+        <span class="stat" id="health">❤️ 100</span>
+        <span class="stat" id="energy">⚡ 100</span>
+        <span class="stat" id="hunger">🍗 100</span>
+        <span class="stat" id="hygiene">🧼 100</span>
+      </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="rightHud">
+      <div class="clock" id="clock">MON 08:00</div>
+      <div class="location" id="location">Your House</div>
+    </div>
+  </div>
+</div>
 
-    <div style="max-width: 500px; margin: 0 auto; text-align: left;">
-        <h2 style="text-align: center;">From the Library</h2>
-        <p style="text-align: center;">“The soul that has learned to abide in the presence of God, not by effort but by love, has discovered the secret of a life without end.”<br>— Jeanne Guyon</p>
-        <p style="text-align: center;"><a href="#library" class="featured-link">Browse the voices →</a></p>
+<div id="crosshair"></div>
+<div id="driveBadge">🚗 DRIVING — Swipe to look • EXIT to leave</div>
+<div id="hint"></div>
+
+<div id="joystick">
+  <div id="stick"></div>
+</div>
+
+<div id="actions">
+  <button class="action" id="actionBtn">ACTION</button>
+  <button class="action" id="carBtn">CAR</button>
+  <button class="action" id="runBtn">RUN</button>
+  <button class="action" id="exitBtn">EXIT</button>
+</div>
+
+<button id="phoneBtn">📱</button>
+
+<div id="phone">
+  <div class="phonePanel">
+    <div class="phoneHead">
+      <div class="phoneTitle">📱 David's Phone</div>
+      <button class="close" id="phoneClose">×</button>
     </div>
 
-    <div class="divider"></div>
-
-    <div style="max-width: 500px; margin: 0 auto; text-align: left;">
-        <h2 style="text-align: center;">The Upper Room</h2>
-        <p style="text-align: center;">Curious about praying in the Spirit? Gentle answers for honest questions.</p>
-        <p style="text-align: center;"><a href="#upper-room" class="featured-link">Open the door →</a></p>
+    <div class="phoneGrid">
+      <button class="phoneItem" data-phone="map"><b>🗺️</b>Map</button>
+      <button class="phoneItem" data-phone="jobs"><b>💼</b>Jobs</button>
+      <button class="phoneItem" data-phone="house"><b>🏠</b>House</button>
+      <button class="phoneItem" data-phone="car"><b>🚗</b>Cars</button>
+      <button class="phoneItem" data-phone="stats"><b>📊</b>Stats</button>
+      <button class="phoneItem" data-phone="decorate"><b>🛋️</b>Decorate</button>
     </div>
-</section>
+  </div>
+</div>
 
-<!-- ==================== THE FIREPLACE ==================== -->
-<section id="fireplace">
-    <h1>The Fireplace</h1>
-    <p style="color: var(--gold-dim); margin-bottom: 2rem;">Meditations for the secret place.</p>
+<div id="modal">
+  <div class="modalBox">
+    <h2 id="modalTitle">Ibadan Life</h2>
+    <div class="modalText" id="modalText"></div>
+    <div id="modalButtons"></div>
+    <button class="modalBtn" id="modalClose">CLOSE</button>
+  </div>
+</div>
 
-    <article id="walking-home">
-        <h2>Walking Home</h2>
-        <p style="color: var(--gold-dim); font-style: italic;">A meditation on Enoch and Elijah</p>
-        <p style="text-align: center; margin: 2rem 0;">• • •</p>
-        <p><em>Pause. Breathe. Let the noise of your mind settle like dust.</em></p>
-
-        <blockquote>
-            “By faith Enoch was translated that he should not see death; and was not found, because God had translated him: for before his translation he had this testimony, that he pleased God.”
-        </blockquote>
-        <p style="text-align: center; color: var(--gold-dim); margin-bottom: 2rem;">— Hebrews 11:5</p>
-
-        <p>There is a way of walking with God that has no end.</p>
-        <p>Not a sprint. Not a religious routine. A walk. Daily. Quiet. So close that the boundary between earth and eternity becomes thin as a veil.</p>
-        <p>Enoch walked. And one day, he simply walked home. No funeral. No grave. He was not, for God took him.</p>
-
-        <p style="text-align: center; margin: 2.5rem 0;">• • •</p>
-        <p><em>What does it mean to “please God”? Not perform. Not prove. But to walk in such union that your presence becomes a pleasing fragrance to Him.</em></p>
-
-        <blockquote>
-            “And it came to pass, as they still went on, and talked, that, behold, there appeared a chariot of fire, and horses of fire, and parted them both asunder; and Elijah went up by a whirlwind into heaven.”
-        </blockquote>
-        <p style="text-align: center; color: var(--gold-dim); margin-bottom: 2rem;">— 2 Kings 2:11</p>
-
-        <p>Elijah burned. His life was a storm of fire — on Carmel, in the cave, in the wilderness. But his departure came not in battle. It came in the going on, in the talking, in the walking together.</p>
-        <p>The chariot was not a reward for his fierceness. It was the embrace of a God who would not let His prophet taste death.</p>
-
-        <p style="text-align: center; margin: 2.5rem 0;">• • •</p>
-        <p><em>Sweet fellowship of the Spirit — this is the common thread. Enoch walked with God. Elijah walked with God. And the walking itself became the chariot.</em></p>
-
-        <div class="pullquote">
-            “There is a life of intimate communion with God that is not reserved for a few, but is offered to all who will seek it with their whole heart. This is not an achievement; it is a gift received by those who make themselves available to be taken.”
-            <span class="attribution">— From the desert fathers, adapted</span>
-        </div>
-
-        <h3>The Door Is Open</h3>
-        <p>These two witnesses stand at the edges of Scripture like burning doorposts. They testify that God is not far off. That intimacy can become so real that death is only a transition, not a terror.</p>
-        <p>And the same Spirit who walked with Enoch, who sent the chariot for Elijah, is here now. He has not weakened. He has not withdrawn. He waits in the secret place.</p>
-        <p><strong>Will you walk?</strong></p>
-
-        <blockquote class="small">
-            “He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.” — Psalm 91:1
-        </blockquote>
-
-        <p style="text-align: center;"><a href="#quiet" class="featured-link">Enter The Quiet →</a></p>
-    </article>
-</section>
-
-<!-- ==================== THE LIBRARY ==================== -->
-<section id="library">
-    <h1>The Library</h1>
-    <p style="color: var(--gold-dim); margin-bottom: 1rem;">These are not theologians speculating. These are lovers of God testifying. They found the secret place, and it changed everything.</p>
-
-    <!-- Union with God -->
-    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem;">Union with God</h2>
-    <div class="voice">
-        <h3>Jeanne Guyon <span class="era">(17th century)</span></h3>
-        <p>“The soul that has learned to abide in the presence of God, not by effort but by love, has discovered the secret of a life without end. Prayer becomes not a duty but a breath.”</p>
-    </div>
-    <div class="voice">
-        <h3>Brother Lawrence <span class="era">(17th century)</span></h3>
-        <p>“The time of business does not with me differ from the time of prayer; and in the noise and clatter of my kitchen… I possess God in as great a tranquillity as if I were upon my knees at the blessed sacrament.”</p>
-    </div>
-    <div class="voice">
-        <h3>A.W. Tozer <span class="era">(20th century)</span></h3>
-        <p>“The man who has God for his treasure has all things in One, and those things he has in the only way that really matters.”</p>
-    </div>
-    <div class="voice">
-        <h3>Athanasius of Alexandria <span class="era">(4th century)</span></h3>
-        <p>“God became man so that man might become god.”<br>
-        <small style="color: var(--gold-dim);">Not deity by nature, but by grace — partakers of the divine nature (2 Peter 1:4).</small></p>
-    </div>
-
-    <!-- Prayer as Communion -->
-    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem; margin-top: 3.5rem;">Prayer as Communion, Not Ritual</h2>
-    <div class="voice">
-        <h3>John Chrysostom <span class="era">(4th century)</span></h3>
-        <p>“It is possible to offer up prayer without the hands or the voice, but with the mind and the heart alone. The only thing needed is that the mind be awake and the heart burning.”</p>
-    </div>
-    <div class="voice">
-        <h3>Watchman Nee <span class="era">(20th century)</span></h3>
-        <p>“Prayer is not the first thing; it is the second. The first thing is to abide in Him. Out of abiding comes prayer that is according to the Spirit.”</p>
-    </div>
-    <div class="voice">
-        <h3>Teresa of Ávila <span class="era">(16th century)</span></h3>
-        <p>“Mental prayer is nothing but a friendly intercourse and a frequent solitary conversation with Him who, as we know, loves us.”</p>
-    </div>
-
-    <!-- The Secret Place -->
-    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem; margin-top: 3.5rem;">The Secret Place — Dwelling, Not Visiting</h2>
-    <div class="voice">
-        <h3>Thomas à Kempis <span class="era">(15th century)</span></h3>
-        <p>“The cell, if thou dost continue in it, grows sweet; but if thou dost wander from it, it becomes wearisome.”</p>
-    </div>
-    <div class="voice">
-        <h3>Andrew Murray <span class="era">(19th century)</span></h3>
-        <p>“The secret place of the Most High is a place of rest, not strain. Our struggle is not to enter, but to remain — to abide.”</p>
-    </div>
-    <div class="voice">
-        <h3>Oswald Chambers <span class="era">(20th century)</span></h3>
-        <p>“Get into the habit of dealing with God about everything. Unless in the first waking moment of the day you learn to fling the door wide back and let God in, you will work on a wrong level all day.”</p>
-    </div>
-
-    <!-- The Fire of God -->
-    <h2 style="border-bottom: 1px solid var(--gold-dim); padding-bottom: 0.5rem; margin-top: 3.5rem;">The Fire of God — Associations That Set You Ablaze</h2>
-    <div class="voice">
-        <h3>John Wesley <span class="era">(18th century)</span></h3>
-        <p>“I felt my heart strangely warmed. I felt I did trust in Christ, Christ alone for salvation.”</p>
-    </div>
-    <div class="voice">
-        <h3>Leonard Ravenhill <span class="era">(20th century)</span></h3>
-        <p>“No man is greater than his prayer life. The pastor who is not praying is playing; the people who are not praying are straying.”</p>
-    </div>
-    <div class="voice">
-        <h3>Samuel Chadwick <span class="era">(19th/20th century)</span></h3>
-        <p>“The gift of the Holy Spirit is not a luxury for the super-spiritual; it is the birthright of every child of God. To be without the Spirit is to be without power, without fire, and without the seal of the living God.”</p>
-    </div>
-</section>
-
-<!-- ==================== THE UPPER ROOM ==================== -->
-<section id="upper-room">
-    <h1>The Upper Room</h1>
-    <p style="color: var(--gold-dim); margin-bottom: 2rem;">Honest questions. Gentle answers. A river of intimate communion.</p>
-
-    <h2>What is this gift?</h2>
-    <p>You may have heard about speaking in tongues. Perhaps it was loud, confusing. But what if praying in tongues is not a performance, but a river of intimacy between the Spirit of God and your spirit?</p>
-    <blockquote>
-        “For he that speaketh in an unknown tongue speaketh not unto men, but unto God… in the spirit he speaketh mysteries.” — 1 Corinthians 14:2
-    </blockquote>
-    <p>Paul placed a high value on this gift — not as a badge of superiority, but as a means of private, profound edification: “He that speaketh in an unknown tongue edifieth himself” (1 Cor 14:4). Your spirit, by the Holy Spirit, receiving strength that bypasses your mental limitations.</p>
-    <p>This is not the mark of a superior Christian. It is a gift of a generous Father. And it is for <strong>you</strong>.</p>
-
-    <h2>Why I pray in tongues</h2>
-    <p>I share this because I’ve tasted the sweet fellowship of the Spirit in this way, and I ache for you to taste it too.</p>
-    <p>Before, my prayer life often felt dry. I would run out of words. I didn’t know how to pray for situations too deep for human language. Then I received the gift. At first, just a syllable. A whisper. But as I yielded, it became a stream. I discovered:</p>
-    <ul style="list-style: none; padding: 0;">
-        <li style="margin: 1rem 0;">🔥 Worship that transcends English — adoration my mind can’t wrap around.</li>
-        <li style="margin: 1rem 0;">🔥 Prayer when I have no words — the Spirit prays through me (Romans 8:26).</li>
-        <li style="margin: 1rem 0;">🔥 Edification in the secret place — my inner man charged from the throne.</li>
-        <li style="margin: 1rem 0;">🔥 The weight of God’s glory — times His presence became so thick, everything faded.</li>
-    </ul>
-    <blockquote>
-        “And they were all filled with the Holy Ghost, and began to speak with other tongues, as the Spirit gave them utterance.” — Acts 2:4
-    </blockquote>
-    <p>The same Spirit is alive right now. He hasn’t retired. He waits for the willing heart.</p>
-
-    <h2>Common questions, held gently</h2>
-
-    <div class="faq-q">Q: Is speaking in tongues for every believer?</div>
-    <div class="faq-a">The apostle Paul explicitly said, “I would that ye all spake with tongues” (1 Cor 14:5). Peter declared the promise of the Spirit is “unto you, and to your children, and to all that are afar off” (Acts 2:39). The gift is offered. No one should feel forced or second-class. The Lord is gentle. He leads, He does not drive.</div>
-
-    <div class="faq-q">Q: Isn’t this just emotionalism?</div>
-    <div class="faq-a">Emotion often accompanies deep encounters with God, and that is healthy, not shameful. But tongues is not an emotional crutch. Paul, a man of fierce intellect, practiced it more than anyone (1 Cor 14:18) yet also insisted on order. Emotion may be a companion; it is not the source.</div>
-
-    <div class="faq-q">Q: I’m afraid of opening myself to something counterfeit.</div>
-    <div class="faq-a">This is a holy fear. But Jesus promised: “If ye then, being evil, know how to give good gifts unto your children: how much more shall your heavenly Father give the Holy Spirit to them that ask him?” (Luke 11:13). Ask the Father, and He will not give you a serpent. The safest place is on your knees, yielding to the Holy Spirit who already dwells in you if you are born again. He will not lead you into deception.</div>
-
-    <div class="faq-q">Q: Does the Bible say tongues will cease?</div>
-    <div class="faq-a">Scripture says that in the perfect, face-to-face presence of God, certain gifts will no longer be needed (1 Corinthians 13:8-10). Until then, we have a Comforter who intercedes for and through us. Until the Bridegroom returns, we need every means of communion He provides.</div>
-
-    <div class="faq-q">Q: How do I receive this gift?</div>
-    <div class="faq-a">With simple, childlike faith. Find a quiet place. Ask the Father to fill you afresh with the Holy Spirit. Thank Him for the promise. Then, as the Spirit prompts, begin to speak — not in English, but in the syllables that rise from your spirit. It may feel like one word, repeated. That is a seed. Water it. It will grow into a river. “Out of his belly shall flow rivers of living water” (John 7:38).</div>
-</section>
-
-<!-- ==================== THE QUIET ==================== -->
-<section id="quiet" style="text-align: center;">
-    <div class="verse" style="margin-bottom: 1rem;">“Be still, and know that I am God.”</div>
-    <div class="verse-ref" style="margin-bottom: 3rem;">— Psalm 46:10</div>
-
-    <button class="button" onclick="enterSilence()">Enter Silence</button>
-    <button class="button" onclick="guidedPause()">Guided Pause</button>
-    <p style="margin-top: 3rem; color: var(--gold-dim); font-size: 0.9rem;">The Lord is in His holy temple. Let all the earth keep silence before Him.</p>
-</section>
-
-<footer>
-    The Dwelling · A place of sweet fellowship with the Spirit
-</footer>
-
-<script>
-    function enterSilence() {
-        // Hide everything except a full-screen silence message
-        document.querySelector('nav').classList.add('hidden');
-        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-        document.querySelector('footer').classList.add('hidden');
-        const silenceDiv = document.createElement('div');
-        silenceDiv.className = 'silence-screen';
-        silenceDiv.innerHTML = 'The Lord is in His holy temple.<br>Let all the earth keep silence before Him.';
-        silenceDiv.id = 'silence-overlay';
-        document.body.appendChild(silenceDiv);
-        // Return after 5 minutes
-        setTimeout(() => {
-            document.getElementById('silence-overlay').remove();
-            document.querySelector('nav').classList.remove('hidden');
-            document.querySelectorAll('section').forEach(s => s.classList.remove('hidden'));
-            document.querySelector('footer').classList.remove('hidden');
-        }, 300000);
-    }
-
-    function guidedPause() {
-        alert("Guided pause coming soon.\nFor now, let these words settle:\n\"The Lord is in His holy temple. Let all the earth keep silence before Him.\"\nClose your eyes. Breathe. He is here.");
-    }
+<script type="importmap">
+{
+  "imports":{
+    "three":"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  }
+}
 </script>
 
+<script type="module">
+
+import * as THREE from "three";
+import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
+
+/* =========================================================
+   IBADAN LIFE 3D
+   SINGLE-FILE MOBILE GTA-STYLE LIFE SIMULATOR
+========================================================= */
+
+const SAVE_KEY = "IBADAN_LIFE_3D_V3";
+
+const state = JSON.parse(localStorage.getItem(SAVE_KEY) || "null") || {
+  name:"David",
+  cash:50000,
+  bank:120000,
+  health:100,
+  hunger:100,
+  energy:100,
+  hygiene:100,
+  social:100,
+  fun:100,
+  day:1,
+  minutes:8*60,
+  weather:"Sunny",
+  location:"Your House",
+  job:"Unemployed",
+  jobPay:0,
+  inside:false,
+  building:null,
+  driving:false,
+  ownedCar:"Toyota Corolla",
+  furniture:[],
+  xp:0,
+  level:1,
+  totalEarned:0,
+  totalSpent:0,
+  lastOutside:{
+    x:-50,
+    z:-34,
+    yaw:0
+  }
+};
+
+/* =========================================================
+   THREE SETUP
+========================================================= */
+
+const scene = new THREE.Scene();
+
+scene.background = new THREE.Color(0x8cc8e8);
+
+scene.fog = new THREE.FogExp2(
+  0x8cc8e8,
+  0.0022
+);
+
+const camera = new THREE.PerspectiveCamera(
+  62,
+  innerWidth/innerHeight,
+  0.1,
+  1200
+);
+
+camera.position.set(-62,12,-48);
+
+const renderer = new THREE.WebGLRenderer({
+  antialias:true,
+  powerPreference:"high-performance"
+});
+
+renderer.setPixelRatio(
+  Math.min(devicePixelRatio,1.7)
+);
+
+renderer.setSize(innerWidth,innerHeight);
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+
+document.getElementById("game").appendChild(renderer.domElement);
+
+/* =========================================================
+   LIGHTING
+========================================================= */
+
+const hemi = new THREE.HemisphereLight(
+  0xcfefff,
+  0x32422e,
+  1.4
+);
+
+scene.add(hemi);
+
+const sun = new THREE.DirectionalLight(
+  0xffffff,
+  2.2
+);
+
+sun.position.set(-120,180,80);
+sun.castShadow = true;
+
+sun.shadow.mapSize.set(2048,2048);
+
+sun.shadow.camera.left = -300;
+sun.shadow.camera.right = 300;
+sun.shadow.camera.top = 300;
+sun.shadow.camera.bottom = -300;
+
+scene.add(sun);
+
+/* =========================================================
+   GROUPS
+========================================================= */
+
+const world = new THREE.Group();
+const interiorWorld = new THREE.Group();
+
+scene.add(world);
+scene.add(interiorWorld);
+
+interiorWorld.visible = false;
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const loader = new GLTFLoader();
+
+function mat(color,roughness=.8,metalness=0){
+  return new THREE.MeshStandardMaterial({
+    color,
+    roughness,
+    metalness
+  });
+}
+
+function box(
+  w,
+  h,
+  d,
+  color,
+  x=0,
+  y=0,
+  z=0
+){
+  const m = new THREE.Mesh(
+    new THREE.BoxGeometry(w,h,d),
+    mat(color)
+  );
+
+  m.position.set(x,y,z);
+  m.castShadow=true;
+  m.receiveShadow=true;
+
+  return m;
+}
+
+function cylinder(
+  r,
+  h,
+  color,
+  x=0,
+  y=0,
+  z=0
+){
+  const m = new THREE.Mesh(
+    new THREE.CylinderGeometry(r,r,h,16),
+    mat(color)
+  );
+
+  m.position.set(x,y,z);
+  m.castShadow=true;
+  m.receiveShadow=true;
+
+  return m;
+}
+
+function formatMoney(n){
+  return "₦"+Math.round(n).toLocaleString();
+}
+
+function clamp(v,a,b){
+  return Math.max(a,Math.min(b,v));
+}
+
+function distance2D(a,b){
+  return Math.hypot(
+    a.x-b.x,
+    a.z-b.z
+  );
+}
+
+function saveGame(){
+  localStorage.setItem(
+    SAVE_KEY,
+    JSON.stringify(state)
+  );
+}
+
+/* =========================================================
+   GROUND
+========================================================= */
+
+const ground = box(
+  550,
+  1,
+  550,
+  0x4e7747,
+  0,
+  -0.5,
+  0
+);
+
+world.add(ground);
+
+/* =========================================================
+   ROADS
+========================================================= */
+
+function createRoad(x,z,w,d){
+  const road = box(
+    w,
+    .12,
+    d,
+    0x24272b,
+    x,
+    .02,
+    z
+  );
+
+  world.add(road);
+
+  /* road edges */
+  const edgeMat = mat(0x777777);
+
+  if(w>d){
+    for(let i=-w/2;i<w/2;i+=9){
+      const line = new THREE.Mesh(
+        new THREE.BoxGeometry(4,.025,.18),
+        edgeMat
+      );
+
+      line.position.set(
+        x+i,
+        .09,
+        z
+      );
+
+      world.add(line);
+    }
+  }else{
+    for(let i=-d/2;i<d/2;i+=9){
+      const line = new THREE.Mesh(
+        new THREE.BoxGeometry(.18,.025,4),
+        edgeMat
+      );
+
+      line.position.set(
+        x,
+        .09,
+        z+i
+      );
+
+      world.add(line);
+    }
+  }
+}
+
+createRoad(0,0,550,15);
+createRoad(0,70,550,14);
+createRoad(0,-70,550,14);
+createRoad(0,0,15,550);
+createRoad(70,0,14,550);
+createRoad(-70,0,14,550);
+
+/* sidewalks */
+
+function sidewalk(x,z,w,d){
+  const s = box(
+    w,
+    .18,
+    d,
+    0x999b96,
+    x,
+    .08,
+    z
+  );
+
+  world.add(s);
+}
+
+sidewalk(0,10,550,5);
+sidewalk(0,-10,550,5);
+sidewalk(10,0,5,550);
+sidewalk(-10,0,5,550);
+
+/* =========================================================
+   BUILDINGS
+========================================================= */
+
+const buildings = [];
+
+function createBuilding(
+  id,
+  name,
+  x,
+  z,
+  w,
+  d,
+  h,
+  color
+){
+
+  const group = new THREE.Group();
+
+  const body = box(
+    w,
+    h,
+    d,
+    color,
+    0,
+    h/2,
+    0
+  );
+
+  group.add(body);
+
+  /* roof */
+  const roof = box(
+    w+1,
+    .8,
+    d+1,
+    0x34363b,
+    0,
+    h+.4,
+    0
+  );
+
+  group.add(roof);
+
+  /* windows */
+  const windowMat = mat(0x8dd7ee,.25,.25);
+
+  for(let wx=-w/2+4; wx<w/2-2; wx+=5){
+    const win = new THREE.Mesh(
+      new THREE.BoxGeometry(
+        1.7,
+        2.1,
+        .08
+      ),
+      windowMat
+    );
+
+    win.position.set(
+      wx,
+      h*.62,
+      d/2+.05
+    );
+
+    group.add(win);
+  }
+
+  /* front door */
+  const door = new THREE.Mesh(
+    new THREE.BoxGeometry(
+      2.2,
+      3.5,
+      .12
+    ),
+    mat(0x5b3725)
+  );
+
+  door.position.set(
+    0,
+    1.75,
+    d/2+.08
+  );
+
+  group.add(door);
+
+  /* name sign */
+  const sign = new THREE.Mesh(
+    new THREE.BoxGeometry(
+      Math.min(w-4,18),
+      1.2,
+      .18
+    ),
+    mat(0x20252b)
+  );
+
+  sign.position.set(
+    0,
+    h*.84,
+    d/2+.13
+  );
+
+  group.add(sign);
+
+  group.position.set(x,0,z);
+
+  world.add(group);
+
+  const b = {
+    id,
+    name,
+    x,
+    z,
+    w,
+    d,
+    h,
+    group
+  };
+
+  buildings.push(b);
+
+  return b;
+}
+
+createBuilding(
+  "house",
+  "Your House",
+  -50,
+  -48,
+  24,
+  22,
+  12,
+  0xc58e61
+);
+
+createBuilding(
+  "market",
+  "Bodija Market",
+  55,
+  -45,
+  34,
+  25,
+  10,
+  0xd2b15d
+);
+
+createBuilding(
+  "hostel",
+  "University Hostel",
+  -48,
+  48,
+  28,
+  24,
+  15,
+  0xb9c1ca
+);
+
+createBuilding(
+  "hotel",
+  "Mokola Hotel",
+  48,
+  48,
+  30,
+  26,
+  20,
+  0x728ba1
+);
+
+createBuilding(
+  "shopping",
+  "Dugbe Shopping Centre",
+  125,
+  0,
+  36,
+  30,
+  16,
+  0x7d8d99
+);
+
+createBuilding(
+  "hospital",
+  "General Hospital",
+  -125,
+  0,
+  36,
+  30,
+  18,
+  0xe8e8e8
+);
+
+createBuilding(
+  "bank",
+  "First City Bank",
+  0,
+  125,
+  32,
+  24,
+  12,
+  0x4c687b
+);
+
+createBuilding(
+  "restaurant",
+  "Mama's Kitchen",
+  0,
+  -125,
+  30,
+  24,
+  10,
+  0xc17c4d
+);
+
+/* =========================================================
+   TREES
+========================================================= */
+
+function createTree(x,z,scale=1){
+
+  const g = new THREE.Group();
+
+  const trunk = cylinder(
+    .55,
+    4,
+    0x68472d
+  );
+
+  trunk.position.y=2;
+
+  g.add(trunk);
+
+  const crown = new THREE.Mesh(
+    new THREE.SphereGeometry(
+      3.3,
+      12,
+      10
+    ),
+    mat(0x2d733d)
+  );
+
+  crown.position.y=6;
+
+  crown.castShadow=true;
+
+  g.add(crown);
+
+  g.position.set(x,0,z);
+  g.scale.setScalar(scale);
+
+  world.add(g);
+}
+
+const treePositions=[
+  [-180,-160,1.2],
+  [-150,-110,.9],
+  [-180,160,1.1],
+  [-100,175,.8],
+  [165,-160,1.2],
+  [190,-110,.9],
+  [180,155,1.1],
+  [115,180,.9],
+  [-200,40,1],
+  [205,50,1],
+  [-40,200,.8],
+  [40,-200,1]
+];
+
+treePositions.forEach(t=>createTree(...t));
+
+/* =========================================================
+   STREET LIGHTS
+========================================================= */
+
+function streetLight(x,z){
+
+  const g = new THREE.Group();
+
+  const pole = cylinder(
+    .12,
+    7,
+    0x25282b
+  );
+
+  pole.position.y=3.5;
+
+  g.add(pole);
+
+  const arm = box(
+    2.2,
+    .12,
+    .12,
+    0x25282b,
+    1,
+    6.9,
+    0
+  );
+
+  g.add(arm);
+
+  const lamp = new THREE.Mesh(
+    new THREE.SphereGeometry(.25,10,8),
+    new THREE.MeshStandardMaterial({
+      color:0xffe6a3,
+      emissive:0xffb52e,
+      emissiveIntensity:1.8
+    })
+  );
+
+  lamp.position.set(2,6.7,0);
+
+  g.add(lamp);
+
+  g.position.set(x,0,z);
+
+  world.add(g);
+}
+
+for(let i=-220;i<=220;i+=55){
+  streetLight(i,12);
+  streetLight(i,-12);
+  streetLight(12,i);
+  streetLight(-12,i);
+}
+
+/* =========================================================
+   PLAYER FALLBACK MODEL
+========================================================= */
+
+function createFallbackHuman(){
+
+  const g = new THREE.Group();
+
+  g.userData.fallback=true;
+
+  const skin=mat(0x7b4a2d);
+  const shirt=mat(0x1677a9);
+  const pants=mat(0x172033);
+  const shoes=mat(0x151515);
+
+  const torso=box(
+    1.25,
+    1.7,
+    .7,
+    0x1677a9
+  );
+
+  torso.position.y=2.5;
+  torso.material=shirt;
+
+  g.add(torso);
+
+  const head=new THREE.Mesh(
+    new THREE.SphereGeometry(
+      .52,
+      16,
+      12
+    ),
+    skin
+  );
+
+  head.position.y=3.75;
+  head.castShadow=true;
+
+  g.add(head);
+
+  const leftArm=box(
+    .35,
+    1.5,
+    .35,
+    0x1677a9
+  );
+
+  leftArm.position.set(-.9,2.55,0);
+
+  const rightArm=leftArm.clone();
+  rightArm.position.x=.9;
+
+  g.add(leftArm);
+  g.add(rightArm);
+
+  const leftLeg=box(
+    .42,
+    1.7,
+    .42,
+    0x172033
+  );
+
+  leftLeg.position.set(-.34,.85,0);
+
+  const rightLeg=leftLeg.clone();
+  rightLeg.position.x=.34;
+
+  g.add(leftLeg);
+  g.add(rightLeg);
+
+  const shoe1=box(
+    .48,
+    .25,
+    .75,
+    0x151515
+  );
+
+  shoe1.position.set(
+    -.34,.1,.12
+  );
+
+  const shoe2=shoe1.clone();
+  shoe2.position.x=.34;
+
+  g.add(shoe1);
+  g.add(shoe2);
+
+  g.userData.parts={
+    leftArm,
+    rightArm,
+    leftLeg,
+    rightLeg
+  };
+
+  return g;
+}
+
+let player = createFallbackHuman();
+
+player.position.set(
+  state.lastOutside.x,
+  0,
+  state.lastOutside.z
+);
+
+player.rotation.y=state.lastOutside.yaw;
+
+player.scale.setScalar(.92);
+
+world.add(player);
+
+/* =========================================================
+   REAL PLAYER GLB
+========================================================= */
+
+let playerGLTF=null;
+let playerMixer=null;
+let playerActions={};
+let activePlayerAction=null;
+
+const PLAYER_URL =
+  "https://threejs.org/examples/models/gltf/Soldier.glb";
+
+function findAction(names){
+
+  for(const n of names){
+
+    const key=Object.keys(playerActions)
+      .find(k=>k.toLowerCase()===n.toLowerCase());
+
+    if(key) return playerActions[key];
+  }
+
+  const first=Object.keys(playerActions)[0];
+
+  return first ? playerActions[first] : null;
+}
+
+function setPlayerAction(names){
+
+  const action=findAction(names);
+
+  if(!action || action===activePlayerAction)
+    return;
+
+  if(activePlayerAction)
+    activePlayerAction.fadeOut(.18);
+
+  action.reset();
+  action.fadeIn(.18);
+  action.play();
+
+  activePlayerAction=action;
+}
+
+async function loadRealPlayer(){
+
+  try{
+
+    const gltf=await loader.loadAsync(
+      PLAYER_URL
+    );
+
+    playerGLTF=gltf;
+
+    const real=SkeletonUtils.clone(
+      gltf.scene
+    );
+
+    real.traverse(o=>{
+
+      if(o.isMesh){
+
+        o.castShadow=true;
+        o.receiveShadow=true;
+
+      }
+
+    });
+
+    real.scale.setScalar(.0125);
+
+    real.position.copy(player.position);
+    real.rotation.copy(player.rotation);
+
+    world.remove(player);
+    player=real;
+    world.add(player);
+
+    playerMixer=
+      new THREE.AnimationMixer(player);
+
+    for(const clip of gltf.animations){
+
+      const action=
+        playerMixer.clipAction(clip);
+
+      playerActions[clip.name]=action;
+    }
+
+    setPlayerAction(["Idle","idle"]);
+
+    return true;
+
+  }catch(err){
+
+    console.warn(
+      "Real player failed; fallback used.",
+      err
+    );
+
+    return false;
+  }
+}
+
+/* =========================================================
+   VEHICLES
+========================================================= */
+
+const vehicles=[];
+
+function createFallbackCar(
+  name,
+  color,
+  x,
+  z
+){
+
+  const g=new THREE.Group();
+
+  const body=box(
+    4.2,
+    1.05,
+    7.4,
+    color,
+    0,
+    1,
+    0
+  );
+
+  g.add(body);
+
+  const cabin=box(
+    3.1,
+    1.25,
+    3.4,
+    0x20252b,
+    0,
+    1.9,
+    -.3
+  );
+
+  g.add(cabin);
+
+  const wheelGeo=
+    new THREE.CylinderGeometry(
+      .62,
+      .62,
+      .42,
+      16
+    );
+
+  const wheelMat=
+    mat(0x111111);
+
+  [
+    [-2.05,.65,-2.25],
+    [2.05,.65,-2.25],
+    [-2.05,.65,2.25],
+    [2.05,.65,2.25]
+  ].forEach(p=>{
+
+    const w=new THREE.Mesh(
+      wheelGeo,
+      wheelMat
+    );
+
+    w.rotation.z=Math.PI/2;
+    w.position.set(...p);
+    w.castShadow=true;
+
+    g.add(w);
+  });
+
+  g.position.set(x,0,z);
+
+  g.userData={
+    name,
+    speed:0,
+    isPlayerCar:false,
+    fallback:true
+  };
+
+  world.add(g);
+  vehicles.push(g);
+
+  return g;
+}
+
+const carColors=[
+  0xd92727,
+  0x111111,
+  0xe5e5e5,
+  0x2468d9,
+  0xdaa520,
+  0xeeeeee
+];
+
+for(let i=0;i<8;i++){
+
+  const x=
+    i%2===0
+      ? -180+i*35
+      : 150-i*28;
+
+  const z=
+    i%2===0
+      ? 0
+      : 70;
+
+  createFallbackCar(
+    i===0
+      ?"Toyota Corolla"
+      :"Traffic Car",
+    carColors[i%carColors.length],
+    x,
+    z
+  );
+}
+
+/* owned car */
+const ownedCar=
+  createFallbackCar(
+    state.ownedCar,
+    0x1d72c9,
+    -34,
+    -32
+  );
+
+ownedCar.userData.isPlayerCar=true;
+
+/* =========================================================
+   REAL FERRARI MODEL
+========================================================= */
+
+async function loadRealCar(){
+
+  try{
+
+    const gltf=
+      await loader.loadAsync(
+        "https://threejs.org/examples/models/gltf/ferrari.glb"
+      );
+
+    const real=
+      SkeletonUtils.clone(
+        gltf.scene
+      );
+
+    real.traverse(o=>{
+
+      if(o.isMesh){
+
+        o.castShadow=true;
+        o.receiveShadow=true;
+
+      }
+
+    });
+
+    real.scale.setScalar(.045);
+
+    real.position.copy(
+      ownedCar.position
+    );
+
+    real.rotation.y=Math.PI;
+
+    real.userData={
+      ...ownedCar.userData,
+      name:state.ownedCar,
+      isPlayerCar:true,
+      real:true,
+      forwardOffset:Math.PI
+    };
+
+    world.remove(ownedCar);
+
+    const index=
+      vehicles.indexOf(ownedCar);
+
+    if(index>=0)
+      vehicles.splice(index,1);
+
+    world.add(real);
+    vehicles.push(real);
+
+    return real;
+
+  }catch(err){
+
+    console.warn(
+      "Real vehicle failed; fallback car used.",
+      err
+    );
+
+    return ownedCar;
+  }
+}
+
+/* =========================================================
+   NPCS
+========================================================= */
+
+const npcs=[];
+
+function createNPC(
+  x,
+  z
+){
+
+  const npc=
+    createFallbackHuman();
+
+  npc.scale.setScalar(.75);
+
+  npc.position.set(x,0,z);
+
+  npc.userData={
+    dir:
+      Math.random()*Math.PI*2,
+    speed:
+      .7+Math.random()*.7,
+    timer:
+      2+Math.random()*6,
+    mixer:null,
+    action:null
+  };
+
+  world.add(npc);
+  npcs.push(npc);
+
+  return npc;
+}
+
+for(let i=0;i<14;i++){
+
+  createNPC(
+    (Math.random()-.5)*420,
+    (Math.random()-.5)*420
+  );
+}
+
+/* =========================================================
+   BUILDING COLLISION
+========================================================= */
+
+function buildingContains(
+  b,
+  x,
+  z,
+  margin=1
+){
+
+  return (
+    x>b.x-b.w/2-margin &&
+    x<b.x+b.w/2+margin &&
+    z>b.z-b.d/2-margin &&
+    z<b.z+b.d/2+margin
+  );
+}
+
+function isNearDoor(
+  b,
+  x,
+  z
+){
+
+  const doorX=b.x;
+  const doorZ=b.z+b.d/2+2.2;
+
+  return Math.hypot(
+    x-doorX,
+    z-doorZ
+  )<5.5;
+}
+
+function nearestBuilding(){
+
+  let best=null;
+  let bestDist=Infinity;
+
+  for(const b of buildings){
+
+    const door={
+      x:b.x,
+      z:b.z+b.d/2+2.2
+    };
+
+    const d=Math.hypot(
+      player.position.x-door.x,
+      player.position.z-door.z
+    );
+
+    if(d<bestDist){
+
+      bestDist=d;
+      best=b;
+    }
+  }
+
+  return bestDist<6 ? best:null;
+}
+
+/* =========================================================
+   INTERIOR
+========================================================= */
+
+function clearInterior(){
+
+  while(interiorWorld.children.length){
+
+    interiorWorld.remove(
+      interiorWorld.children[
+        interiorWorld.children.length-1
+      ]
+    );
+  }
+}
+
+function createInterior(
+  building
+){
+
+  clearInterior();
+
+  const roomW=30;
+  const roomD=24;
+  const wallH=8;
+  const wallT=.7;
+
+  const floor=box(
+    roomW,
+    .3,
+    roomD,
+    0x8b7969,
+    0,
+    0,
+    0
+  );
+
+  interiorWorld.add(floor);
+
+  const back=box(
+    roomW,
+    wallH,
+    wallT,
+    0xd9d0c5,
+    0,
+    wallH/2,
+    -roomD/2
+  );
+
+  const left=box(
+    wallT,
+    wallH,
+    roomD,
+    0xd9d0c5,
+    -roomW/2,
+    wallH/2,
+    0
+  );
+
+  const right=box(
+    wallT,
+    wallH,
+    roomD,
+    0xd9d0c5,
+    roomW/2,
+    wallH/2,
+    0
+  );
+
+  const frontLeft=box(
+    roomW/2-2.5,
+    wallH,
+    wallT,
+    0xd9d0c5,
+    -(roomW/4+1.25),
+    wallH/2,
+    roomD/2
+  );
+
+  const frontRight=box(
+    roomW/2-2.5,
+    wallH,
+    wallT,
+    0xd9d0c5,
+    roomW/4+1.25,
+    wallH/2,
+    roomD/2
+  );
+
+  interiorWorld.add(
+    back,
+    left,
+    right,
+    frontLeft,
+    frontRight
+  );
+
+  /* exit door */
+  const exitDoor=box(
+    5,
+    5.8,
+    .3,
+    0x3d2518,
+    0,
+    2.9,
+    roomD/2+.25
+  );
+
+  exitDoor.userData.exitDoor=true;
+
+  interiorWorld.add(exitDoor);
+
+  /* bed */
+  const bed=box(
+    6,
+    1,
+    3.4,
+    0x513c34,
+    -7,
+    .7,
+    -5
+  );
+
+  const mattress=box(
+    5.7,
+    .45,
+    3.1,
+    0xe6e1d7,
+    -7,
+    1.4,
+    -5
+  );
+
+  interiorWorld.add(
+    bed,
+    mattress
+  );
+
+  /* sofa */
+  const sofa=box(
+    6,
+    1.5,
+    2,
+    0x5c2e2b,
+    7,
+    .9,
+    -3
+  );
+
+  interiorWorld.add(sofa);
+
+  /* table */
+  const table=box(
+    4,
+    .4,
+    2.4,
+    0x6b4328,
+    3,
+    1.8,
+    4
+  );
+
+  interiorWorld.add(table);
+
+  for(const [x,z] of [
+    [1.5,3.2],
+    [4.5,3.2],
+    [1.5,4.8],
+    [4.5,4.8]
+  ]){
+
+    const leg=box(
+      .25,
+      1.8,
+      .25,
+      0x4b2d1b,
+      x,
+      .9,
+      z
+    );
+
+    interiorWorld.add(leg);
+  }
+
+  /* TV */
+  const tv=box(
+    4,
+    2.5,
+    .25,
+    0x111111,
+    7,
+    3.2,
+    -5.5
+  );
+
+  interiorWorld.add(tv);
+
+  /* plant */
+  const pot=cylinder(
+    .65,
+    .8,
+    0x874d30,
+    -11,
+    .4,
+    5
+  );
+
+  const leaves=new THREE.Mesh(
+    new THREE.SphereGeometry(
+      1.5,
+      12,
+      10
+    ),
+    mat(0x318449)
+  );
+
+  leaves.position.set(
+    -11,
+    2,
+    5
+  );
+
+  interiorWorld.add(
+    pot,
+    leaves
+  );
+
+  /* labels */
+  buildingFurnitureVisuals(building);
+
+  interiorWorld.visible=true;
+}
+
+function buildingFurnitureVisuals(building){
+
+  if(!state.furniture.length)
+    return;
+
+  /* simple saved decoration representation */
+  for(const f of state.furniture){
+
+    const obj=box(
+      f.type==="TV"?3:2,
+      1,
+      1.5,
+      0x7a5434,
+      f.x,
+      .5,
+      f.z
+    );
+
+    obj.rotation.y=f.rotation||0;
+
+    interiorWorld.add(obj);
+  }
+}
+
+/* =========================================================
+   ENTER / EXIT BUILDINGS
+========================================================= */
+
+function enterBuilding(b){
+
+  if(!b) return;
+
+  if(state.driving)
+    exitVehicle();
+
+  state.lastOutside={
+    x:player.position.x,
+    z:player.position.z,
+    yaw:player.rotation.y
+  };
+
+  state.inside=true;
+  state.building=b.id;
+  state.location=b.name;
+
+  world.visible=false;
+
+  createInterior(b);
+
+  player.position.set(
+    0,
+    0,
+    7
+  );
+
+  player.rotation.y=Math.PI;
+
+  player.visible=true;
+
+  interiorWorld.visible=true;
+
+  showHint(
+    "🏠 Inside "+b.name+" • Move around • Walk to EXIT"
+  );
+
+  saveGame();
+}
+
+function exitBuilding(){
+
+  if(!state.inside)
+    return;
+
+  clearInterior();
+
+  interiorWorld.visible=false;
+  world.visible=true;
+
+  state.inside=false;
+  state.building=null;
+
+  player.position.set(
+    state.lastOutside.x,
+    0,
+    state.lastOutside.z
+  );
+
+  player.rotation.y=
+    state.lastOutside.yaw;
+
+  state.location=
+    "Outside";
+
+  showHint(
+    "🚪 Back outside"
+  );
+
+  saveGame();
+}
+
+/* =========================================================
+   INTERIOR COLLISION
+========================================================= */
+
+function constrainInterior(){
+
+  const x=player.position.x;
+  const z=player.position.z;
+
+  const halfW=13.3;
+  const halfD=10.8;
+
+  player.position.x=
+    clamp(
+      x,
+      -halfW,
+      halfW
+    );
+
+  /* keep exit opening */
+  if(z>halfD){
+
+    if(Math.abs(player.position.x)>2.7){
+
+      player.position.z=halfD;
+
+    }else{
+
+      player.position.z=
+        Math.min(z,11.5);
+
+    }
+  }
+
+  player.position.z=
+    clamp(
+      player.position.z,
+      -halfD,
+      11.4
+    );
+}
+
+/* =========================================================
+   OUTSIDE COLLISION
+========================================================= */
+
+function canMoveOutside(
+  x,
+  z
+){
+
+  if(
+    x<-270 ||
+    x>270 ||
+    z<-270 ||
+    z>270
+  ) return false;
+
+  for(const b of buildings){
+
+    if(buildingContains(
+      b,
+      x,
+      z,
+      .9
+    )){
+
+      if(isNearDoor(
+        b,
+        x,
+        z
+      )){
+
+        continue;
+      }
+
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/* =========================================================
+   JOYSTICK
+========================================================= */
+
+const joystick=
+  document.getElementById("joystick");
+
+const stick=
+  document.getElementById("stick");
+
+let joy={
+  active:false,
+  id:null,
+  x:0,
+  y:0
+};
+
+function updateJoy(e){
+
+  const r=
+    joystick.getBoundingClientRect();
+
+  const cx=
+    r.left+r.width/2;
+
+  const cy=
+    r.top+r.height/2;
+
+  let dx=e.clientX-cx;
+  let dy=e.clientY-cy;
+
+  const max=40;
+
+  const len=Math.hypot(dx,dy);
+
+  if(len>max){
+
+    dx=dx/len*max;
+    dy=dy/len*max;
+  }
+
+  joy.x=dx/max;
+  joy.y=dy/max;
+
+  stick.style.transform=
+    `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+}
+
+joystick.addEventListener(
+  "pointerdown",
+  e=>{
+
+    joy.active=true;
+    joy.id=e.pointerId;
+
+    joystick.setPointerCapture(
+      e.pointerId
+    );
+
+    updateJoy(e);
+  }
+);
+
+joystick.addEventListener(
+  "pointermove",
+  e=>{
+
+    if(
+      joy.active &&
+      joy.id===e.pointerId
+    ){
+
+      updateJoy(e);
+    }
+  }
+);
+
+function endJoy(){
+
+  joy.active=false;
+  joy.x=0;
+  joy.y=0;
+
+  stick.style.transform=
+    "translate(-50%,-50%)";
+}
+
+joystick.addEventListener(
+  "pointerup",
+  endJoy
+);
+
+joystick.addEventListener(
+  "pointercancel",
+  endJoy
+);
+
+/* =========================================================
+   RUN
+========================================================= */
+
+let running=false;
+
+const runBtn=
+  document.getElementById("runBtn");
+
+function runStart(e){
+
+  e.preventDefault();
+  running=true;
+}
+
+function runEnd(e){
+
+  e.preventDefault();
+  running=false;
+}
+
+runBtn.addEventListener(
+  "pointerdown",
+  runStart
+);
+
+runBtn.addEventListener(
+  "pointerup",
+  runEnd
+);
+
+runBtn.addEventListener(
+  "pointercancel",
+  runEnd
+);
+
+runBtn.addEventListener(
+  "pointerleave",
+  runEnd
+);
+
+/* =========================================================
+   CAMERA SWIPE
+========================================================= */
+
+let cameraYaw=0;
+let cameraPitch=.38;
+
+let cameraTouch={
+  active:false,
+  id:null,
+  x:0,
+  y:0
+};
+
+renderer.domElement.addEventListener(
+  "pointerdown",
+  e=>{
+
+    if(
+      e.pointerType==="mouse" &&
+      e.button!==0
+    ) return;
+
+    cameraTouch.active=true;
+    cameraTouch.id=e.pointerId;
+    cameraTouch.x=e.clientX;
+    cameraTouch.y=e.clientY;
+
+    renderer.domElement.setPointerCapture(
+      e.pointerId
+    );
+  }
+);
+
+renderer.domElement.addEventListener(
+  "pointermove",
+  e=>{
+
+    if(
+      !cameraTouch.active ||
+      cameraTouch.id!==e.pointerId
+    ) return;
+
+    const dx=e.clientX-cameraTouch.x;
+    const dy=e.clientY-cameraTouch.y;
+
+    cameraTouch.x=e.clientX;
+    cameraTouch.y=e.clientY;
+
+    cameraYaw-=dx*.006;
+
+    cameraPitch=
+      clamp(
+        cameraPitch+dy*.004,
+        .12,
+        .72
+      );
+  }
+);
+
+function endCameraTouch(){
+  cameraTouch.active=false;
+}
+
+renderer.domElement.addEventListener(
+  "pointerup",
+  endCameraTouch
+);
+
+renderer.domElement.addEventListener(
+  "pointercancel",
+  endCameraTouch
+);
+
+/* =========================================================
+   PLAYER MOVEMENT
+========================================================= */
+
+function movePlayer(dt){
+
+  const inputX=joy.x;
+  const inputY=joy.y;
+
+  const strength=
+    Math.min(
+      1,
+      Math.hypot(
+        inputX,
+        inputY
+      )
+    );
+
+  if(strength<.08){
+
+    if(!state.driving)
+      setPlayerAction(["Idle","idle"]);
+
+    return;
+  }
+
+  const speed=
+    (running?10:5.3)*dt*strength;
+
+  if(state.inside){
+
+    const nx=
+      player.position.x+
+      inputX*speed;
+
+    const nz=
+      player.position.z+
+      inputY*speed;
+
+    player.position.x=nx;
+    player.position.z=nz;
+
+    constrainInterior();
+
+  }else{
+
+    /*
+      Movement is screen-relative:
+      joystick up = forward relative to camera.
+    */
+
+    const forward=
+      new THREE.Vector3(
+        Math.sin(cameraYaw),
+        0,
+        Math.cos(cameraYaw)
+      );
+
+    const right=
+      new THREE.Vector3(
+        forward.z,
+        0,
+        -forward.x
+      );
+
+    const movement=
+      new THREE.Vector3();
+
+    movement
+      .addScaledVector(
+        right,
+        inputX
+      )
+      .addScaledVector(
+        forward,
+        inputY
+      );
+
+    movement.normalize();
+
+    const nx=
+      player.position.x+
+      movement.x*speed;
+
+    const nz=
+      player.position.z+
+      movement.z*speed;
+
+    if(
+      canMoveOutside(nx,nz)
+    ){
+
+      player.position.x=nx;
+      player.position.z=nz;
+
+    }
+
+    if(
+      movement.lengthSq()>.001
+    ){
+
+      const targetYaw=
+        Math.atan2(
+          movement.x,
+          movement.z
+        );
+
+      player.rotation.y=
+        THREE.MathUtils.lerp(
+          player.rotation.y,
+          targetYaw,
+          .25
+        );
+    }
+  }
+
+  if(playerMixer){
+
+    setPlayerAction(
+      running
+        ?["Run","run","Walk","walk"]
+        :["Walk","walk","Run","run"]
+    );
+
+  }else{
+
+    animateFallback(
+      running?1:0.6
+    );
+  }
+}
+
+function animateFallback(speed){
+
+  if(!player.userData?.fallback)
+    return;
+
+  const p=
+    player.userData.parts;
+
+  if(!p)
+    return;
+
+  const t=
+    performance.now()*.012*speed;
+
+  p.leftArm.rotation.x=
+    Math.sin(t)*.6;
+
+  p.rightArm.rotation.x=
+    -Math.sin(t)*.6;
+
+  p.leftLeg.rotation.x=
+    -Math.sin(t)*.65;
+
+  p.rightLeg.rotation.x=
+    Math.sin(t)*.65;
+}
+
+/* =========================================================
+   VEHICLE
+========================================================= */
+
+function nearestVehicle(){
+
+  let best=null;
+  let bestDist=Infinity;
+
+  for(const car of vehicles){
+
+    if(!car.visible) continue;
+
+    const d=
+      distance2D(
+        player.position,
+        car.position
+      );
+
+    if(d<bestDist){
+
+      bestDist=d;
+      best=car;
+    }
+  }
+
+  return bestDist<8 ? best:null;
+}
+
+function enterVehicle(car){
+
+  if(!car) return;
+
+  if(state.inside)
+    return;
+
+  state.driving=true;
+
+  car.userData.occupied=true;
+  car.userData.driver=true;
+
+  player.visible=false;
+
+  player.position.copy(
+    car.position
+  );
+
+  cameraYaw=
+    car.rotation.y;
+
+  state.location=
+    car.userData.name || "Vehicle";
+
+  document.getElementById(
+    "driveBadge"
+  ).style.display="block";
+
+  showHint(
+    "🚗 Driving • Use joystick to drive • EXIT to leave"
+  );
+}
+
+function exitVehicle(){
+
+  if(!state.driving)
+    return;
+
+  const car=
+    vehicles.find(
+      v=>v.userData?.driver
+    );
+
+  if(!car){
+
+    state.driving=false;
+    player.visible=true;
+
+    return;
+  }
+
+  const side=
+    new THREE.Vector3(
+      1.8,
+      0,
+      0
+    );
+
+  side.applyQuaternion(
+    car.quaternion
+  );
+
+  player.position.copy(
+    car.position
+  ).add(side);
+
+  player.position.y=0;
+
+  player.rotation.y=
+    car.rotation.y;
+
+  car.userData.driver=false;
+  car.userData.occupied=false;
+
+  player.visible=true;
+
+  state.driving=false;
+
+  document.getElementById(
+    "driveBadge"
+  ).style.display="none";
+
+  state.location="Outside";
+
+  saveGame();
+
+  showHint(
+    "🚶 You left the vehicle"
+  );
+}
+
+function updateDriving(dt){
+
+  const car=
+    vehicles.find(
+      v=>v.userData?.driver
+    );
+
+  if(!car){
+
+    state.driving=false;
+    player.visible=true;
+
+    return;
+  }
+
+  const throttle=
+    -joy.y;
+
+  const steer=
+    joy.x;
+
+  const acceleration=
+    throttle*18;
+
+  car.userData.speed=
+    car.userData.speed || 0;
+
+  car.userData.speed+=
+    acceleration*dt;
+
+  car.userData.speed*=
+    Math.pow(.90,dt*8);
+
+  car.userData.speed=
+    clamp(
+      car.userData.speed,
+      -9,
+      24
+    );
+
+  car.rotation.y-=
+    steer*
+    dt*
+    1.7*
+    (0.3+
+      Math.min(
+        1,
+        Math.abs(car.userData.speed)/8
+      )
+    );
+
+  const forward=
+    new THREE.Vector3(
+      Math.sin(car.rotation.y),
+      0,
+      Math.cos(car.rotation.y)
+    );
+
+  const next=
+    car.position.clone()
+      .addScaledVector(
+        forward,
+        car.userData.speed*dt
+      );
+
+  if(
+    canMoveOutside(
+      next.x,
+      next.z
+    )
+  ){
+
+    car.position.copy(next);
+
+  }else{
+
+    car.userData.speed*=-.25;
+
+  }
+
+  player.position.copy(
+    car.position
+  );
+
+  player.rotation.y=
+    car.rotation.y;
+
+  state.location=
+    car.userData.name ||
+    "Vehicle";
+}
+
+/* =========================================================
+   ACTION SYSTEM
+========================================================= */
+
+function performAction(){
+
+  if(state.driving){
+
+    exitVehicle();
+    return;
+  }
+
+  if(state.inside){
+
+    const z=player.position.z;
+
+    if(
+      z>8.5 &&
+      Math.abs(player.position.x)<3
+    ){
+
+      exitBuilding();
+      return;
+    }
+
+    const b=
+      buildings.find(
+        b=>b.id===state.building
+      );
+
+    if(!b) return;
+
+    switch(b.id){
+
+      case "house":
+        showModal(
+          "🏠 Your House",
+          "Rest, sleep, shower, decorate and manage your home."
+        );
+        break;
+
+      case "hospital":
+        healthCheck();
+        break;
+
+      case "restaurant":
+        eat();
+        break;
+
+      case "market":
+        showModal(
+          "🛒 Bodija Market",
+          "A busy Ibadan market. Buy food, household items and supplies."
+        );
+        break;
+
+      case "bank":
+        showModal(
+          "🏦 First City Bank",
+          "Bank balance: "+formatMoney(state.bank)
+        );
+        break;
+
+      default:
+        showModal(
+          b.name,
+          "Explore the building and interact with the environment."
+        );
+    }
+
+    return;
+  }
+
+  const b=
+    nearestBuilding();
+
+  if(b){
+
+    enterBuilding(b);
+    return;
+  }
+
+  const car=
+    nearestVehicle();
+
+  if(car){
+
+    enterVehicle(car);
+    return;
+  }
+
+  /* random useful action */
+  eat();
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+function eat(){
+
+  if(state.cash<500){
+
+    showHint("💸 You need ₦500 to buy food.");
+    return;
+  }
+
+  state.cash-=500;
+  state.totalSpent+=500;
+
+  state.hunger=
+    clamp(
+      state.hunger+35,
+      0,100
+    );
+
+  state.fun=
+    clamp(
+      state.fun+5,
+      0,100
+    );
+
+  state.xp+=5;
+
+  saveGame();
+
+  showHint(
+    "🍛 You ate a proper meal • Hunger +35"
+  );
+}
+
+function shower(){
+
+  state.hygiene=
+    clamp(
+      state.hygiene+50,
+      0,100
+    );
+
+  saveGame();
+
+  showHint(
+    "🚿 Fresh again. Hygiene +50"
+  );
+}
+
+function sleep(){
+
+  state.energy=
+    clamp(
+      state.energy+70,
+      0,100
+    );
+
+  state.hunger=
+    clamp(
+      state.hunger-10,
+      0,100
+    );
+
+  advanceMinutes(7*60);
+
+  saveGame();
+
+  showHint(
+    "😴 You slept for 7 hours."
+  );
+}
+
+function healthCheck(){
+
+  state.health=
+    clamp(
+      state.health+20,
+      0,100
+    );
+
+  state.energy=
+    clamp(
+      state.energy-5,
+      0,100
+    );
+
+  saveGame();
+
+  showHint(
+    "🩺 Health check complete • Health +20"
+  );
+}
+
+/* =========================================================
+   TIME
+========================================================= */
+
+function advanceMinutes(m){
+
+  state.minutes+=m;
+
+  while(state.minutes>=1440){
+
+    state.minutes-=1440;
+    state.day++;
+
+  }
+}
+
+function updateTime(dt){
+
+  advanceMinutes(
+    dt*.55
+  );
+
+  const hour=
+    Math.floor(
+      state.minutes/60
+    );
+
+  const minute=
+    Math.floor(
+      state.minutes%60
+    );
+
+  const isNight=
+    hour<6 ||
+    hour>=19;
+
+  const targetSky=
+    isNight
+      ?0x091427
+      :(
+        hour<8
+          ?0x769db5
+          :0x8cc8e8
+      );
+
+  scene.background.lerp(
+    new THREE.Color(targetSky),
+    .02
+  );
+
+  scene.fog.color.copy(
+    scene.background
+  );
+
+  if(isNight){
+
+    hemi.intensity=
+      THREE.MathUtils.lerp(
+        hemi.intensity,
+        .42,
+        .02
+      );
+
+    sun.intensity=
+      THREE.MathUtils.lerp(
+        sun.intensity,
+        .25,
+        .02
+      );
+
+  }else{
+
+    hemi.intensity=
+      THREE.MathUtils.lerp(
+        hemi.intensity,
+        1.4,
+        .02
+      );
+
+    sun.intensity=
+      THREE.MathUtils.lerp(
+        sun.intensity,
+        2.2,
+        .02
+      );
+  }
+}
+
+/* =========================================================
+   NPC MOVEMENT
+========================================================= */
+
+function updateNPCs(dt){
+
+  if(state.inside)
+    return;
+
+  for(const npc of npcs){
+
+    npc.userData.timer-=dt;
+
+    if(
+      npc.userData.timer<=0
+    ){
+
+      npc.userData.timer=
+        2+Math.random()*6;
+
+      npc.userData.dir=
+        Math.random()*Math.PI*2;
+    }
+
+    const speed=
+      npc.userData.speed;
+
+    const nx=
+      npc.position.x+
+      Math.sin(
+        npc.userData.dir
+      )*
+      speed*
+      dt;
+
+    const nz=
+      npc.position.z+
+      Math.cos(
+        npc.userData.dir
+      )*
+      speed*
+      dt;
+
+    if(
+      canMoveOutside(nx,nz)
+    ){
+
+      npc.position.x=nx;
+      npc.position.z=nz;
+
+    }else{
+
+      npc.userData.dir+=
+        Math.PI/2;
+    }
+
+    npc.rotation.y=
+      npc.userData.dir;
+
+    animateNPC(npc);
+  }
+}
+
+function animateNPC(npc){
+
+  const p=
+    npc.userData.parts;
+
+  if(!p) return;
+
+  const t=
+    performance.now()*.008;
+
+  p.leftArm.rotation.x=
+    Math.sin(t)*.35;
+
+  p.rightArm.rotation.x=
+    -Math.sin(t)*.35;
+
+  p.leftLeg.rotation.x=
+    -Math.sin(t)*.4;
+
+  p.rightLeg.rotation.x=
+    Math.sin(t)*.4;
+}
+
+/* =========================================================
+   CAMERA
+========================================================= */
+
+function updateCamera(){
+
+  let target;
+
+  if(state.inside){
+
+    target=
+      new THREE.Vector3(
+        player.position.x,
+        2.7,
+        player.position.z
+      );
+
+    const radius=12;
+
+    const x=
+      target.x+
+      Math.sin(cameraYaw)*
+      radius;
+
+    const z=
+      target.z+
+      Math.cos(cameraYaw)*
+      radius;
+
+    const y=
+      target.y+
+      Math.sin(cameraPitch)*
+      radius;
+
+    camera.position.lerp(
+      new THREE.Vector3(
+        x,y,z
+      ),
+      .09
+    );
+
+    camera.lookAt(
+      target.x,
+      1.8,
+      target.z
+    );
+
+    return;
+  }
+
+  if(state.driving){
+
+    const car=
+      vehicles.find(
+        v=>v.userData?.driver
+      );
+
+    if(!car) return;
+
+    const forward=
+      new THREE.Vector3(
+        Math.sin(car.rotation.y),
+        0,
+        Math.cos(car.rotation.y)
+      );
+
+    const desired=
+      car.position.clone()
+        .addScaledVector(
+          forward,
+          -13
+        );
+
+    desired.y+=7;
+
+    camera.position.lerp(
+      desired,
+      .10
+    );
+
+    camera.lookAt(
+      car.position.x,
+      1.6,
+      car.position.z
+    );
+
+    return;
+  }
+
+  const target=
+    player.position.clone();
+
+  target.y+=2.2;
+
+  const radius=
+    running?8.8:10.5;
+
+  const desired=
+    new THREE.Vector3(
+      target.x+
+        Math.sin(cameraYaw)*
+        radius*
+        Math.cos(cameraPitch),
+
+      target.y+
+        Math.sin(cameraPitch)*
+        radius,
+
+      target.z+
+        Math.cos(cameraYaw)*
+        radius*
+        Math.cos(cameraPitch)
+    );
+
+  /* prevent camera going underground */
+  desired.y=
+    Math.max(
+      desired.y,
+      2.8
+    );
+
+  camera.position.lerp(
+    desired,
+    .10
+  );
+
+  camera.lookAt(
+    target.x,
+    target.y,
+    target.z
+  );
+}
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+function updateLocation(){
+
+  if(state.inside)
+    return;
+
+  if(state.driving)
+    return;
+
+  let closest=null;
+  let distance=Infinity;
+
+  for(const b of buildings){
+
+    const d=
+      Math.hypot(
+        player.position.x-b.x,
+        player.position.z-b.z
+      );
+
+    if(d<distance){
+
+      distance=d;
+      closest=b;
+    }
+  }
+
+  if(
+    closest &&
+    distance<35
+  ){
+
+    state.location=
+      "Near "+closest.name;
+
+  }else if(
+    Math.abs(player.position.x)<80 &&
+    Math.abs(player.position.z)<80
+  ){
+
+    state.location=
+      "Central Ibadan";
+
+  }else{
+
+    state.location=
+      "Ibadan";
+  }
+}
+
+/* =========================================================
+   HUD
+========================================================= */
+
+let hudTimer=0;
+
+function updateHUD(dt){
+
+  hudTimer+=dt;
+
+  if(hudTimer<.12)
+    return;
+
+  hudTimer=0;
+
+  document.getElementById(
+    "playerName"
+  ).textContent=
+    state.name;
+
+  document.getElementById(
+    "money"
+  ).textContent=
+    formatMoney(state.cash);
+
+  document.getElementById(
+    "health"
+  ).textContent=
+    "❤️ "+Math.round(state.health);
+
+  document.getElementById(
+    "energy"
+  ).textContent=
+    "⚡ "+Math.round(state.energy);
+
+  document.getElementById(
+    "hunger"
+  ).textContent=
+    "🍗 "+Math.round(state.hunger);
+
+  document.getElementById(
+    "hygiene"
+  ).textContent=
+    "🧼 "+Math.round(state.hygiene);
+
+  const hour=
+    Math.floor(
+      state.minutes/60
+    );
+
+  const minute=
+    Math.floor(
+      state.minutes%60
+    );
+
+  const hh=
+    String(
+      hour%12 || 12
+    ).padStart(2,"0");
+
+  const mm=
+    String(
+      minute
+    ).padStart(2,"0");
+
+  const ampm=
+    hour<12?"AM":"PM";
+
+  document.getElementById(
+    "clock"
+  ).textContent=
+    `DAY ${state.day} • ${hh}:${mm} ${ampm}`;
+
+  document.getElementById(
+    "location"
+  ).textContent=
+    state.location;
+
+  if(
+    state.inside
+  ){
+
+    showContextHint();
+
+  }else if(
+    !state.driving
+  ){
+
+    const b=
+      nearestBuilding();
+
+    const car=
+      nearestVehicle();
+
+    if(b){
+
+      showContextHint(
+        `🚪 ${b.name} • TAP ACTION to enter`
+      );
+
+    }else if(car){
+
+      showContextHint(
+        `🚗 ${car.userData.name||"Vehicle"} • TAP CAR to board`
+      );
+
+    }
+  }
+}
+
+let hintTimer=null;
+
+function showHint(text){
+
+  const h=
+    document.getElementById("hint");
+
+  h.textContent=text;
+  h.classList.add("show");
+
+  clearTimeout(hintTimer);
+
+  hintTimer=
+    setTimeout(
+      ()=>{
+        h.classList.remove("show");
+      },
+      2800
+    );
+}
+
+function showContextHint(text){
+
+  const h=
+    document.getElementById("hint");
+
+  h.textContent=text;
+  h.classList.add("show");
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+document.getElementById(
+  "actionBtn"
+).addEventListener(
+  "click",
+  performAction
+);
+
+document.getElementById(
+  "carBtn"
+).addEventListener(
+  "click",
+  ()=>{
+
+    if(state.driving){
+
+      exitVehicle();
+      return;
+    }
+
+    const car=
+      nearestVehicle();
+
+    if(car){
+
+      enterVehicle(car);
+
+    }else{
+
+      showHint(
+        "🚗 Move closer to a vehicle."
+      );
+    }
+  }
+);
+
+document.getElementById(
+  "exitBtn"
+).addEventListener(
+  "click",
+  ()=>{
+
+    if(state.driving){
+
+      exitVehicle();
+      return;
+    }
+
+    if(state.inside){
+
+      exitBuilding();
+      return;
+    }
+
+    showHint(
+      "Nothing to exit."
+    );
+  }
+);
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+const phone=
+  document.getElementById("phone");
+
+document.getElementById(
+  "phoneBtn"
+).addEventListener(
+  "click",
+  ()=>{
+    phone.style.display="flex";
+  }
+);
+
+document.getElementById(
+  "phoneClose"
+).addEventListener(
+  "click",
+  ()=>{
+    phone.style.display="none";
+  }
+);
+
+document.querySelectorAll(
+  ".phoneItem"
+).forEach(btn=>{
+
+  btn.addEventListener(
+    "click",
+    ()=>{
+
+      const type=
+        btn.dataset.phone;
+
+      phone.style.display="none";
+
+      phoneAction(type);
+    }
+  );
+});
+
+function phoneAction(type){
+
+  if(type==="map"){
+
+    showModal(
+      "🗺️ Ibadan Map",
+      `
+      <b>Districts</b><br><br>
+      🏠 Family House<br>
+      🌳 Bodija<br>
+      🎓 University of Ibadan<br>
+      🚦 Mokola<br>
+      🏢 Dugbe<br>
+      ⛰️ Mapo<br>
+      🚌 Iwo Road<br>
+      🏙️ Challenge<br>
+      🏘️ Ring Road<br>
+      🌴 Jericho
+      `
+    );
+
+  }
+
+  else if(type==="jobs"){
+
+    showJobs();
+
+  }
+
+  else if(type==="house"){
+
+    showModal(
+      "🏠 House",
+      "Your home is fully enterable. Sleep, shower, decorate and explore your interior."
+    );
+
+  }
+
+  else if(type==="car"){
+
+    showModal(
+      "🚗 Garage",
+      `
+      Current vehicle: <b>${state.ownedCar}</b><br><br>
+      Owned vehicles can be summoned and driven around Ibadan.
+      `
+    );
+
+  }
+
+  else if(type==="stats"){
+
+    showModal(
+      "📊 Player Stats",
+      `
+      Level: <b>${state.level}</b><br>
+      XP: <b>${state.xp}</b><br>
+      Cash: <b>${formatMoney(state.cash)}</b><br>
+      Bank: <b>${formatMoney(state.bank)}</b><br>
+      Total earned: <b>${formatMoney(state.totalEarned)}</b><br>
+      Total spent: <b>${formatMoney(state.totalSpent)}</b><br>
+      Job: <b>${state.job}</b>
+      `
+    );
+
+  }
+
+  else if(type==="decorate"){
+
+    decorateHouse();
+
+  }
+}
+
+/* =========================================================
+   JOBS
+========================================================= */
+
+function showJobs(){
+
+  showModal(
+    "💼 Jobs",
+    "Choose a career and start earning money.",
+    [
+      ["🧹 Buka Attendant","Buka Attendant",2500],
+      ["🛒 Market Trader","Market Trader",4000],
+      ["🚌 Danfo Driver","Danfo Driver",6000],
+      ["🛡️ Security Officer","Security Officer",5000],
+      ["👨‍🏫 Teacher","Teacher",8000],
+      ["👩‍⚕️ Nurse","Nurse",10000],
+      ["💻 Software Developer","Software Developer",18000],
+      ["🏦 Bank Officer","Bank Officer",15000],
+      ["📱 Content Creator","Content Creator",12000]
+    ]
+  );
+}
+
+function takeJob(name,pay){
+
+  state.job=name;
+  state.jobPay=pay;
+
+  showHint(
+    `💼 Job selected: ${name} • Pay ₦${pay.toLocaleString()}`
+  );
+
+  saveGame();
+}
+
+function showModal(
+  title,
+  text,
+  buttons=[]
+){
+
+  document.getElementById(
+    "modalTitle"
+  ).textContent=title;
+
+  document.getElementById(
+    "modalText"
+  ).innerHTML=text;
+
+  const holder=
+    document.getElementById(
+      "modalButtons"
+    );
+
+  holder.innerHTML="";
+
+  buttons.forEach(b=>{
+
+    const btn=
+      document.createElement(
+        "button"
+      );
+
+    btn.className=
+      "modalBtn primary";
+
+    btn.textContent=b[0];
+
+    btn.onclick=()=>{
+
+      takeJob(
+        b[1],
+        b[2]
+      );
+
+      closeModal();
+    };
+
+    holder.appendChild(btn);
+  });
+
+  document.getElementById(
+    "modal"
+  ).style.display="flex";
+}
+
+function closeModal(){
+
+  document.getElementById(
+    "modal"
+  ).style.display="none";
+}
+
+document.getElementById(
+  "modalClose"
+).addEventListener(
+  "click",
+  closeModal
+);
+
+/* =========================================================
+   DECORATION
+========================================================= */
+
+function decorateHouse(){
+
+  if(
+    !state.inside ||
+    state.building!=="house"
+  ){
+
+    showModal(
+      "🛋️ Decoration",
+      "Enter Your House first, then use this option to place furniture."
+    );
+
+    return;
+  }
+
+  const items=[
+    ["🛋️ Sofa","Sofa"],
+    ["📺 TV","TV"],
+    ["🛏️ Bed","Bed"],
+    ["🪴 Plant","Plant"],
+    ["🪑 Table","Table"]
+  ];
+
+  showModal(
+    "🛋️ Decorate",
+    "Add furniture to your house.",
+    items.map(
+      item=>[
+        item[0]+" "+item[1],
+        item[1],
+        0
+      ]
+    )
+  );
+}
+
+/* =========================================================
+   DECORATION OVERRIDE
+========================================================= */
+
+function addFurniture(type){
+
+  state.furniture.push({
+    type,
+    x:(Math.random()-.5)*12,
+    z:(Math.random()-.5)*7,
+    rotation:Math.random()*Math.PI
+  });
+
+  saveGame();
+
+  if(
+    state.inside &&
+    state.building==="house"
+  ){
+
+    createInterior(
+      buildings.find(
+        b=>b.id==="house"
+      )
+    );
+  }
+
+  showHint(
+    "🛋️ "+type+" added to your house."
+  );
+}
+
+/* =========================================================
+   KEYBOARD SUPPORT
+========================================================= */
+
+const keys={};
+
+window.addEventListener(
+  "keydown",
+  e=>{
+    keys[e.key.toLowerCase()]=true;
+
+    if(
+      e.key.toLowerCase()==="e"
+    )
+      performAction();
+
+    if(
+      e.key.toLowerCase()==="f"
+    ){
+
+      if(state.driving)
+        exitVehicle();
+      else
+        const c=nearestVehicle(),
+          b=nearestBuilding();
+
+      if(c) enterVehicle(c);
+      else if(b) enterBuilding(b);
+    }
+
+    if(
+      e.key.toLowerCase()==="q"
+    )
+      exitVehicle();
+
+  }
+);
+
+window.addEventListener(
+  "keyup",
+  e=>{
+    keys[e.key.toLowerCase()]=false;
+  }
+);
+
+/* desktop keyboard feeds joystick */
+
+function updateKeyboardInput(){
+
+  if(
+    joy.active ||
+    state.driving
+  ) return;
+
+  let x=0;
+  let y=0;
+
+  if(keys["a"]||keys["arrowleft"])
+    x-=1;
+
+  if(keys["d"]||keys["arrowright"])
+    x+=1;
+
+  if(keys["w"]||keys["arrowup"])
+    y+=1;
+
+  if(keys["s"]||keys["arrowdown"])
+    y-=1;
+
+  joy.x=x;
+  joy.y=y;
+
+  running=
+    !!keys["shift"];
+}
+
+/* =========================================================
+   NEEDS
+========================================================= */
+
+let needsTimer=0;
+
+function updateNeeds(dt){
+
+  needsTimer+=dt;
+
+  if(
+    needsTimer<5
+  ) return;
+
+  needsTimer=0;
+
+  state.hunger=
+    clamp(
+      state.hunger-.45,
+      0,100
+    );
+
+  state.energy=
+    clamp(
+      state.energy-.18,
+      0,100
+    );
+
+  state.hygiene=
+    clamp(
+      state.hygiene-.20,
+      0,100
+    );
+
+  state.social=
+    clamp(
+      state.social-.12,
+      0,100
+    );
+
+  if(state.hunger<15)
+    state.health=
+      clamp(
+        state.health-1,
+        0,100
+      );
+
+  saveGame();
+}
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  ()=>{
+    camera.aspect=
+      innerWidth/innerHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+      innerWidth,
+      innerHeight
+    );
+
+    renderer.setPixelRatio(
+      Math.min(devicePixelRatio,1.7)
+    );
+  }
+);
+
+/* =========================================================
+   STARTUP
+========================================================= */
+
+async function boot(){
+
+  document.getElementById(
+    "loadingText"
+  ).textContent=
+    "Building Ibadan...";
+
+  await new Promise(
+    r=>setTimeout(r,250)
+  );
+
+  document.getElementById(
+    "loadingText"
+  ).textContent=
+    "Loading 3D character...";
+
+  await loadRealPlayer();
+
+  document.getElementById(
+    "loadingText"
+  ).textContent=
+    "Loading vehicles...";
+
+  await loadRealCar();
+
+  document.getElementById(
+    "loadingText"
+  ).textContent=
+    "Starting Ibadan Life...";
+
+  player.position.set(
+    state.lastOutside.x,
+    0,
+    state.lastOutside.z
+  );
+
+  player.rotation.y=
+    state.lastOutside.yaw;
+
+  updateCamera();
+
+  await new Promise(
+    r=>setTimeout(r,400)
+  );
+
+  document.getElementById(
+    "loading"
+  ).style.display="none";
+
+  showHint(
+    "🐐 Welcome to Ibadan Life. Walk around and explore."
+  );
+}
+
+/* =========================================================
+   MAIN LOOP
+========================================================= */
+
+let last=performance.now();
+
+function loop(now){
+
+  const dt=
+    Math.min(
+      .05,
+      (now-last)/1000
+    );
+
+  last=now;
+
+  updateKeyboardInput();
+
+  updateTime(dt);
+
+  updateNeeds(dt);
+
+  if(state.driving){
+
+    updateDriving(dt);
+
+  }else{
+
+    movePlayer(dt);
+    updateNPCs(dt);
+  }
+
+  updateLocation();
+  updateCamera();
+  updateHUD(dt);
+
+  if(playerMixer)
+    playerMixer.update(dt);
+
+  renderer.render(
+    scene,
+    camera
+  );
+
+  requestAnimationFrame(loop);
+}
+
+/* =========================================================
+   PREVENT MOBILE PAGE BEHAVIOUR
+========================================================= */
+
+document.addEventListener(
+  "contextmenu",
+  e=>e.preventDefault()
+);
+
+document.addEventListener(
+  "gesturestart",
+  e=>e.preventDefault()
+);
+
+document.addEventListener(
+  "touchmove",
+  e=>{
+    if(e.target===renderer.domElement)
+      e.preventDefault();
+  },
+  {passive:false}
+);
+
+/* =========================================================
+   START
+========================================================= */
+
+boot().then(
+  ()=>{
+    requestAnimationFrame(loop);
+  }
+);
+
+</script>
 </body>
 </html>
