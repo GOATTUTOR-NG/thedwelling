@@ -153,8 +153,6 @@ html,body{
   box-shadow:0 10px 28px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07);
 }
 
-/* ---------- profile ---------- */
-
 .profile{
   display:flex;
   align-items:center;
@@ -241,8 +239,6 @@ html,body{
 .chip.cash{color:#8ff0b2}
 .chip.bank{color:#ffd98a}
 
-/* ---------- needs ---------- */
-
 .needs{
   padding:9px 10px;
   display:flex;
@@ -285,8 +281,6 @@ html,body{
 .meter i.warn{background:linear-gradient(90deg,#f0b429,#ffd977)}
 .meter i.bad{background:linear-gradient(90deg,#e5484d,#ff8a8d)}
 
-/* ---------- phone button ---------- */
-
 .phone-btn{
   pointer-events:auto;
   width:44px;
@@ -304,8 +298,6 @@ html,body{
 }
 
 .phone-btn:active{transform:scale(.92)}
-
-/* ---------- location ---------- */
 
 .loc-row{
   display:flex;
@@ -330,8 +322,6 @@ html,body{
 .loc{color:#cfe4ff}
 .time{color:#ffd98a}
 
-/* ---------- hint ---------- */
-
 .hint{
   position:absolute;
   left:50%;
@@ -350,8 +340,6 @@ html,body{
   box-shadow:0 10px 28px rgba(0,0,0,.5);
   transition:opacity .3s ease;
 }
-
-/* ---------- vignette ---------- */
 
 #vignette{
   position:fixed;
@@ -631,7 +619,6 @@ html,body{
 <body>
 
 <canvas id="game"></canvas>
-
 <div id="vignette"></div>
 
 <div id="loading">
@@ -644,11 +631,8 @@ html,body{
 </div>
 
 <div id="hud">
-
   <div class="topbar">
-
     <div class="hud-top">
-
       <div class="panel profile">
         <div class="avatar">🧑🏾</div>
         <div class="pinfo">
@@ -660,7 +644,6 @@ html,body{
           </div>
         </div>
       </div>
-
       <div class="right-col">
         <div class="panel needs">
           <div class="needrow"><span>❤️</span><div class="meter"><i id="health"></i></div></div>
@@ -671,35 +654,25 @@ html,body{
         </div>
         <button class="phone-btn" id="phoneBtn" aria-label="Open phone">📱</button>
       </div>
-
     </div>
-
     <div class="loc-row">
       <span class="loc" id="location">Family House</span>
       <span class="time" id="time">08:00</span>
     </div>
-
   </div>
-
   <div class="hint" id="hint">
     Move around Ibadan. Walk to a door or vehicle.
   </div>
-
 </div>
 
 <div id="controls">
-
-  <div class="joy" id="joy">
-    <div class="knob" id="knob"></div>
-  </div>
-
+  <div class="joy" id="joy"><div class="knob" id="knob"></div></div>
   <div class="actions">
     <button class="btn run" id="runBtn"><span class="ico">🏃</span>RUN</button>
     <button class="btn primary" id="actionBtn"><span class="ico">✋</span>ACTION</button>
     <button class="btn gold" id="carBtn"><span class="ico">🚗</span>CAR</button>
     <button class="btn" id="camBtn"><span class="ico">🎥</span>CAM</button>
   </div>
-
 </div>
 
 <div id="phone">
@@ -748,25 +721,17 @@ import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 ========================================================= */
 
 const SAVE_KEY = "IBADAN_LIFE_3D_V3";
-
 const $ = id => document.getElementById(id);
-
-const clamp = (v, a = 0, b = 100) =>
-  Math.max(a, Math.min(b, v));
-
-const money = n =>
-  "₦" + Math.round(n).toLocaleString("en-NG");
+const clamp = (v, a = 0, b = 100) => Math.max(a, Math.min(b, v));
+const money = n => "₦" + Math.round(n).toLocaleString("en-NG");
 
 function roundRect(ctx, x, y, w, h, r){
-
   if(typeof ctx.roundRect === "function"){
     ctx.beginPath();
     ctx.roundRect(x, y, w, h, r);
     return;
   }
-
   const rr = Math.min(r, w/2, h/2);
-
   ctx.beginPath();
   ctx.moveTo(x+rr, y);
   ctx.lineTo(x+w-rr, y);
@@ -778,7 +743,6 @@ function roundRect(ctx, x, y, w, h, r){
   ctx.lineTo(x, y+rr);
   ctx.quadraticCurveTo(x, y, x+rr, y);
   ctx.closePath();
-
 }
 
 
@@ -787,66 +751,27 @@ function roundRect(ctx, x, y, w, h, r){
 ========================================================= */
 
 const DEFAULT_STATE = {
-
   name:"David",
-
-  cash:50000,
-  bank:120000,
-
-  health:100,
-  hunger:86,
-  energy:90,
-  hygiene:90,
-  social:72,
-  fun:75,
-
-  level:1,
-  xp:0,
-
-  day:1,
-  minutes:480,
-
-  weather:"Sunny",
-  location:"Family House",
-
-  job:"Unemployed",
-  jobPay:0,
-
-  inside:false,
-  building:null,
-
+  cash:50000, bank:120000,
+  health:100, hunger:86, energy:90, hygiene:90, social:72, fun:75,
+  level:1, xp:0,
+  day:1, minutes:480,
+  weather:"Sunny", location:"Family House",
+  job:"Unemployed", jobPay:0,
+  inside:false, building:null,
   driving:false,
-
   ownedCar:"Toyota Corolla",
-
   furniture:[],
-
   lastOutside:{ x:-50, z:-44, rot:0 },
-
   cameraMode:0
-
 };
 
-
 let saved = null;
-
-try{
-  saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null");
-}catch(e){
-  saved = null;
-}
-
+try{ saved = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); }catch(e){ saved = null; }
 
 const state = Object.assign({}, DEFAULT_STATE, saved || {});
-
-state.lastOutside = Object.assign(
-  {},
-  DEFAULT_STATE.lastOutside,
-  saved?.lastOutside || {}
-);
-
-state.furniture =
-  Array.isArray(saved?.furniture) ? saved.furniture : [];
+state.lastOutside = Object.assign({}, DEFAULT_STATE.lastOutside, saved?.lastOutside || {});
+state.furniture = Array.isArray(saved?.furniture) ? saved.furniture : [];
 
 
 /* =========================================================
@@ -857,13 +782,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x8fc0e0);
 scene.fog = new THREE.Fog(0x9dc6e4, 70, 400);
 
-const camera = new THREE.PerspectiveCamera(
-  58,
-  innerWidth / innerHeight,
-  0.1,
-  1200
-);
-
+const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.1, 1200);
 camera.position.set(0, 12, 18);
 
 const renderer = new THREE.WebGLRenderer({
@@ -881,10 +800,7 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.02;
 
-const MAX_ANISO = Math.min(
-  8,
-  renderer.capabilities.getMaxAnisotropy()
-);
+const MAX_ANISO = Math.min(8, renderer.capabilities.getMaxAnisotropy());
 
 
 /* =========================================================
@@ -893,10 +809,8 @@ const MAX_ANISO = Math.min(
 
 const world = new THREE.Group();
 const interior = new THREE.Group();
-
 scene.add(world);
 scene.add(interior);
-
 interior.visible = false;
 
 
@@ -940,7 +854,6 @@ const sky = new THREE.Mesh(
     fog: false
   })
 );
-
 sky.frustumCulled = false;
 scene.add(sky);
 
@@ -953,7 +866,6 @@ const ambient = new THREE.HemisphereLight(0xaed9ff, 0x3a4a26, 1.15);
 scene.add(ambient);
 
 const sun = new THREE.DirectionalLight(0xfff2dd, 2.4);
-
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
 sun.shadow.camera.left   = -70;
@@ -964,13 +876,11 @@ sun.shadow.camera.near   = 1;
 sun.shadow.camera.far    = 320;
 sun.shadow.bias          = -0.0006;
 sun.shadow.normalBias    = 0.035;
-
 scene.add(sun);
 scene.add(sun.target);
 
 const sunOffset = new THREE.Vector3(-90, 130, 70);
 
-/* soft bounce fill from the opposite side */
 const fill = new THREE.DirectionalLight(0x9fc4ff, 0.35);
 fill.position.set(80, 60, -90);
 scene.add(fill);
@@ -981,197 +891,109 @@ scene.add(fill);
 ========================================================= */
 
 function canvasTexture(w, h, draw, repeatX = 1, repeatY = 1){
-
   const c = document.createElement("canvas");
   c.width = w;
   c.height = h;
-
   draw(c.getContext("2d"), w, h);
-
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.repeat.set(repeatX, repeatY);
   t.anisotropy = MAX_ANISO;
-
   return t;
-
 }
 
-
-/* ---------- grass ---------- */
-
+/* grass */
 const grassTex = canvasTexture(256, 256, (g, w, h) => {
-
   g.fillStyle = "#3f7548";
   g.fillRect(0, 0, w, h);
-
   for(let i = 0; i < 12000; i++){
-
     const v = Math.random();
-
     g.fillStyle =
       v < 0.45 ? "rgba(48,98,58,.55)"  :
       v < 0.78 ? "rgba(88,138,76,.50)" :
       v < 0.94 ? "rgba(60,112,64,.45)" :
                  "rgba(122,168,96,.30)";
-
-    g.fillRect(
-      Math.random() * w,
-      Math.random() * h,
-      2, 3
-    );
-
+    g.fillRect(Math.random() * w, Math.random() * h, 2, 3);
   }
-
 }, 140, 140);
 
-
-/* ---------- concrete pavement ---------- */
-
+/* pavement */
 const paveTex = canvasTexture(256, 256, (g, w, h) => {
-
   g.fillStyle = "#8d8b83";
   g.fillRect(0, 0, w, h);
-
   for(let i = 0; i < 6000; i++){
-
     const v = 120 + Math.random() * 70 | 0;
-
     g.fillStyle = `rgba(${v},${v},${v-6},.25)`;
-    g.fillRect(
-      Math.random() * w,
-      Math.random() * h,
-      2, 2
-    );
-
+    g.fillRect(Math.random() * w, Math.random() * h, 2, 2);
   }
-
   g.strokeStyle = "rgba(0,0,0,.18)";
   g.lineWidth = 2;
-
   for(let i = 0; i <= w; i += 64){
     g.beginPath(); g.moveTo(i, 0); g.lineTo(i, h); g.stroke();
     g.beginPath(); g.moveTo(0, i); g.lineTo(w, i); g.stroke();
   }
-
 }, 40, 40);
 
-
-/* ---------- wood floor ---------- */
-
+/* wood floor */
 const woodTex = canvasTexture(256, 256, (g, w, h) => {
-
   g.fillStyle = "#8a6039";
   g.fillRect(0, 0, w, h);
-
   for(let y = 0; y < h; y += 32){
-
-    g.fillStyle =
-      `rgba(${110 + Math.random()*40|0},${76 + Math.random()*30|0},${44 + Math.random()*22|0},.55)`;
-
+    g.fillStyle = `rgba(${110 + Math.random()*40|0},${76 + Math.random()*30|0},${44 + Math.random()*22|0},.55)`;
     g.fillRect(0, y, w, 30);
-
     g.fillStyle = "rgba(0,0,0,.22)";
     g.fillRect(0, y + 30, w, 2);
-
   }
-
   for(let i = 0; i < 2600; i++){
-
     g.fillStyle = "rgba(60,36,18,.10)";
-    g.fillRect(
-      Math.random() * w,
-      Math.random() * h,
-      12, 1
-    );
-
+    g.fillRect(Math.random() * w, Math.random() * h, 12, 1);
   }
-
 }, 5, 4);
 
-
-/* ---------- building facade ---------- */
-
+/* building facade */
 function facadeTexture(faceW, faceH, baseHex, accentHex){
-
   const PX = 26;
-
   const W = Math.max(64, Math.min(1024, Math.round(faceW * PX)));
   const H = Math.max(64, Math.min(1024, Math.round(faceH * PX)));
-
   const c = document.createElement("canvas");
-  c.width = W;
-  c.height = H;
-
+  c.width = W; c.height = H;
   const g = c.getContext("2d");
-
   const base = "#" + baseHex.toString(16).padStart(6, "0");
   const accent = "#" + accentHex.toString(16).padStart(6, "0");
-
-  /* wall */
   g.fillStyle = base;
   g.fillRect(0, 0, W, H);
-
-  /* stucco grain */
   for(let i = 0; i < W * H / 90; i++){
-
     const a = Math.random() * 0.06;
-    g.fillStyle = Math.random() < 0.5
-      ? `rgba(0,0,0,${a})`
-      : `rgba(255,255,255,${a})`;
-
+    g.fillStyle = Math.random() < 0.5 ? `rgba(0,0,0,${a})` : `rgba(255,255,255,${a})`;
     g.fillRect(Math.random() * W, Math.random() * H, 3, 3);
-
   }
-
-  /* windows */
   const cell = 3.3;
   const cols = Math.max(1, Math.round(faceW / cell));
   const rows = Math.max(1, Math.round(faceH / cell));
-
-  const padX = W * 0.06;
-  const padY = H * 0.07;
-
+  const padX = W * 0.06, padY = H * 0.07;
   const cw = (W - padX * 2) / cols;
   const ch = (H - padY * 2) / rows;
-
-  const ww = cw * 0.56;
-  const wh = ch * 0.5;
-
+  const ww = cw * 0.56, wh = ch * 0.5;
   for(let r = 0; r < rows; r++){
-
     for(let c2 = 0; c2 < cols; c2++){
-
       const x = padX + c2 * cw + (cw - ww) / 2;
       const y = padY + r * ch + (ch - wh) / 2;
-
-      /* recess shadow */
       g.fillStyle = "rgba(0,0,0,.28)";
       g.fillRect(x - 3, y - 3, ww + 6, wh + 6);
-
-      /* frame */
       g.fillStyle = accent;
       g.fillRect(x - 1.5, y - 1.5, ww + 3, wh + 3);
-
-      /* glass */
       const lit = Math.random() < 0.14;
-
       const grd = g.createLinearGradient(x, y, x + ww, y + wh);
-
       if(lit){
-        grd.addColorStop(0, "#ffeab4");
-        grd.addColorStop(1, "#d8a94e");
+        grd.addColorStop(0, "#ffeab4"); grd.addColorStop(1, "#d8a94e");
       }else{
         grd.addColorStop(0, "#9dc2da");
         grd.addColorStop(0.5, "#4d7794");
         grd.addColorStop(1, "#27435a");
       }
-
       g.fillStyle = grd;
       g.fillRect(x, y, ww, wh);
-
-      /* reflection streak */
       g.fillStyle = "rgba(255,255,255,.16)";
       g.beginPath();
       g.moveTo(x, y + wh);
@@ -1180,25 +1002,16 @@ function facadeTexture(faceW, faceH, baseHex, accentHex){
       g.lineTo(x + ww, y + wh * 0.32);
       g.closePath();
       g.fill();
-
-      /* mullion */
       g.fillStyle = accent;
       g.fillRect(x + ww / 2 - 1, y, 2, wh);
-
     }
-
   }
-
-  /* base plinth */
   g.fillStyle = "rgba(0,0,0,.20)";
   g.fillRect(0, H - H * 0.07, W, H * 0.07);
-
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.anisotropy = MAX_ANISO;
-
   return t;
-
 }
 
 
@@ -1207,98 +1020,24 @@ function facadeTexture(faceW, faceH, baseHex, accentHex){
 ========================================================= */
 
 const mats = {
-
-  ground: new THREE.MeshStandardMaterial({
-    map: grassTex,
-    roughness: 1,
-    metalness: 0
-  }),
-
-  pavement: new THREE.MeshStandardMaterial({
-    map: paveTex,
-    roughness: .95,
-    metalness: 0
-  }),
-
-  road: new THREE.MeshStandardMaterial({
-    color: 0x33373d,
-    roughness: .92,
-    metalness: .05
-  }),
-
-  roof: new THREE.MeshStandardMaterial({
-    color: 0x6a3a2c,
-    roughness: .88,
-    metalness: .04
-  }),
-
-  roofMetal: new THREE.MeshStandardMaterial({
-    color: 0x8a8f96,
-    roughness: .55,
-    metalness: .55
-  }),
-
-  wood: new THREE.MeshStandardMaterial({
-    color: 0x6f4526,
-    roughness: .82
-  }),
-
-  darkWood: new THREE.MeshStandardMaterial({
-    color: 0x4a2d18,
-    roughness: .85
-  }),
-
+  ground: new THREE.MeshStandardMaterial({ map: grassTex, roughness: 1, metalness: 0 }),
+  pavement: new THREE.MeshStandardMaterial({ map: paveTex, roughness: .95, metalness: 0 }),
+  road: new THREE.MeshStandardMaterial({ color: 0x33373d, roughness: .92, metalness: .05 }),
+  roof: new THREE.MeshStandardMaterial({ color: 0x6a3a2c, roughness: .88, metalness: .04 }),
+  wood: new THREE.MeshStandardMaterial({ color: 0x6f4526, roughness: .82 }),
+  darkWood: new THREE.MeshStandardMaterial({ color: 0x4a2d18, roughness: .85 }),
   glass: new THREE.MeshStandardMaterial({
-    color: 0x8fc4dd,
-    roughness: .08,
-    metalness: .55,
-    transparent: true,
-    opacity: .72
+    color: 0x8fc4dd, roughness: .08, metalness: .55,
+    transparent: true, opacity: .72
   }),
-
-  trunk: new THREE.MeshStandardMaterial({
-    color: 0x5b3d28,
-    roughness: 1
-  }),
-
-  leaf: new THREE.MeshStandardMaterial({
-    color: 0x2c7a43,
-    roughness: .95,
-    flatShading: true
-  }),
-
-  leafDark: new THREE.MeshStandardMaterial({
-    color: 0x1f5c33,
-    roughness: .95,
-    flatShading: true
-  }),
-
-  white: new THREE.MeshStandardMaterial({
-    color: 0xe9e9e2,
-    roughness: .72
-  }),
-
-  dark: new THREE.MeshStandardMaterial({
-    color: 0x23272d,
-    roughness: .78
-  }),
-
-  metal: new THREE.MeshStandardMaterial({
-    color: 0x9aa2ab,
-    roughness: .35,
-    metalness: .8
-  }),
-
-  red: new THREE.MeshStandardMaterial({
-    color: 0xc23a3a,
-    roughness: .6
-  }),
-
-  green: new THREE.MeshStandardMaterial({
-    color: 0x1a8a52,
-    roughness: .65
-  })
-
+  trunk: new THREE.MeshStandardMaterial({ color: 0x5b3d28, roughness: 1 }),
+  leaf: new THREE.MeshStandardMaterial({ color: 0x2c7a43, roughness: .95, flatShading: true }),
+  leafDark: new THREE.MeshStandardMaterial({ color: 0x1f5c33, roughness: .95, flatShading: true }),
+  white: new THREE.MeshStandardMaterial({ color: 0xe9e9e2, roughness: .72 }),
+  dark: new THREE.MeshStandardMaterial({ color: 0x23272d, roughness: .78 }),
+  metal: new THREE.MeshStandardMaterial({ color: 0x9aa2ab, roughness: .35, metalness: .8 }),
+  red: new THREE.MeshStandardMaterial({ color: 0xc23a3a, roughness: .6 }),
+  green: new THREE.MeshStandardMaterial({ color: 0x1a8a52, roughness: .65 })
 };
 
 
@@ -1307,127 +1046,75 @@ const mats = {
 ========================================================= */
 
 function box(w, h, d, mat, x = 0, y = h / 2, z = 0, parent = world){
-
   const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-
   m.position.set(x, y, z);
   m.castShadow = true;
   m.receiveShadow = true;
-
   parent.add(m);
-
   return m;
-
 }
-
 
 function cyl(r, h, mat, x = 0, y = h / 2, z = 0, parent = world, seg = 16){
-
-  const m = new THREE.Mesh(
-    new THREE.CylinderGeometry(r, r, h, seg),
-    mat
-  );
-
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, seg), mat);
   m.position.set(x, y, z);
   m.castShadow = true;
   m.receiveShadow = true;
-
   parent.add(m);
-
   return m;
-
 }
 
-
 function plane(w, d, mat, x = 0, y = 0, z = 0, parent = world){
-
   const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), mat);
-
   m.rotation.x = -Math.PI / 2;
   m.position.set(x, y, z);
   m.receiveShadow = true;
-
   parent.add(m);
-
   return m;
-
 }
 
-
 function textSprite(text, color = "#ffe6a8"){
-
-  const pad = 52;
-  const fs = 58;
-
+  const pad = 52, fs = 58;
   const meas = document.createElement("canvas").getContext("2d");
   const font = `800 ${fs}px Inter, system-ui, -apple-system, sans-serif`;
-
   meas.font = font;
-
   const tw = meas.measureText(text).width;
-
-  const W = Math.ceil(tw + pad * 2);
-  const H = 148;
-
+  const W = Math.ceil(tw + pad * 2), H = 148;
   const c = document.createElement("canvas");
-  c.width = W;
-  c.height = H;
-
+  c.width = W; c.height = H;
   const g = c.getContext("2d");
-
   g.font = font;
   g.textAlign = "center";
   g.textBaseline = "middle";
-
   g.fillStyle = "rgba(6,14,25,.76)";
   roundRect(g, 6, 20, W - 12, H - 40, 42);
   g.fill();
-
   g.strokeStyle = "rgba(255,255,255,.20)";
   g.lineWidth = 3;
   g.stroke();
-
   g.shadowColor = "rgba(0,0,0,.75)";
   g.shadowBlur = 12;
   g.fillStyle = color;
   g.fillText(text, W / 2, H / 2 + 2);
-
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = MAX_ANISO;
-
-  const sprite = new THREE.Sprite(
-    new THREE.SpriteMaterial({
-      map: tex,
-      transparent: true,
-      depthWrite: false
-    })
-  );
-
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: tex, transparent: true, depthWrite: false
+  }));
   const hh = 2.7;
   sprite.scale.set(hh * W / H, hh, 1);
-
   return sprite;
-
 }
 
 
 /* =========================================================
-   GROUND
+   GROUND + ROADS
 ========================================================= */
 
 plane(1500, 1500, mats.ground, 0, -0.06, 0, world);
 
-
-/* =========================================================
-   ROAD NETWORK
-========================================================= */
-
 const roads = [];
-
-function makeRoad(x, z, w, d){
-  roads.push({ x, z, w, d });
-}
+function makeRoad(x, z, w, d){ roads.push({ x, z, w, d }); }
 
 makeRoad(0, 0, 560, 24);
 makeRoad(0, 0, 24, 560);
@@ -1436,117 +1123,60 @@ makeRoad(0, 125, 560, 20);
 makeRoad(-125, 0, 20, 560);
 makeRoad(125, 0, 20, 560);
 
-
-/* ---------- single ground decal texture ---------- */
+function SPAN_ROAD(){ return 620; }
 
 function buildRoadDecal(){
-
-  const SIZE = 2048;
-  const SPAN = 620;
-  const s = SIZE / SPAN;
-
+  const SIZE = 2048, SPAN = 620, s = SIZE / SPAN;
   const c = document.createElement("canvas");
   c.width = c.height = SIZE;
-
   const g = c.getContext("2d");
-
   const tx = x => (x + SPAN / 2) * s;
   const tz = z => (z + SPAN / 2) * s;
 
-  /* --- pavement / curbs --- */
   g.fillStyle = "#8b8a82";
-
   for(const r of roads){
-    g.fillRect(
-      tx(r.x - r.w / 2 - 4),
-      tz(r.z - r.d / 2 - 4),
-      (r.w + 8) * s,
-      (r.d + 8) * s
-    );
+    g.fillRect(tx(r.x - r.w/2 - 4), tz(r.z - r.d/2 - 4),
+      (r.w + 8) * s, (r.d + 8) * s);
   }
-
-  /* --- asphalt --- */
   g.fillStyle = "#33373d";
-
   for(const r of roads){
-    g.fillRect(
-      tx(r.x - r.w / 2),
-      tz(r.z - r.d / 2),
-      r.w * s,
-      r.d * s
-    );
+    g.fillRect(tx(r.x - r.w/2), tz(r.z - r.d/2), r.w * s, r.d * s);
   }
-
-  /* --- asphalt grain (clipped) --- */
   g.save();
-
   g.beginPath();
   for(const r of roads){
-    g.rect(
-      tx(r.x - r.w / 2),
-      tz(r.z - r.d / 2),
-      r.w * s,
-      r.d * s
-    );
+    g.rect(tx(r.x - r.w/2), tz(r.z - r.d/2), r.w * s, r.d * s);
   }
   g.clip();
-
   for(let i = 0; i < 60000; i++){
-
     const v = 38 + Math.random() * 74 | 0;
-
-    g.fillStyle = `rgba(${v},${v},${v + 6},${Math.random() * 0.22})`;
+    g.fillStyle = `rgba(${v},${v},${v+6},${Math.random() * 0.22})`;
     g.fillRect(Math.random() * SIZE, Math.random() * SIZE, 2.5, 2.5);
-
   }
-
   g.restore();
-
-  /* --- lane markings --- */
   g.fillStyle = "#e6d27a";
-
   for(const r of roads){
-
     if(r.w > r.d){
-
       const y = tz(r.z) - 2.4;
-
-      for(let x = tx(r.x - r.w / 2); x < tx(r.x + r.w / 2); x += 13 * s){
+      for(let x = tx(r.x - r.w/2); x < tx(r.x + r.w/2); x += 13 * s){
         g.fillRect(x, y, 7 * s, 4.8);
       }
-
     }else{
-
       const x = tx(r.x) - 2.4;
-
-      for(let z = tz(r.z - r.d / 2); z < tz(r.z + r.d / 2); z += 13 * s){
+      for(let z = tz(r.z - r.d/2); z < tz(r.z + r.d/2); z += 13 * s){
         g.fillRect(x, z, 4.8, 7 * s);
       }
-
     }
-
   }
-
-  /* --- subtle edge lines --- */
   g.strokeStyle = "rgba(255,255,255,.10)";
   g.lineWidth = 2;
-
   for(const r of roads){
-    g.strokeRect(
-      tx(r.x - r.w / 2) + 1,
-      tz(r.z - r.d / 2) + 1,
-      r.w * s - 2,
-      r.d * s - 2
-    );
+    g.strokeRect(tx(r.x - r.w/2) + 1, tz(r.z - r.d/2) + 1, r.w * s - 2, r.d * s - 2);
   }
-
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
   t.anisotropy = MAX_ANISO;
-  t.generateMipmaps = true;
-
   return t;
-
 }
 
 const roadPlane = new THREE.Mesh(
@@ -1559,14 +1189,10 @@ const roadPlane = new THREE.Mesh(
     metalness: .05
   })
 );
-
-function SPAN_ROAD(){ return 620; }
-
 roadPlane.rotation.x = -Math.PI / 2;
 roadPlane.position.y = 0.0;
 roadPlane.receiveShadow = true;
 roadPlane.renderOrder = 1;
-
 world.add(roadPlane);
 
 
@@ -1575,132 +1201,72 @@ world.add(roadPlane);
 ========================================================= */
 
 const buildings = [
-
   { id:"house", name:"Your House", x:-50, z:-34, w:26, d:20, h:9,
     color:0xc99d6b, accent:0x6b4a2a, door:[-50,-44] },
-
   { id:"market", name:"Bodija Market", x:-105, z:-95, w:32, d:22, h:7,
     color:0xd6b04d, accent:0x7a5a18, door:[-105,-108] },
-
   { id:"hostel", name:"University Hostel", x:62, z:-104, w:28, d:16, h:13,
     color:0xb8c7cf, accent:0x4c6470, door:[62,-115] },
-
   { id:"hotel", name:"Mokola Hotel", x:105, z:8, w:30, d:20, h:15,
     color:0xd46b51, accent:0x7a2f22, door:[105,-4] },
-
   { id:"mall", name:"Dugbe Shopping Centre", x:70, z:96, w:34, d:24, h:12,
     color:0x8ca5c7, accent:0x3b5375, door:[70,82] },
-
   { id:"hall", name:"Mapo Hall", x:-72, z:105, w:30, d:22, h:10,
     color:0xe2d3ae, accent:0x8a7648, door:[-72,92] },
-
   { id:"hospital", name:"General Hospital", x:125, z:-72, w:35, d:24, h:11,
     color:0xdce5e9, accent:0x6d8792, door:[125,-88] },
-
   { id:"bank", name:"First City Bank", x:-128, z:70, w:30, d:20, h:10,
     color:0x4c7fb4, accent:0x213f61, door:[-128,57] },
-
   { id:"kitchen", name:"Mama's Kitchen", x:10, z:112, w:22, d:18, h:6,
     color:0xb65d39, accent:0x6b2f16, door:[10,101] }
-
 ];
 
-
 function makeBuilding(b){
-
   const g = new THREE.Group();
-
   g.position.set(b.x, 0, b.z);
   g.userData.building = b;
 
   const sideTex  = facadeTexture(b.d, b.h, b.color, b.accent);
   const frontTex = facadeTexture(b.w, b.h, b.color, b.accent);
+  const sideMat = new THREE.MeshStandardMaterial({ map: sideTex, roughness: .88, metalness: .03 });
+  const frontMat = new THREE.MeshStandardMaterial({ map: frontTex, roughness: .88, metalness: .03 });
+  const roofMat = new THREE.MeshStandardMaterial({ color: 0x5d332a, roughness: .9 });
 
-  const sideMat = new THREE.MeshStandardMaterial({
-    map: sideTex, roughness: .88, metalness: .03
-  });
+  const matsArr = [sideMat, sideMat, roofMat, roofMat, frontMat, frontMat];
 
-  const frontMat = new THREE.MeshStandardMaterial({
-    map: frontTex, roughness: .88, metalness: .03
-  });
-
-  const roofMat = new THREE.MeshStandardMaterial({
-    color: 0x5d332a, roughness: .9
-  });
-
-  /* box material order: +x, -x, +y, -y, +z, -z */
-  const matsArr = [
-    sideMat, sideMat,
-    roofMat, roofMat,
-    frontMat, frontMat
-  ];
-
-  const body = new THREE.Mesh(
-    new THREE.BoxGeometry(b.w, b.h, b.d),
-    matsArr
-  );
-
+  const body = new THREE.Mesh(new THREE.BoxGeometry(b.w, b.h, b.d), matsArr);
   body.position.y = b.h / 2;
   body.castShadow = true;
   body.receiveShadow = true;
-
   g.add(body);
 
-  /* roof slab */
-  const slab = box(
-    b.w + 1.4, 0.9, b.d + 1.4,
-    mats.roof,
-    0, b.h + 0.45, 0, g
-  );
+  const slab = box(b.w + 1.4, 0.9, b.d + 1.4, mats.roof, 0, b.h + 0.45, 0, g);
   slab.castShadow = true;
-
-  /* parapet trim */
   box(b.w + 1.8, 0.35, b.d + 1.8, mats.dark, 0, b.h + 0.95, 0, g);
 
-  /* entrance canopy */
   const doorLocalX = b.door[0] - b.x;
   const doorLocalZ = b.door[1] - b.z;
 
-  const canopy = box(
-    6, 0.35, 3.4,
-    mats.dark,
-    doorLocalX, 3.3, doorLocalZ + (doorLocalZ > 0 ? -1.4 : 1.4),
-    g
-  );
+  const canopy = box(6, 0.35, 3.4, mats.dark,
+    doorLocalX, 3.3, doorLocalZ + (doorLocalZ > 0 ? -1.4 : 1.4), g);
   canopy.castShadow = true;
 
-  /* door */
-  box(
-    2.8, 2.4, 0.22,
-    mats.darkWood,
-    doorLocalX, 1.2, doorLocalZ,
-    g
-  );
+  box(2.8, 2.4, 0.22, mats.darkWood, doorLocalX, 1.2, doorLocalZ, g);
 
-  /* door frame glow strip */
-  const strip = box(
-    3.2, 0.14, 0.3,
+  const strip = box(3.2, 0.14, 0.3,
     new THREE.MeshStandardMaterial({
-      color: 0x2ecc71,
-      emissive: 0x1e8a4a,
-      emissiveIntensity: .9
+      color: 0x2ecc71, emissive: 0x1e8a4a, emissiveIntensity: .9
     }),
-    doorLocalX, 2.55, doorLocalZ,
-    g
-  );
+    doorLocalX, 2.55, doorLocalZ, g);
   strip.castShadow = false;
 
-  /* sign */
   const label = textSprite(b.name);
   label.position.set(0, b.h + 4.4, 0);
   g.add(label);
 
   world.add(g);
-
   b.group = g;
-
 }
-
 
 buildings.forEach(makeBuilding);
 
@@ -1710,31 +1276,22 @@ buildings.forEach(makeBuilding);
 ========================================================= */
 
 function landmark(name, x, z){
-
   const g = new THREE.Group();
   g.position.set(x, 0, z);
-
   cyl(0.4, 20, mats.metal, 0, 10, 0, g, 10);
-
   const orb = new THREE.Mesh(
     new THREE.SphereGeometry(1.1, 14, 10),
     new THREE.MeshStandardMaterial({
-      color: 0xffd166,
-      emissive: 0xffb703,
-      emissiveIntensity: .8,
-      roughness: .3
+      color: 0xffd166, emissive: 0xffb703,
+      emissiveIntensity: .8, roughness: .3
     })
   );
-
   orb.position.y = 20.6;
   g.add(orb);
-
   const label = textSprite(name, "#ffe16b");
   label.position.y = 24.5;
   g.add(label);
-
   world.add(g);
-
 }
 
 landmark("COCOA HOUSE", -175, -175);
@@ -1751,9 +1308,7 @@ const leafGeoB = new THREE.IcosahedronGeometry(2.6, 1);
 const trunkGeo = new THREE.CylinderGeometry(0.42, 0.6, 5, 8);
 
 function makeTree(x, z, scale = 1){
-
   const g = new THREE.Group();
-
   g.position.set(x, 0, z);
   g.rotation.y = Math.random() * Math.PI * 2;
 
@@ -1778,39 +1333,20 @@ function makeTree(x, z, scale = 1){
   g.add(c3);
 
   g.scale.setScalar(scale);
-
   world.add(g);
-
 }
 
-
 for(let i = 0; i < 60; i++){
-
   const x = Math.random() * 500 - 250;
   const z = Math.random() * 500 - 250;
-
-  if(Math.abs(x) < 22 || Math.abs(z) < 22){
-    continue;
-  }
-
+  if(Math.abs(x) < 22 || Math.abs(z) < 22) continue;
   let blocked = false;
-
   for(const b of buildings){
-    if(
-      Math.abs(x - b.x) < b.w / 2 + 8 &&
-      Math.abs(z - b.z) < b.d / 2 + 8
-    ){
-      blocked = true;
-      break;
-    }
+    if(Math.abs(x - b.x) < b.w / 2 + 8 &&
+       Math.abs(z - b.z) < b.d / 2 + 8){ blocked = true; break; }
   }
-
-  if(blocked){
-    continue;
-  }
-
+  if(blocked) continue;
   makeTree(x, z, 0.7 + Math.random() * 0.75);
-
 }
 
 
@@ -1820,30 +1356,23 @@ for(let i = 0; i < 60; i++){
 
 const lampGeo = new THREE.CylinderGeometry(0.11, 0.15, 6.4, 8);
 const lampHeadGeo = new THREE.BoxGeometry(0.9, 0.22, 0.5);
-
 const lamps = [];
 
 function streetLight(x, z){
-
   const g = new THREE.Group();
   g.position.set(x, 0, z);
-
   const pole = new THREE.Mesh(lampGeo, mats.dark);
   pole.position.y = 3.2;
   pole.castShadow = true;
   g.add(pole);
-
   const head = new THREE.Mesh(lampHeadGeo, mats.metal);
   head.position.set(0.4, 6.4, 0);
   g.add(head);
-
   const light = new THREE.PointLight(0xffcf8a, 0, 22, 2);
   light.position.set(0.4, 6.2, 0);
   g.add(light);
-
   world.add(g);
   lamps.push(light);
-
 }
 
 for(let i = -220; i <= 220; i += 44){
@@ -1855,135 +1384,439 @@ for(let i = -220; i <= 220; i += 44){
 
 
 /* =========================================================
-   PLAYER
+   PLAYER GROUP
 ========================================================= */
 
 const player = new THREE.Group();
 player.position.set(-50, 0, -34);
 player.userData.radius = 0.8;
-
 scene.add(player);
 
 let playerVisual = null;
 let playerMixer = null;
 let playerActions = {};
 let playerLimbs = null;
+let playerReal = false;
 
 
-/* ---------- shared humanoid materials ---------- */
+/* =========================================================
+   SHARED HUMANOID GEOMETRY
+   (all humans reuse these meshes — very efficient)
+========================================================= */
 
-const skinMat   = new THREE.MeshStandardMaterial({ color: 0x8b5636, roughness: .78 });
-const shirtMat  = new THREE.MeshStandardMaterial({ color: 0x2f6fb5, roughness: .85 });
-const pantsMat  = new THREE.MeshStandardMaterial({ color: 0x24303f, roughness: .9 });
-const shoeMat   = new THREE.MeshStandardMaterial({ color: 0x15181d, roughness: .7 });
-const hairMat   = new THREE.MeshStandardMaterial({ color: 0x191310, roughness: .95 });
-
-/* ---------- shared humanoid geometries ---------- */
-
-const GEO = {
-  torso: new THREE.CapsuleGeometry(0.28, 0.42, 5, 12),
-  head: new THREE.SphereGeometry(0.19, 18, 14),
-  hair: new THREE.SphereGeometry(0.205, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.62),
-  arm: new THREE.CapsuleGeometry(0.09, 0.42, 4, 8),
-  leg: new THREE.CapsuleGeometry(0.11, 0.5, 4, 8),
-  foot: new THREE.BoxGeometry(0.19, 0.1, 0.32),
-  neck: new THREE.CylinderGeometry(0.08, 0.09, 0.1, 8)
+const HG = {
+  head:       new THREE.SphereGeometry(0.185, 20, 16),
+  ear:        new THREE.SphereGeometry(0.040, 8, 6),
+  eyeWhite:   new THREE.SphereGeometry(0.024, 8, 6),
+  pupil:      new THREE.SphereGeometry(0.012, 8, 6),
+  brow:       new THREE.BoxGeometry(0.048, 0.010, 0.016),
+  nose:       new THREE.SphereGeometry(0.022, 8, 6),
+  mouth:      new THREE.BoxGeometry(0.052, 0.008, 0.016),
+  hairBase:   new THREE.SphereGeometry(0.196, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.62),
+  neck:       new THREE.CylinderGeometry(0.058, 0.068, 0.09, 10),
+  chest:      new THREE.BoxGeometry(0.34, 0.30, 0.18),
+  belly:      new THREE.BoxGeometry(0.32, 0.14, 0.17),
+  hip:        new THREE.BoxGeometry(0.30, 0.13, 0.17),
+  belt:       new THREE.BoxGeometry(0.31, 0.035, 0.185),
+  collar:     new THREE.TorusGeometry(0.058, 0.013, 6, 10),
+  btnStrip:   new THREE.BoxGeometry(0.028, 0.28, 0.006),
+  button:     new THREE.SphereGeometry(0.008, 6, 6),
+  shoulder:   new THREE.SphereGeometry(0.075, 10, 8),
+  upperArm:   new THREE.CapsuleGeometry(0.056, 0.15, 4, 8),
+  foreArm:    new THREE.CapsuleGeometry(0.046, 0.16, 4, 8),
+  hand:       new THREE.BoxGeometry(0.070, 0.085, 0.042),
+  watch:      new THREE.BoxGeometry(0.034, 0.034, 0.018),
+  thigh:      new THREE.CapsuleGeometry(0.080, 0.19, 4, 8),
+  calf:       new THREE.CapsuleGeometry(0.064, 0.20, 4, 8),
+  shoe:       new THREE.BoxGeometry(0.092, 0.062, 0.20),
+  sole:       new THREE.BoxGeometry(0.098, 0.018, 0.208),
+  capDome:    new THREE.SphereGeometry(0.196, 18, 12, 0, Math.PI * 2, 0, Math.PI * 0.5),
+  capBrim:    new THREE.BoxGeometry(0.17, 0.016, 0.12),
+  capBtn:     new THREE.SphereGeometry(0.014, 6, 6),
+  glassRing:  new THREE.TorusGeometry(0.040, 0.007, 6, 12),
+  glassLens:  new THREE.CircleGeometry(0.040, 12),
+  glassBridge:new THREE.BoxGeometry(0.032, 0.007, 0.007),
+  glassTemple:new THREE.BoxGeometry(0.007, 0.007, 0.16),
+  chain:      new THREE.TorusGeometry(0.044, 0.005, 6, 14),
+  backpack:   new THREE.BoxGeometry(0.20, 0.26, 0.10),
+  bpStrap:    new THREE.BoxGeometry(0.034, 0.26, 0.014),
+  bpBuckle:   new THREE.BoxGeometry(0.10, 0.028, 0.020)
 };
 
 
-function fallbackHuman(opts = {}){
+/* =========================================================
+   MATERIAL CACHE — shared across all humans
+========================================================= */
 
-  const shirt = opts.shirt
-    ? new THREE.MeshStandardMaterial({ color: opts.shirt, roughness: .85 })
-    : shirtMat;
+const _matCache = new Map();
 
-  const pants = opts.pants
-    ? new THREE.MeshStandardMaterial({ color: opts.pants, roughness: .9 })
-    : pantsMat;
+function mat(color, rough = 0.85, metal = 0){
+  const key = "m|" + color + "|" + rough + "|" + metal;
+  let m = _matCache.get(key);
+  if(!m){
+    m = new THREE.MeshStandardMaterial({
+      color, roughness: rough, metalness: metal
+    });
+    _matCache.set(key, m);
+  }
+  return m;
+}
+
+
+/* =========================================================
+   HUMAN FACTORY
+========================================================= */
+
+function makeHuman(opts = {}){
+
+  const skinC  = opts.skin  ?? 0x8b5636;
+  const shirtC = opts.shirt ?? 0x2f6fb5;
+  const pantsC = opts.pants ?? 0x24303f;
+  const shoeC  = opts.shoes ?? 0x15181d;
+  const hairC  = opts.hair  ?? 0x191310;
+
+  const hairStyle  = opts.hairStyle  ?? "short";
+  const shirtStyle = opts.shirtStyle ?? "tshirt";
+  const hasShorts  = !!opts.shorts;
+  const hasCap     = !!opts.cap;
+  const hasGlasses = !!opts.glasses;
+  const hasWatch   = !!opts.watch;
+  const hasBackpack= !!opts.backpack;
+  const hasChain   = !!opts.chain;
+
+  const skinMat  = mat(skinC, 0.82, 0);
+  const shirtMat = mat(shirtC, 0.88, 0);
+  const pantsMat = mat(pantsC, 0.92, 0);
+  const shoeMat  = mat(shoeC, 0.62, 0.05);
+  const soleMat  = mat(0xf0f0ec, 0.9, 0);
+  const hairMat  = mat(hairC, 0.96, 0);
+  const darkMat  = mat(0x0a0a0a, 0.6, 0.1);
+  const eyeWMat  = mat(0xf8f8f5, 0.3, 0);
+  const pupilMat = mat(0x0a0a0a, 0.35, 0);
+  const beltMat  = mat(0x1a1a1a, 0.7, 0.05);
 
   const g = new THREE.Group();
 
-  /* torso */
-  const torso = new THREE.Mesh(GEO.torso, shirt);
-  torso.position.y = 1.22;
-  torso.castShadow = true;
-  g.add(torso);
-
-  /* hips */
-  const hips = new THREE.Mesh(
-    new THREE.CapsuleGeometry(0.24, 0.1, 4, 10),
-    pants
-  );
-  hips.position.y = 0.95;
-  hips.castShadow = true;
-  g.add(hips);
-
-  /* neck */
-  const neck = new THREE.Mesh(GEO.neck, skinMat);
-  neck.position.y = 1.52;
-  g.add(neck);
-
-  /* head */
-  const head = new THREE.Mesh(GEO.head, skinMat);
-  head.position.y = 1.72;
-  head.castShadow = true;
-  g.add(head);
-
-  /* hair */
-  const hair = new THREE.Mesh(GEO.hair, hairMat);
-  hair.position.y = 1.735;
-  hair.castShadow = true;
-  g.add(hair);
-
-  /* arms */
-  const arms = {};
-
-  [-1, 1].forEach(side => {
-
-    const pivot = new THREE.Group();
-    pivot.position.set(side * 0.33, 1.42, 0);
-    g.add(pivot);
-
-    const arm = new THREE.Mesh(GEO.arm, shirt);
-    arm.position.y = -0.28;
-    arm.castShadow = true;
-    pivot.add(arm);
-
-    const hand = new THREE.Mesh(
-      new THREE.SphereGeometry(0.085, 10, 8),
-      skinMat
-    );
-    hand.position.y = -0.56;
-    pivot.add(hand);
-
-    pivot.rotation.z = side * 0.08;
-
-    arms[side < 0 ? "left" : "right"] = pivot;
-
-  });
-
-  /* legs */
+  /* ---------------- LEGS ---------------- */
   const legs = {};
 
   [-1, 1].forEach(side => {
 
     const pivot = new THREE.Group();
-    pivot.position.set(side * 0.14, 0.92, 0);
+    pivot.position.set(side * 0.09, 0.90, 0);
     g.add(pivot);
 
-    const leg = new THREE.Mesh(GEO.leg, pants);
-    leg.position.y = -0.3;
-    leg.castShadow = true;
-    pivot.add(leg);
+    /* thigh (pants or skin if shorts) */
+    const thigh = new THREE.Mesh(HG.thigh, pantsMat);
+    thigh.position.y = -0.18;
+    thigh.castShadow = true;
+    pivot.add(thigh);
 
-    const foot = new THREE.Mesh(GEO.foot, shoeMat);
-    foot.position.set(0, -0.6, 0.06);
-    foot.castShadow = true;
-    pivot.add(foot);
+    /* calf */
+    const calfMat = hasShorts ? skinMat : pantsMat;
+    const calf = new THREE.Mesh(HG.calf, calfMat);
+    calf.position.y = -0.52;
+    calf.castShadow = true;
+    pivot.add(calf);
+
+    /* short white sock on bare legs */
+    if(hasShorts){
+      const sock = new THREE.Mesh(HG.calf, soleMat);
+      sock.scale.set(1.02, 0.28, 1.02);
+      sock.position.y = -0.74;
+      pivot.add(sock);
+    }
+
+    /* shoe */
+    const shoe = new THREE.Mesh(HG.shoe, shoeMat);
+    shoe.position.set(0, -0.858, 0.035);
+    shoe.castShadow = true;
+    pivot.add(shoe);
+
+    /* sole */
+    const sole = new THREE.Mesh(HG.sole, soleMat);
+    sole.position.set(0, -0.891, 0.035);
+    sole.castShadow = true;
+    pivot.add(sole);
 
     legs[side < 0 ? "left" : "right"] = pivot;
 
   });
+
+  /* ---------------- PELVIS ---------------- */
+  const hip = new THREE.Mesh(HG.hip, pantsMat);
+  hip.position.y = 0.96;
+  hip.castShadow = true;
+  g.add(hip);
+
+  const belt = new THREE.Mesh(HG.belt, beltMat);
+  belt.position.y = 0.902;
+  g.add(belt);
+
+  /* ---------------- TORSO ---------------- */
+  const belly = new THREE.Mesh(HG.belly, shirtMat);
+  belly.position.y = 1.10;
+  belly.castShadow = true;
+  g.add(belly);
+
+  const chest = new THREE.Mesh(HG.chest, shirtMat);
+  chest.position.y = 1.33;
+  chest.castShadow = true;
+  g.add(chest);
+
+  /* shirt style details */
+  if(shirtStyle === "polo" || shirtStyle === "button"){
+
+    const collar = new THREE.Mesh(HG.collar, shirtMat);
+    collar.position.set(0, 1.48, 0.01);
+    collar.rotation.x = Math.PI / 2;
+    collar.scale.set(1, 0.55, 1);
+    g.add(collar);
+
+    const strip = new THREE.Mesh(HG.btnStrip, darkMat);
+    strip.position.set(0, 1.28, 0.092);
+    g.add(strip);
+
+    if(shirtStyle === "button"){
+      for(let i = 0; i < 3; i++){
+        const btn = new THREE.Mesh(HG.button, darkMat);
+        btn.position.set(0, 1.38 - i * 0.09, 0.096);
+        g.add(btn);
+      }
+    }
+
+  }
+
+  /* gold chain / pendant */
+  if(hasChain){
+    const chain = new THREE.Mesh(
+      HG.chain,
+      new THREE.MeshStandardMaterial({
+        color: 0xffd24a, metalness: 0.95, roughness: 0.18
+      })
+    );
+    chain.position.set(0, 1.47, 0.075);
+    chain.rotation.x = Math.PI / 2;
+    chain.scale.set(1, 0.65, 1);
+    g.add(chain);
+  }
+
+  /* ---------------- NECK ---------------- */
+  const neck = new THREE.Mesh(HG.neck, skinMat);
+  neck.position.y = 1.53;
+  neck.castShadow = true;
+  g.add(neck);
+
+  /* ---------------- HEAD ---------------- */
+  const headGroup = new THREE.Group();
+  headGroup.position.y = 1.72;
+  g.add(headGroup);
+
+  const head = new THREE.Mesh(HG.head, skinMat);
+  head.scale.set(0.98, 1.06, 1.0);
+  head.castShadow = true;
+  headGroup.add(head);
+
+  /* ears */
+  const earL = new THREE.Mesh(HG.ear, skinMat);
+  earL.position.set(-0.183, -0.01, 0);
+  headGroup.add(earL);
+
+  const earR = new THREE.Mesh(HG.ear, skinMat);
+  earR.position.set(0.183, -0.01, 0);
+  headGroup.add(earR);
+
+  /* eyes */
+  const eyeL = new THREE.Mesh(HG.eyeWhite, eyeWMat);
+  eyeL.position.set(-0.062, 0.025, 0.152);
+  headGroup.add(eyeL);
+
+  const eyeR = new THREE.Mesh(HG.eyeWhite, eyeWMat);
+  eyeR.position.set(0.062, 0.025, 0.152);
+  headGroup.add(eyeR);
+
+  const pupilL = new THREE.Mesh(HG.pupil, pupilMat);
+  pupilL.position.set(-0.062, 0.025, 0.168);
+  headGroup.add(pupilL);
+
+  const pupilR = new THREE.Mesh(HG.pupil, pupilMat);
+  pupilR.position.set(0.062, 0.025, 0.168);
+  headGroup.add(pupilR);
+
+  /* brows */
+  const browL = new THREE.Mesh(HG.brow, hairMat);
+  browL.position.set(-0.062, 0.077, 0.155);
+  headGroup.add(browL);
+
+  const browR = new THREE.Mesh(HG.brow, hairMat);
+  browR.position.set(0.062, 0.077, 0.155);
+  headGroup.add(browR);
+
+  /* nose */
+  const nose = new THREE.Mesh(HG.nose, skinMat);
+  nose.position.set(0, -0.018, 0.168);
+  nose.scale.set(0.85, 1.05, 1.15);
+  headGroup.add(nose);
+
+  /* mouth */
+  const mouth = new THREE.Mesh(HG.mouth, darkMat);
+  mouth.position.set(0, -0.075, 0.163);
+  headGroup.add(mouth);
+
+  /* hair (not when wearing a cap) */
+  if(hairStyle !== "bald" && !hasCap){
+
+    const hair = new THREE.Mesh(HG.hairBase, hairMat);
+    hair.position.y = 0.006;
+    hair.castShadow = true;
+
+    if(hairStyle === "afro"){
+      hair.scale.set(1.14, 1.32, 1.14);
+      hair.position.y = 0.02;
+    }else if(hairStyle === "fade"){
+      hair.scale.set(0.98, 0.94, 0.98);
+    }
+
+    headGroup.add(hair);
+
+  }
+
+  /* cap */
+  if(hasCap){
+
+    const capMat = mat(opts.capColor ?? 0xd04545, 0.82, 0);
+
+    const cap = new THREE.Mesh(HG.capDome, capMat);
+    cap.position.y = 0.03;
+    cap.scale.set(1.02, 0.88, 1.02);
+    cap.castShadow = true;
+    headGroup.add(cap);
+
+    const brim = new THREE.Mesh(HG.capBrim, capMat);
+    brim.position.set(0, 0.038, 0.19);
+    brim.castShadow = true;
+    headGroup.add(brim);
+
+    const btn = new THREE.Mesh(HG.capBtn, capMat);
+    btn.position.y = 0.205;
+    headGroup.add(btn);
+
+  }
+
+  /* glasses */
+  if(hasGlasses){
+
+    const frameMat = mat(0x111111, 0.35, 0.55);
+    const lensMat = new THREE.MeshStandardMaterial({
+      color: 0x223344, transparent: true, opacity: 0.55,
+      metalness: 0.5, roughness: 0.1
+    });
+
+    const fL = new THREE.Mesh(HG.glassRing, frameMat);
+    fL.position.set(-0.062, 0.025, 0.172);
+    headGroup.add(fL);
+
+    const fR = new THREE.Mesh(HG.glassRing, frameMat);
+    fR.position.set(0.062, 0.025, 0.172);
+    headGroup.add(fR);
+
+    const lL = new THREE.Mesh(HG.glassLens, lensMat);
+    lL.position.set(-0.062, 0.025, 0.174);
+    headGroup.add(lL);
+
+    const lR = new THREE.Mesh(HG.glassLens, lensMat);
+    lR.position.set(0.062, 0.025, 0.174);
+    headGroup.add(lR);
+
+    const bridge = new THREE.Mesh(HG.glassBridge, frameMat);
+    bridge.position.set(0, 0.032, 0.172);
+    headGroup.add(bridge);
+
+    const tL = new THREE.Mesh(HG.glassTemple, frameMat);
+    tL.position.set(-0.155, 0.032, 0.08);
+    headGroup.add(tL);
+
+    const tR = new THREE.Mesh(HG.glassTemple, frameMat);
+    tR.position.set(0.155, 0.032, 0.08);
+    headGroup.add(tR);
+
+  }
+
+  /* ---------------- ARMS ---------------- */
+  const arms = {};
+
+  [-1, 1].forEach(side => {
+
+    const pivot = new THREE.Group();
+    pivot.position.set(side * 0.21, 1.42, 0);
+    g.add(pivot);
+
+    /* shoulder cap */
+    const shoulder = new THREE.Mesh(HG.shoulder, shirtMat);
+    shoulder.castShadow = true;
+    pivot.add(shoulder);
+
+    /* upper arm (sleeve) */
+    const upperArm = new THREE.Mesh(HG.upperArm, shirtMat);
+    upperArm.position.y = -0.13;
+    upperArm.castShadow = true;
+    pivot.add(upperArm);
+
+    /* forearm (skin for short sleeves, sleeve for long) */
+    const foreMat = shirtStyle === "longsleeve" ? shirtMat : skinMat;
+    const foreArm = new THREE.Mesh(HG.foreArm, foreMat);
+    foreArm.position.y = -0.37;
+    foreArm.castShadow = true;
+    pivot.add(foreArm);
+
+    /* hand */
+    const hand = new THREE.Mesh(HG.hand, skinMat);
+    hand.position.y = -0.53;
+    hand.castShadow = true;
+    pivot.add(hand);
+
+    /* watch on right wrist */
+    if(hasWatch && side === 1){
+      const watch = new THREE.Mesh(
+        HG.watch,
+        new THREE.MeshStandardMaterial({
+          color: 0xd0d0d0, metalness: 0.9, roughness: 0.2
+        })
+      );
+      watch.position.set(0, -0.45, 0);
+      pivot.add(watch);
+    }
+
+    /* natural arm pose */
+    pivot.rotation.z = side * 0.09;
+
+    arms[side < 0 ? "left" : "right"] = pivot;
+
+  });
+
+  /* ---------------- BACKPACK ---------------- */
+  if(hasBackpack){
+
+    const bpMat = mat(opts.backpackColor ?? 0x333a44, 0.88, 0);
+
+    const pack = new THREE.Mesh(HG.backpack, bpMat);
+    pack.position.set(0, 1.22, -0.17);
+    pack.castShadow = true;
+    g.add(pack);
+
+    const sL = new THREE.Mesh(HG.bpStrap, bpMat);
+    sL.position.set(-0.10, 1.32, -0.088);
+    g.add(sL);
+
+    const sR = new THREE.Mesh(HG.bpStrap, bpMat);
+    sR.position.set(0.10, 1.32, -0.088);
+    g.add(sR);
+
+    const buckle = new THREE.Mesh(HG.bpBuckle, darkMat);
+    buckle.position.set(0, 1.18, -0.115);
+    g.add(buckle);
+
+  }
 
   g.userData.limbs = { arms, legs };
 
@@ -1992,38 +1825,47 @@ function fallbackHuman(opts = {}){
 }
 
 
-playerVisual = fallbackHuman();
-playerLimbs = playerVisual.userData.limbs;
+/* =========================================================
+   PLAYER LOOK & INITIAL MODEL
+========================================================= */
 
+const PLAYER_LOOK = {
+  skin: 0x7a4a2a,
+  shirt: 0x2f6fb5,
+  pants: 0x24303f,
+  shoes: 0xf5f5f5,
+  hair: 0x0a0806,
+  hairStyle: "fade",
+  shirtStyle: "polo",
+  shorts: false,
+  cap: false,
+  glasses: false,
+  watch: true,
+  backpack: false,
+  chain: true
+};
+
+playerVisual = makeHuman(PLAYER_LOOK);
+playerLimbs = playerVisual.userData.limbs;
 player.add(playerVisual);
 
 
 /* =========================================================
-   REAL PLAYER MODEL
+   REAL PLAYER MODEL (GLTF)
 ========================================================= */
 
 const loader = new GLTFLoader();
 
 async function loadPlayer(){
-
   try{
-
     const gltf = await Promise.race([
-
-      loader.loadAsync(
-        "https://threejs.org/examples/models/gltf/Soldier.glb"
-      ),
-
-      new Promise((_, rej) =>
-        setTimeout(() => rej(new Error("timeout")), 8000)
-      )
-
+      loader.loadAsync("https://threejs.org/examples/models/gltf/Soldier.glb"),
+      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 8000))
     ]);
 
     player.remove(playerVisual);
 
     playerVisual = SkeletonUtils.clone(gltf.scene);
-
     playerVisual.scale.setScalar(1.15);
 
     playerVisual.traverse(o => {
@@ -2036,7 +1878,9 @@ async function loadPlayer(){
 
     player.add(playerVisual);
 
+    /* disable procedural animation, use mixer instead */
     playerLimbs = null;
+    playerReal = true;
 
     playerMixer = new THREE.AnimationMixer(playerVisual);
 
@@ -2047,34 +1891,21 @@ async function loadPlayer(){
     playAnim("Idle");
 
   }catch(e){
-
     console.warn("Using fallback character model.");
-
   }
-
 }
 
-
 function playAnim(name){
-
   if(!playerMixer) return;
-
   const keys = Object.keys(playerActions);
-
   const key =
     keys.find(k => k.toLowerCase() === name.toLowerCase()) ||
     keys.find(k => k.toLowerCase().includes(name.toLowerCase()));
-
   if(!key) return;
-
   if(playerMixer._current === key) return;
-
   playerMixer._current = key;
-
   Object.values(playerActions).forEach(a => a.fadeOut(0.18));
-
   playerActions[key].reset().fadeIn(0.18).play();
-
 }
 
 
@@ -2090,7 +1921,6 @@ const carSpecs = [
   ["Mercedes C-Class",  0x141414, 4.1, 7.9],
   ["Range Rover Sport", 0x6b2020, 4.5, 8.3]
 ];
-
 
 const tireGeo = new THREE.CylinderGeometry(0.62, 0.62, 0.36, 18);
 const rimGeo  = new THREE.CylinderGeometry(0.34, 0.34, 0.38, 12);
@@ -2108,42 +1938,22 @@ const tailMat = new THREE.MeshStandardMaterial({
   color: 0x8a1414, emissive: 0xa01010, emissiveIntensity: .7, roughness: .35
 });
 
-
 function fallbackCar(name, color, w = 4, l = 8){
-
   const g = new THREE.Group();
 
   const bodyMat = new THREE.MeshStandardMaterial({
     color, metalness: .55, roughness: .34
   });
 
-  /* lower body */
-  const lower = box(w, 0.62, l, bodyMat, 0, 0.72, 0, g);
-
-  /* skirt */
+  box(w, 0.62, l, bodyMat, 0, 0.72, 0, g);
   box(w * 0.94, 0.22, l * 0.96, mats.dark, 0, 0.45, 0, g);
-
-  /* cabin */
-  const cabin = box(
-    w * 0.86, 0.62, l * 0.46,
-    glassMat,
-    0, 1.32, -l * 0.03, g
-  );
-
-  /* roof */
+  box(w * 0.86, 0.62, l * 0.46, glassMat, 0, 1.32, -l * 0.03, g);
   box(w * 0.78, 0.14, l * 0.42, bodyMat, 0, 1.66, -l * 0.03, g);
-
-  /* hood */
   box(w * 0.92, 0.16, l * 0.28, bodyMat, 0, 1.06, l * 0.31, g);
-
-  /* trunk */
   box(w * 0.92, 0.16, l * 0.22, bodyMat, 0, 1.06, -l * 0.35, g);
 
-  /* wheels */
-  for(const x of [-w / 2 - 0.02, w / 2 + 0.02]){
-
+  for(const x of [-w/2 - 0.02, w/2 + 0.02]){
     for(const z of [-l * 0.31, l * 0.31]){
-
       const tire = new THREE.Mesh(tireGeo, tireMat);
       tire.rotation.z = Math.PI / 2;
       tire.position.set(x, 0.62, z);
@@ -2154,101 +1964,103 @@ function fallbackCar(name, color, w = 4, l = 8){
       rim.rotation.z = Math.PI / 2;
       rim.position.set(x + (x > 0 ? 0.02 : -0.02), 0.62, z);
       g.add(rim);
-
     }
-
   }
 
-  /* head lights */
   for(const x of [-w * 0.32, w * 0.32]){
-    box(0.55, 0.2, 0.1, headMat, x, 0.88, l / 2 + 0.03, g);
+    box(0.55, 0.2, 0.1, headMat, x, 0.88, l/2 + 0.03, g);
   }
-
-  /* tail lights */
   for(const x of [-w * 0.32, w * 0.32]){
-    box(0.5, 0.18, 0.1, tailMat, x, 0.88, -l / 2 - 0.03, g);
+    box(0.5, 0.18, 0.1, tailMat, x, 0.88, -l/2 - 0.03, g);
   }
 
   g.userData.carName = name;
   g.userData.length = l;
-
   return g;
-
 }
-
 
 function addTraffic(){
-
   carSpecs.forEach((s, i) => {
-
     const car = fallbackCar(...s);
-
     car.position.set(-170 + i * 55, 0, 13);
     car.rotation.y = Math.PI / 2;
-
     car.userData.speed = 0.05 + i * 0.008;
     car.userData.traffic = true;
-
     world.add(car);
     vehicles.push(car);
-
   });
-
 }
-
 addTraffic();
 
-
 async function loadRealCar(){
-
   try{
-
     const gltf = await Promise.race([
-
-      loader.loadAsync(
-        "https://threejs.org/examples/models/gltf/ferrari.glb"
-      ),
-
-      new Promise((_, rej) =>
-        setTimeout(() => rej(new Error("timeout")), 8000)
-      )
-
+      loader.loadAsync("https://threejs.org/examples/models/gltf/ferrari.glb"),
+      new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 8000))
     ]);
 
     const car = SkeletonUtils.clone(gltf.scene);
-
     car.scale.setScalar(0.78);
-
-    car.traverse(o => {
-      if(o.isMesh){
-        o.castShadow = true;
-        o.receiveShadow = true;
-      }
-    });
-
+    car.traverse(o => { if(o.isMesh){ o.castShadow = true; o.receiveShadow = true; } });
     car.userData.carName = "Ferrari";
     car.userData.length = 7;
-
     car.position.set(18, 0, 9);
     car.rotation.y = Math.PI;
-
     world.add(car);
     vehicles.push(car);
-
     return car;
-
   }catch(e){
-
     console.warn("Using fallback vehicles.");
-
     return null;
-
   }
-
 }
 
-
 let playerCar = null;
+
+
+/* =========================================================
+   NPC PALETTE + RANDOMISER
+========================================================= */
+
+const NPC_PALETTE = {
+  skins:  [0x5a3a24, 0x6b452c, 0x7d5234, 0x8b5636, 0x9c6640, 0xad7a54, 0x4a2e1a],
+  shirts: [0xd05a4a, 0x4a8ad0, 0xd0a54a, 0x5ac07a, 0x9a5ad0, 0xd0d0d0,
+           0x2c2c2c, 0xe0e0e0, 0x3a6b4a, 0x8b4a6b, 0x4a6bd0, 0xffd166,
+           0x6ac0c0, 0xd07a4a, 0x3a3a3a, 0xf0e8c0],
+  pants:  [0x24303f, 0x3a3a3a, 0x4a3a2a, 0x2a3a4a, 0x5a5a5a, 0x1a1a1a, 0x3a2a3a],
+  shoes:  [0x15181d, 0xf5f5f5, 0x4a3020, 0x8b1a1a, 0x2a2a2a, 0xe8e8e8],
+  hairs:  [0x191310, 0x2a1a10, 0x0a0806, 0x3a2a1a, 0x1a1008],
+  caps:   [0xd04545, 0x2a5aa0, 0x1a1a1a, 0x4a8a3a, 0xd0a045, 0xf0f0f0, 0x3a1a5a],
+  bps:    [0x333a44, 0x4a2a1a, 0x2a4a2a, 0x6a2a3a, 0x1a1a1a, 0x2a3a5a]
+};
+
+const pickRandom = arr => arr[(Math.random() * arr.length) | 0];
+
+function randomNPCOpts(){
+  return {
+    skin: pickRandom(NPC_PALETTE.skins),
+    shirt: pickRandom(NPC_PALETTE.shirts),
+    pants: pickRandom(NPC_PALETTE.pants),
+    shoes: pickRandom(NPC_PALETTE.shoes),
+    hair: pickRandom(NPC_PALETTE.hairs),
+    hairStyle: Math.random() < 0.12 ? "bald"
+             : Math.random() < 0.22 ? "afro"
+             : Math.random() < 0.35 ? "fade"
+             : "short",
+    shirtStyle: Math.random() < 0.20 ? "polo"
+              : Math.random() < 0.12 ? "longsleeve"
+              : Math.random() < 0.10 ? "button"
+              : "tshirt",
+    shorts: Math.random() < 0.30,
+    cap: Math.random() < 0.38,
+    capColor: pickRandom(NPC_PALETTE.caps),
+    glasses: Math.random() < 0.18,
+    watch: Math.random() < 0.25,
+    backpack: Math.random() < 0.22,
+    backpackColor: pickRandom(NPC_PALETTE.bps),
+    chain: Math.random() < 0.15
+  };
+}
 
 
 /* =========================================================
@@ -2257,15 +2069,8 @@ let playerCar = null;
 
 const npcs = [];
 
-const npcShirts = [0xd05a4a, 0x4a8ad0, 0xd0a54a, 0x5ac07a, 0x9a5ad0, 0xd0d0d0];
-
 function makeNPC(){
-
-  const g = fallbackHuman({
-    shirt: npcShirts[(Math.random() * npcShirts.length) | 0],
-    pants: Math.random() < 0.5 ? 0x24303f : 0x3a3a3a
-  });
-
+  const g = makeHuman(randomNPCOpts());
   g.scale.setScalar(0.92);
 
   g.position.set(
@@ -2285,10 +2090,9 @@ function makeNPC(){
 
   world.add(g);
   npcs.push(g);
-
 }
 
-for(let i = 0; i < 20; i++){
+for(let i = 0; i < 16; i++){
   makeNPC();
 }
 
@@ -2298,49 +2102,22 @@ for(let i = 0; i < 20; i++){
 ========================================================= */
 
 function nearestBuilding(){
-
-  let best = null;
-  let bestDistance = Infinity;
-
+  let best = null, bestDistance = Infinity;
   for(const b of buildings){
-
-    const d = Math.hypot(
-      player.position.x - b.door[0],
-      player.position.z - b.door[1]
-    );
-
-    if(d < bestDistance){
-      bestDistance = d;
-      best = b;
-    }
-
+    const d = Math.hypot(player.position.x - b.door[0], player.position.z - b.door[1]);
+    if(d < bestDistance){ bestDistance = d; best = b; }
   }
-
   return bestDistance < 5.0 ? best : null;
-
 }
 
-
 function nearestVehicle(){
-
-  let best = null;
-  let bestDistance = Infinity;
-
+  let best = null, bestDistance = Infinity;
   for(const v of vehicles){
-
     if(v.userData.driver) continue;
-
     const d = v.position.distanceTo(player.position);
-
-    if(d < bestDistance){
-      bestDistance = d;
-      best = v;
-    }
-
+    if(d < bestDistance){ bestDistance = d; best = v; }
   }
-
   return bestDistance < 5.5 ? best : null;
-
 }
 
 
@@ -2348,75 +2125,47 @@ function nearestVehicle(){
    INTERIORS
 ========================================================= */
 
-const wallMat = new THREE.MeshStandardMaterial({
-  color: 0xd8cbb6, roughness: .92
-});
-
-const floorMat = new THREE.MeshStandardMaterial({
-  map: woodTex, roughness: .82
-});
-
-const ceilMat = new THREE.MeshStandardMaterial({
-  color: 0xe8e4dc, roughness: 1
-});
-
-let interiorLights = [];
-
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xd8cbb6, roughness: .92 });
+const floorMat = new THREE.MeshStandardMaterial({ map: woodTex, roughness: .82 });
+const ceilMat = new THREE.MeshStandardMaterial({ color: 0xe8e4dc, roughness: 1 });
 
 function createInterior(b){
 
   interior.clear();
-  interiorLights = [];
-
   interior.visible = true;
   world.visible = false;
 
-  /* floor */
   plane(30, 23, floorMat, 0, 0, 0, interior);
 
-  /* ceiling */
-  const ceil = new THREE.Mesh(
-    new THREE.PlaneGeometry(30, 23),
-    ceilMat
-  );
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(30, 23), ceilMat);
   ceil.rotation.x = Math.PI / 2;
   ceil.position.y = 4.2;
   interior.add(ceil);
 
-  /* walls */
   box(30, 4.2, 0.4, wallMat, 0, 2.1, -11.5, interior);
   box(30, 4.2, 0.4, wallMat, 0, 2.1,  11.5, interior);
   box(0.4, 4.2, 23, wallMat, -15, 2.1, 0, interior);
   box(0.4, 4.2, 23, wallMat,  15, 2.1, 0, interior);
 
-  /* skirting */
   const skirtMat = new THREE.MeshStandardMaterial({ color: 0x7a6a56, roughness: .9 });
   box(30, 0.25, 0.5, skirtMat, 0, 0.12, -11.4, interior);
   box(30, 0.25, 0.5, skirtMat, 0, 0.12,  11.4, interior);
   box(0.5, 0.25, 23, skirtMat, -14.9, 0.12, 0, interior);
   box(0.5, 0.25, 23, skirtMat,  14.9, 0.12, 0, interior);
 
-  /* sign */
   const sign = textSprite(b.name, "#ffe16b");
   sign.position.set(0, 5.6, -11.2);
   interior.add(sign);
 
-  /* kitchen counter */
   box(4.2, 0.9, 1.1, mats.wood, -9, 0.45, -8, interior);
   box(4.4, 0.1, 1.2, mats.dark, -9, 0.95, -8, interior);
-
-  /* cabinets */
   box(3.4, 1.1, 1.0, mats.white, 9, 0.55, -8, interior);
-
-  /* sofa */
   box(4.0, 0.55, 1.3, mats.green, -7, 0.45, 4, interior);
   box(4.0, 0.75, 0.3, mats.green, -7, 0.95, 3.45, interior);
 
-  /* table */
   cyl(1.2, 0.12, mats.wood, 0, 0.72, 6, interior, 20);
   cyl(0.16, 0.72, mats.darkWood, 0, 0.36, 6, interior, 10);
 
-  /* rug */
   const rug = new THREE.Mesh(
     new THREE.CircleGeometry(3.4, 28),
     new THREE.MeshStandardMaterial({ color: 0x8a5a4a, roughness: .95 })
@@ -2426,15 +2175,12 @@ function createInterior(b){
   rug.receiveShadow = true;
   interior.add(rug);
 
-  /* red exit door */
   box(3.0, 2.5, 0.22, mats.red, 0, 1.25, 11.15, interior);
 
   const exitGlow = new THREE.Mesh(
     new THREE.BoxGeometry(3.4, 0.12, 0.3),
     new THREE.MeshStandardMaterial({
-      color: 0xff5a5a,
-      emissive: 0xff2a2a,
-      emissiveIntensity: 1.1
+      color: 0xff5a5a, emissive: 0xff2a2a, emissiveIntensity: 1.1
     })
   );
   exitGlow.position.set(0, 2.62, 11.1);
@@ -2444,82 +2190,53 @@ function createInterior(b){
   exitLabel.position.set(0, 3.5, 11.0);
   interior.add(exitLabel);
 
-  /* interior lighting */
   const l1 = new THREE.PointLight(0xffd9a0, 1.6, 26, 2);
   l1.position.set(0, 3.6, 0);
   interior.add(l1);
-  interiorLights.push(l1);
 
   const l2 = new THREE.PointLight(0xffc98a, 0.9, 18, 2);
   l2.position.set(-7, 2.8, -6);
   interior.add(l2);
-  interiorLights.push(l2);
 
   const l3 = new THREE.PointLight(0xffc98a, 0.9, 18, 2);
   l3.position.set(7, 2.8, 4);
   interior.add(l3);
-  interiorLights.push(l3);
 
-  /* player spawn */
   player.position.set(0, 0, 8.4);
   player.rotation.y = Math.PI;
   player.visible = true;
 
   renderInteriorFurniture();
-
 }
 
-
 function enterBuilding(b){
-
   if(!b || state.inside) return;
-
   state.lastOutside = {
     x: player.position.x,
     z: player.position.z,
     rot: player.rotation.y
   };
-
   state.inside = true;
   state.building = b.id;
   state.location = b.name;
-
   createInterior(b);
-
   setHint("You are inside " + b.name + ". Walk to the red EXIT door.");
-
   saveGame();
-
 }
 
-
 function exitBuilding(){
-
   if(!state.inside) return;
-
   state.inside = false;
   state.building = null;
-
   interior.clear();
   interior.visible = false;
   world.visible = true;
-
   player.visible = true;
-
-  player.position.set(
-    state.lastOutside.x,
-    0,
-    state.lastOutside.z
-  );
-
+  player.position.set(state.lastOutside.x, 0, state.lastOutside.z);
   player.rotation.y = state.lastOutside.rot || 0;
-
   state.location = "Outside";
-
   setHint("Back outside. Explore Ibadan.");
-
   saveGame();
-
 }
 
 
@@ -2528,9 +2245,7 @@ function exitBuilding(){
 ========================================================= */
 
 function renderInteriorFurniture(){
-
   if(!state.inside) return;
-
   const old = interior.getObjectByName("savedFurniture");
   if(old) interior.remove(old);
 
@@ -2538,80 +2253,57 @@ function renderInteriorFurniture(){
   group.name = "savedFurniture";
 
   for(const f of state.furniture){
-
     const obj = new THREE.Group();
-
     obj.position.set(f.x, 0, f.z);
     obj.rotation.y = f.rot || 0;
 
     if(f.type === "plant"){
-
       cyl(0.34, 0.9, mats.wood, 0, 0.45, 0, obj);
-      const crown = new THREE.Mesh(
-        new THREE.IcosahedronGeometry(1.05, 1),
-        mats.leaf
-      );
+      const crown = new THREE.Mesh(new THREE.IcosahedronGeometry(1.05, 1), mats.leaf);
       crown.position.y = 1.7;
       crown.castShadow = true;
       obj.add(crown);
-
     }else if(f.type === "bed"){
-
       box(4, 0.5, 2.3, mats.white, 0, 0.5, 0, obj);
       box(4, 1.1, 0.25, mats.wood, 0, 0.9, -1, obj);
       box(1.5, 0.25, 1.1, mats.white, -1.1, 0.85, 0.4, obj);
-
     }else if(f.type === "sofa"){
-
       box(3.8, 0.7, 1.2, mats.green, 0, 0.55, 0, obj);
       box(3.8, 0.6, 0.28, mats.green, 0, 1.05, -0.46, obj);
       box(0.28, 0.6, 1.2, mats.green, -1.76, 1.0, 0, obj);
       box(0.28, 0.6, 1.2, mats.green, 1.76, 1.0, 0, obj);
-
     }else if(f.type === "tv"){
-
       box(3, 0.1, 1.5, mats.darkWood, 0, 0.55, 0, obj);
       box(0.2, 0.5, 0.2, mats.dark, -1.2, 0.28, 0, obj);
       box(0.2, 0.5, 0.2, mats.dark, 1.2, 0.28, 0, obj);
       box(2.6, 1.45, 0.12, mats.dark, 0, 1.6, 0, obj);
       box(2.45, 1.3, 0.05, mats.glass, 0, 1.6, 0.08, obj);
-
     }else if(f.type === "fridge"){
-
       box(1.5, 3, 1.3, mats.white, 0, 1.5, 0, obj);
       box(0.1, 1.4, 0.06, mats.metal, 0.6, 2.0, 0.68, obj);
-
     }else if(f.type === "desk"){
-
       box(3, 0.16, 1.4, mats.wood, 0, 1.0, 0, obj);
       box(0.16, 1, 0.16, mats.darkWood, -1.25, 0.5, 0.5, obj);
       box(0.16, 1, 0.16, mats.darkWood, 1.25, 0.5, 0.5, obj);
       box(0.16, 1, 0.16, mats.darkWood, -1.25, 0.5, -0.5, obj);
       box(0.16, 1, 0.16, mats.darkWood, 1.25, 0.5, -0.5, obj);
       box(1.4, 0.9, 0.08, mats.dark, 0, 1.55, -0.4, obj);
-
     }else if(f.type === "wardrobe"){
-
       box(2.3, 3, 1, mats.wood, 0, 1.5, 0, obj);
       box(0.06, 0.5, 0.06, mats.metal, -0.15, 1.6, 0.52, obj);
       box(0.06, 0.5, 0.06, mats.metal, 0.15, 1.6, 0.52, obj);
-
     }else{
-
       box(2.5, 0.14, 1.5, mats.wood, 0, 0.75, 0, obj);
       box(0.14, 0.75, 0.14, mats.darkWood, -1.05, 0.37, -0.6, obj);
       box(0.14, 0.75, 0.14, mats.darkWood, 1.05, 0.37, -0.6, obj);
       box(0.14, 0.75, 0.14, mats.darkWood, -1.05, 0.37, 0.6, obj);
       box(0.14, 0.75, 0.14, mats.darkWood, 1.05, 0.37, 0.6, obj);
-
     }
 
     group.add(obj);
-
   }
 
   interior.add(group);
-
 }
 
 
@@ -2620,61 +2312,37 @@ function renderInteriorFurniture(){
 ========================================================= */
 
 const joy = { active:false, x:0, y:0 };
-
 const joyEl = $("joy");
 const knob = $("knob");
-
 let joyPointer = null;
 
-
 function updateJoy(clientX, clientY){
-
   const r = joyEl.getBoundingClientRect();
-
   const cx = r.left + r.width / 2;
   const cy = r.top + r.height / 2;
-
   let dx = clientX - cx;
   let dy = clientY - cy;
-
   const max = r.width * 0.33;
   const len = Math.hypot(dx, dy);
-
-  if(len > max){
-    dx = dx / len * max;
-    dy = dy / len * max;
-  }
-
+  if(len > max){ dx = dx / len * max; dy = dy / len * max; }
   joy.x = dx / max;
   joy.y = -dy / max;
-
-  knob.style.transform =
-    `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-
+  knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
 }
 
-
 function joyEnd(){
-
   joy.active = false;
   joy.x = 0;
   joy.y = 0;
   joyPointer = null;
-
   knob.style.transform = "translate(-50%,-50%)";
-
 }
 
-
 joyEl.addEventListener("pointerdown", e => {
-
   joy.active = true;
   joyPointer = e.pointerId;
-
   joyEl.setPointerCapture(e.pointerId);
-
   updateJoy(e.clientX, e.clientY);
-
 });
 
 joyEl.addEventListener("pointermove", e => {
@@ -2692,7 +2360,6 @@ joyEl.addEventListener("pointercancel", joyEnd);
 ========================================================= */
 
 let running = false;
-
 const runBtn = $("runBtn");
 
 runBtn.addEventListener("pointerdown", e => {
@@ -2701,7 +2368,7 @@ runBtn.addEventListener("pointerdown", e => {
   runBtn.classList.add("active");
 });
 
-["pointerup", "pointercancel", "pointerleave"].forEach(ev => {
+["pointerup","pointercancel","pointerleave"].forEach(ev => {
   runBtn.addEventListener(ev, () => {
     running = false;
     runBtn.classList.remove("active");
@@ -2715,43 +2382,25 @@ runBtn.addEventListener("pointerdown", e => {
 
 let cameraYaw = 0;
 let cameraMode = state.cameraMode || 0;
-
 let swipeStart = null;
-
 const gameCanvas = $("game");
 
 gameCanvas.addEventListener("pointerdown", e => {
-
   if(e.pointerType === "mouse" && e.button !== 0) return;
-
-  swipeStart = { x: e.clientX, y: e.clientY, id: e.pointerId };
-
+  swipeStart = { x:e.clientX, y:e.clientY, id:e.pointerId };
 });
 
 gameCanvas.addEventListener("pointermove", e => {
-
-  if(
-    swipeStart &&
-    e.pointerId === swipeStart.id &&
-    (e.buttons || e.pointerType !== "mouse")
-  ){
-
+  if(swipeStart && e.pointerId === swipeStart.id &&
+     (e.buttons || e.pointerType !== "mouse")){
     cameraYaw -= (e.clientX - swipeStart.x) * 0.006;
-
     swipeStart.x = e.clientX;
     swipeStart.y = e.clientY;
-
   }
-
 });
 
-gameCanvas.addEventListener("pointerup", () => {
-  swipeStart = null;
-});
-
-gameCanvas.addEventListener("pointercancel", () => {
-  swipeStart = null;
-});
+gameCanvas.addEventListener("pointerup", () => { swipeStart = null; });
+gameCanvas.addEventListener("pointercancel", () => { swipeStart = null; });
 
 
 /* =========================================================
@@ -2761,71 +2410,46 @@ gameCanvas.addEventListener("pointercancel", () => {
 const keys = {};
 
 window.addEventListener("keydown", e => {
-
   const k = e.key.toLowerCase();
-
   keys[k] = true;
-
   if(k === "e") performAction();
-
   if(k === "f"){
-
     if(state.driving){
       exitVehicle();
     }else{
-
       const car = nearestVehicle();
       const building = nearestBuilding();
-
       if(car) enterVehicle(car);
       else if(building) enterBuilding(building);
       else showHintToast("Nothing nearby to enter.");
-
     }
-
   }
-
   if(k === "q" && state.driving) exitVehicle();
-
-  if(k === "escape"){
-    closePhone();
-    closeModal();
-  }
-
+  if(k === "escape"){ closePhone(); closeModal(); }
   if(["arrowup","arrowdown","arrowleft","arrowright"," "].includes(k)){
     e.preventDefault();
   }
-
 });
 
 window.addEventListener("keyup", e => {
   keys[e.key.toLowerCase()] = false;
 });
 
-
 function keyboardInput(){
-
   if(joy.active) return;
-
-  let x = 0;
-  let y = 0;
-
+  let x = 0, y = 0;
   if(keys.a || keys.arrowleft)  x -= 1;
   if(keys.d || keys.arrowright) x += 1;
   if(keys.w || keys.arrowup)    y += 1;
   if(keys.s || keys.arrowdown)  y -= 1;
-
   const len = Math.hypot(x, y);
-
   joy.x = len ? x / len : 0;
   joy.y = len ? y / len : 0;
-
   if(len > 0){
     running = !!(keys.shift || keys.shiftleft || keys.shiftright);
   }else{
     running = false;
   }
-
 }
 
 
@@ -2834,46 +2458,27 @@ function keyboardInput(){
 ========================================================= */
 
 function canMoveOutside(pos){
-
   const margin = 0.85;
-
-  if(
-    pos.x < -268 + margin ||
-    pos.x >  268 - margin ||
-    pos.z < -268 + margin ||
-    pos.z >  268 - margin
-  ){
+  if(pos.x < -268 + margin || pos.x > 268 - margin ||
+     pos.z < -268 + margin || pos.z > 268 - margin){
     return false;
   }
-
   for(const b of buildings){
-
     const dx = Math.abs(pos.x - b.x);
     const dz = Math.abs(pos.z - b.z);
-
     if(dx < b.w / 2 + margin && dz < b.d / 2 + margin){
-
       const doorDistance = Math.hypot(
-        pos.x - b.door[0],
-        pos.z - b.door[1]
+        pos.x - b.door[0], pos.z - b.door[1]
       );
-
       if(doorDistance > 3.6) return false;
-
     }
-
   }
-
   return true;
-
 }
 
-
 function constrainInterior(p){
-
   p.x = clamp(p.x, -14.0, 14.0);
   p.z = clamp(p.z, -10.6, 10.6);
-
 }
 
 
@@ -2882,8 +2487,6 @@ function constrainInterior(p){
 ========================================================= */
 
 let walkCycle = 0;
-let isMoving = false;
-
 
 function updatePlayer(dt){
 
@@ -2893,43 +2496,31 @@ function updatePlayer(dt){
 
   const ix = joy.x;
   const iy = joy.y;
-
   const inputMag = Math.hypot(ix, iy);
 
   if(inputMag < 0.05){
 
-    isMoving = false;
-
     if(playerMixer){
       playAnim("Idle");
     }else if(playerLimbs){
-      /* ease limbs back to rest */
       const L = playerLimbs;
       L.legs.left.rotation.x  *= 0.85;
       L.legs.right.rotation.x *= 0.85;
       L.arms.left.rotation.x  *= 0.85;
       L.arms.right.rotation.x *= 0.85;
+      playerVisual.position.y *= 0.85;
     }
 
     return;
 
   }
 
-  isMoving = true;
-
   const speed = (running ? 7.2 : 4.0) * dt;
 
-  const forward = new THREE.Vector3(
-    Math.sin(cameraYaw), 0, Math.cos(cameraYaw)
-  );
+  const forward = new THREE.Vector3(Math.sin(cameraYaw), 0, Math.cos(cameraYaw));
+  const right = new THREE.Vector3(Math.cos(cameraYaw), 0, -Math.sin(cameraYaw));
 
-  const right = new THREE.Vector3(
-    Math.cos(cameraYaw), 0, -Math.sin(cameraYaw)
-  );
-
-  const delta = forward
-    .clone()
-    .multiplyScalar(iy * speed)
+  const delta = forward.clone().multiplyScalar(iy * speed)
     .add(right.multiplyScalar(ix * speed));
 
   const next = player.position.clone().add(delta);
@@ -2942,41 +2533,26 @@ function updatePlayer(dt){
 
   player.position.copy(next);
 
-  /* smooth turn */
   const targetRot = Math.atan2(delta.x, delta.z);
-
   let diff = targetRot - player.rotation.y;
-
   while(diff >  Math.PI) diff -= Math.PI * 2;
   while(diff < -Math.PI) diff += Math.PI * 2;
-
   player.rotation.y += diff * Math.min(1, dt * 14);
 
-  /* animation */
   if(playerMixer){
-
     playAnim(running ? "Run" : "Walk");
-
   }else if(playerLimbs){
-
     const L = playerLimbs;
-
     walkCycle += dt * (running ? 13 : 8);
-
-    const swing = running ? 0.95 : 0.6;
-
+    const swing = running ? 0.9 : 0.55;
     L.legs.left.rotation.x  =  Math.sin(walkCycle) * swing;
     L.legs.right.rotation.x = -Math.sin(walkCycle) * swing;
-
     L.arms.left.rotation.x  = -Math.sin(walkCycle) * swing * 0.75;
     L.arms.right.rotation.x =  Math.sin(walkCycle) * swing * 0.75;
-
     playerVisual.position.y =
       Math.abs(Math.sin(walkCycle * 2)) * (running ? 0.055 : 0.03);
-
   }
 
-  /* needs drain */
   state.hunger  = clamp(state.hunger  - dt * (running ? 0.05 : 0.03));
   state.energy  = clamp(state.energy  - dt * (running ? 0.06 : 0.025));
   state.hygiene = clamp(state.hygiene - dt * 0.018);
@@ -2990,94 +2566,54 @@ function updatePlayer(dt){
 ========================================================= */
 
 function enterVehicle(v){
-
   if(!v || state.driving) return;
-
   state.driving = true;
   playerCar = v;
-
   v.userData.driver = true;
-
   player.visible = false;
-
   setHint("Driving. Use the joystick to drive.");
-
   saveGame();
-
 }
 
-
 function exitVehicle(){
-
   if(!state.driving) return;
-
   state.driving = false;
-
   if(playerCar){
-
     playerCar.userData.driver = false;
-
     const side = new THREE.Vector3(
       Math.cos(playerCar.rotation.y), 0,
       -Math.sin(playerCar.rotation.y)
     );
-
     player.position.copy(playerCar.position);
     player.position.add(side.multiplyScalar(3.2));
     player.position.y = 0;
-
     if(!canMoveOutside(player.position)){
       player.position.copy(playerCar.position);
       player.position.y = 0;
     }
-
   }
-
   playerCar = null;
   player.visible = true;
-
   setHint("You left the vehicle.");
-
   saveGame();
-
 }
 
-
 function updateDriving(dt){
-
   if(!playerCar) return;
-
   keyboardInput();
-
   const throttle = joy.y;
   const steer = joy.x;
-
-  playerCar.rotation.y +=
-    steer * dt * 1.9 * (Math.abs(throttle) + 0.28);
-
+  playerCar.rotation.y += steer * dt * 1.9 * (Math.abs(throttle) + 0.28);
   const speed = throttle * (running ? 18 : 11) * dt;
-
   const forward = new THREE.Vector3(
     Math.sin(playerCar.rotation.y), 0,
     Math.cos(playerCar.rotation.y)
   );
-
-  const next = playerCar.position
-    .clone()
-    .add(forward.multiplyScalar(speed));
-
-  if(
-    next.x > -270 && next.x < 270 &&
-    next.z > -270 && next.z < 270
-  ){
+  const next = playerCar.position.clone().add(forward.multiplyScalar(speed));
+  if(next.x > -270 && next.x < 270 && next.z > -270 && next.z < 270){
     playerCar.position.copy(next);
   }
-
-  state.location = getDistrict(
-    playerCar.position.x,
-    playerCar.position.z
-  );
-
+  state.location = getDistrict(playerCar.position.x, playerCar.position.z);
 }
 
 
@@ -3086,35 +2622,33 @@ function updateDriving(dt){
 ========================================================= */
 
 function updateNPCs(dt){
-
   if(state.inside) return;
-
   for(const npc of npcs){
-
     const target = npc.userData.target;
-
     const distance = npc.position.distanceTo(target);
-
     if(distance < 3){
-
       target.set(
         Math.random() * 400 - 200,
         0,
         Math.random() * 400 - 200
       );
-
       continue;
-
     }
-
     const direction = target.clone().sub(npc.position).normalize();
-
     npc.position.addScaledVector(direction, npc.userData.speed * dt * 60);
-
     npc.rotation.y = Math.atan2(direction.x, direction.z);
 
+    /* bob the NPC a little while walking */
+    const limbs = npc.userData.limbs;
+    if(limbs){
+      const phase = npc.userData.phase + performance.now() * 0.006;
+      const swing = 0.45;
+      limbs.legs.left.rotation.x  =  Math.sin(phase) * swing;
+      limbs.legs.right.rotation.x = -Math.sin(phase) * swing;
+      limbs.arms.left.rotation.x  = -Math.sin(phase) * swing * 0.75;
+      limbs.arms.right.rotation.x =  Math.sin(phase) * swing * 0.75;
+    }
   }
-
 }
 
 
@@ -3123,23 +2657,13 @@ function updateNPCs(dt){
 ========================================================= */
 
 function updateTraffic(dt){
-
   for(const v of vehicles){
-
     if(v.userData.driver) continue;
-
     if(v.userData.traffic){
-
       v.position.x += v.userData.speed * dt * 60;
-
-      if(v.position.x > 285){
-        v.position.x = -285;
-      }
-
+      if(v.position.x > 285) v.position.x = -285;
     }
-
   }
-
 }
 
 
@@ -3150,61 +2674,39 @@ function updateTraffic(dt){
 const camTarget = new THREE.Vector3();
 const camDesired = new THREE.Vector3();
 
-
 function updateCamera(dt){
-
   const lerpFactor = 1 - Math.pow(0.0016, dt);
 
   if(state.inside){
-
     camTarget.copy(player.position).add(new THREE.Vector3(0, 1.3, 0));
-
     camDesired.copy(camTarget).add(new THREE.Vector3(0, 8.5, 11));
-
     camera.position.lerp(camDesired, lerpFactor * 0.75);
-
     camera.lookAt(camTarget);
-
     return;
-
   }
 
   if(state.driving && playerCar){
-
     const forward = new THREE.Vector3(
       Math.sin(playerCar.rotation.y), 0,
       Math.cos(playerCar.rotation.y)
     );
-
     camTarget.copy(playerCar.position).add(new THREE.Vector3(0, 1.3, 0));
-
-    camDesired.copy(camTarget)
-      .addScaledVector(forward, -12.5);
-
+    camDesired.copy(camTarget).addScaledVector(forward, -12.5);
     camDesired.y += 6.5;
-
     camera.position.lerp(camDesired, lerpFactor * 0.85);
-
     camera.lookAt(camTarget);
-
     return;
-
   }
 
   camTarget.copy(player.position).add(new THREE.Vector3(0, 1.35, 0));
-
   const distance = cameraMode === 1 ? 7.5 : 11;
-
   camDesired.set(
     camTarget.x - Math.sin(cameraYaw) * distance,
     camTarget.y + (cameraMode === 1 ? 4.0 : 6.2),
     camTarget.z - Math.cos(cameraYaw) * distance
   );
-
   camera.position.lerp(camDesired, lerpFactor * 0.8);
-
   camera.lookAt(camTarget);
-
 }
 
 
@@ -3213,17 +2715,11 @@ function updateCamera(dt){
 ========================================================= */
 
 function getDistrict(x, z){
-
-  if(Math.abs(x) < 35 && Math.abs(z) < 35){
-    return "Central Ibadan";
-  }
-
+  if(Math.abs(x) < 35 && Math.abs(z) < 35) return "Central Ibadan";
   if(x < 0 && z < 0) return "Bodija / UI";
   if(x > 0 && z < 0) return "Mokola";
   if(x < 0 && z > 0) return "Mapo / Dugbe";
-
   return "Challenge / Ring Road";
-
 }
 
 
@@ -3242,81 +2738,58 @@ const skySunset   = new THREE.Color(0xff9a52);
 const tmpTop = new THREE.Color();
 const tmpBot = new THREE.Color();
 
-
 function updateTime(dt){
-
   lastMinuteTick += dt;
-
   if(lastMinuteTick < 1) return;
-
   lastMinuteTick = 0;
 
   state.minutes++;
-
   if(state.minutes >= 1440){
     state.minutes = 0;
     state.day++;
   }
 
   const t = (state.minutes - 360) / 720;
-
   const daylight = clamp(Math.sin(Math.PI * t), 0, 1);
-
   const sunset = Math.max(0, 1 - Math.abs(daylight - 0.2) / 0.2);
 
-  /* sky colours */
   tmpTop.copy(skyNightTop).lerp(skyDayTop, daylight);
   tmpBot.copy(skyNightBot).lerp(skyDayBot, daylight);
   tmpBot.lerp(skySunset, sunset * 0.6);
 
   skyUniforms.topColor.value.copy(tmpTop);
   skyUniforms.bottomColor.value.copy(tmpBot);
-
   scene.fog.color.copy(tmpBot).lerp(tmpTop, 0.5);
 
-  /* lights */
   if(state.inside){
-
     sun.intensity = 0.35 + 0.35 * daylight;
     ambient.intensity = 0.5;
     fill.intensity = 0.15;
-
   }else{
-
     sun.intensity = 0.35 + 2.3 * daylight;
     ambient.intensity = 0.42 + 1.05 * daylight;
     fill.intensity = 0.12 + 0.28 * daylight;
-
   }
 
   renderer.toneMappingExposure = 0.92 + 0.16 * daylight;
 
-  /* sun position follows player for crisp shadows */
   sun.position.copy(player.position).add(sunOffset);
   sun.target.position.copy(player.position);
   sun.target.updateMatrixWorld();
 
-  /* street lamps */
   const lampOn = daylight < 0.28;
-
   for(const l of lamps){
     l.intensity = lampOn ? 2.6 : 0;
   }
 
-  /* health decay */
   if(state.hunger < 10) state.health = clamp(state.health - 0.03);
   if(state.energy < 8)  state.health = clamp(state.health - 0.02);
-
 }
 
-
 function timeText(){
-
   const h = Math.floor(state.minutes / 60);
   const m = state.minutes % 60;
-
   return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
-
 }
 
 
@@ -3325,18 +2798,12 @@ function timeText(){
 ========================================================= */
 
 function xp(amount){
-
   state.xp += amount;
-
   while(state.xp >= state.level * 100){
-
     state.xp -= state.level * 100;
     state.level++;
-
     showHintToast("⭐ LEVEL UP! You are now Level " + state.level);
-
   }
-
 }
 
 
@@ -3346,47 +2813,26 @@ function xp(amount){
 
 let hintTimer = 0;
 
-
-function setHint(text){
-  $("hint").textContent = text;
-}
-
-
-function showHintToast(text){
-  setHint(text);
-  hintTimer = 3.2;
-}
-
+function setHint(text){ $("hint").textContent = text; }
+function showHintToast(text){ setHint(text); hintTimer = 3.2; }
 
 function updateHint(dt){
-
-  if(hintTimer > 0){
-    hintTimer -= dt;
-    return;
-  }
+  if(hintTimer > 0){ hintTimer -= dt; return; }
 
   if(state.inside){
-
-    const d = Math.hypot(
-      player.position.x,
-      player.position.z - 11.15
-    );
-
+    const d = Math.hypot(player.position.x, player.position.z - 11.15);
     if(d < 4.5){
       setHint("🚪 Walk to the red door and press ACTION to exit.");
     }else{
       const b = buildings.find(x => x.id === state.building);
       setHint("Inside " + (b?.name || "building") + " — press ACTION for activities.");
     }
-
     return;
-
   }
 
   if(state.driving){
     setHint("🚗 Driving — joystick to move, CAR to exit.");
     return;
-
   }
 
   const building = nearestBuilding();
@@ -3399,7 +2845,6 @@ function updateHint(dt){
   }else{
     setHint("Explore Ibadan — find a job, eat, sleep, drive and build your life.");
   }
-
 }
 
 
@@ -3410,21 +2855,17 @@ function updateHint(dt){
 function performAction(){
 
   if(state.inside){
-
     if(Math.hypot(player.position.x, player.position.z - 11.15) < 4.5){
       exitBuilding();
       return;
     }
-
     showModal("Activity", "Choose something to do inside.", [
       { label:"🍗 Eat",      action: eat },
       { label:"🚿 Shower",   action: shower },
       { label:"😴 Sleep",    action: sleep },
       { label:"📚 Study",    action: study }
     ]);
-
     return;
-
   }
 
   if(state.driving){
@@ -3445,115 +2886,64 @@ function performAction(){
     { label:"🤝 Socialize",  action: socialize },
     { label:"📚 Study",      action: study }
   ]);
-
 }
 
-
 function eat(){
-
-  if(state.cash < 800){
-    showHintToast("Not enough cash for food.");
-    return;
-  }
-
+  if(state.cash < 800){ showHintToast("Not enough cash for food."); return; }
   state.cash -= 800;
   state.hunger = clamp(state.hunger + 30);
   state.fun = clamp(state.fun + 5);
-
   xp(8);
   showHintToast("🍛 You ate a proper Ibadan meal. −₦800");
-
 }
-
 
 function shower(){
-
   state.hygiene = clamp(state.hygiene + 40);
   state.fun = clamp(state.fun + 3);
-
   xp(5);
   showHintToast("🚿 Fresh and clean.");
-
 }
-
 
 function sleep(){
-
   state.energy = clamp(state.energy + 55);
   state.health = clamp(state.health + 10);
-
   state.minutes += 240;
-
-  if(state.minutes >= 1440){
-    state.minutes -= 1440;
-    state.day++;
-  }
-
+  if(state.minutes >= 1440){ state.minutes -= 1440; state.day++; }
   xp(10);
   showHintToast("😴 You slept and recovered.");
-
 }
-
 
 function study(){
-
-  if(state.energy < 12){
-    showHintToast("Too tired to study. Sleep first.");
-    return;
-  }
-
+  if(state.energy < 12){ showHintToast("Too tired to study. Sleep first."); return; }
   state.energy = clamp(state.energy - 12);
   state.fun = clamp(state.fun - 3);
-
   xp(20);
   showHintToast("📚 Study session complete. +20 XP");
-
 }
 
-
 function socialize(){
-
   state.social = clamp(state.social + 22);
   state.fun = clamp(state.fun + 10);
   state.cash = Math.max(0, state.cash - 300);
-
   xp(12);
   showHintToast("🤝 You linked up with people. −₦300");
-
 }
 
-
 function work(){
-
   if(state.job === "Unemployed"){
-
     showModal("No Job", "Choose a job from your phone first.", [
       { label:"Open Jobs", action: openJobs }
     ]);
-
-    return;
-
-  }
-
-  if(state.energy < 20){
-    showHintToast("You need more energy for work.");
     return;
   }
-
+  if(state.energy < 20){ showHintToast("You need more energy for work."); return; }
   state.energy = clamp(state.energy - 20);
   state.hunger = clamp(state.hunger - 12);
   state.cash += state.jobPay;
-
   state.minutes += 120;
-
-  if(state.minutes >= 1440){
-    state.minutes -= 1440;
-    state.day++;
-  }
-
+  if(state.minutes >= 1440){ state.minutes -= 1440; state.day++; }
   xp(30);
   showHintToast("💼 Shift completed: +" + money(state.jobPay));
-
 }
 
 
@@ -3562,45 +2952,25 @@ function work(){
 ========================================================= */
 
 function showModal(title, text, buttons = []){
-
   $("modalTitle").textContent = title;
   $("modalText").textContent = text;
-
   const box = $("modalButtons");
   box.innerHTML = "";
-
   for(const item of buttons){
-
     const btn = document.createElement("button");
     btn.className = "tile";
     btn.innerHTML = item.label || "Choose";
-
     btn.onclick = () => {
-      try{
-        if(item.action) item.action();
-      }finally{
-        closeModal();
-      }
+      try{ if(item.action) item.action(); }
+      finally{ closeModal(); }
     };
-
     box.appendChild(btn);
-
   }
-
   $("modal").style.display = "flex";
-
 }
 
-
-function closeModal(){
-  $("modal").style.display = "none";
-}
-
-
-function closePhone(){
-  $("phone").style.display = "none";
-}
-
+function closeModal(){ $("modal").style.display = "none"; }
+function closePhone(){ $("phone").style.display = "none"; }
 
 $("closeModal").onclick = closeModal;
 $("closePhone").onclick = closePhone;
@@ -3622,9 +2992,7 @@ const jobs = [
   ["Content Creator", 7000]
 ];
 
-
 function openJobs(){
-
   showModal(
     "💼 Jobs",
     "Pick a career. Your pay is added after each shift.",
@@ -3640,7 +3008,6 @@ function openJobs(){
       }
     }))
   );
-
 }
 
 
@@ -3659,45 +3026,29 @@ const furniture = [
   ["🪵 Table",    "table",    15000]
 ];
 
-
 function addFurniture(type, cost, label){
-
-  if(state.cash < cost){
-    showHintToast("Not enough cash.");
-    return;
-  }
-
+  if(state.cash < cost){ showHintToast("Not enough cash."); return; }
   state.cash -= cost;
-
   state.furniture.push({
-    type,
-    label,
+    type, label,
     x: Math.random() * 16 - 8,
     z: Math.random() * 12 - 4,
     rot: 0
   });
-
   xp(6);
   showHintToast(label + " added to your house.");
-
   if(state.inside) renderInteriorFurniture();
-
 }
 
-
 function decorate(){
-
   showModal(
     "🏠 Decorate House",
     "Buy furniture. Items are saved with your game.",
     furniture.map(f => ({
-      label:
-        "<strong>" + f[0] + "</strong><br><small>" +
-        money(f[2]) + "</small>",
+      label: "<strong>" + f[0] + "</strong><br><small>" + money(f[2]) + "</small>",
       action: () => addFurniture(f[1], f[2], f[0])
     }))
   );
-
 }
 
 
@@ -3706,7 +3057,6 @@ function decorate(){
 ========================================================= */
 
 function showMap(){
-
   showModal(
     "🗺️ Ibadan Map",
     "Fast travel costs ₦500 and works when you are outside.",
@@ -3715,29 +3065,21 @@ function showMap(){
       action: () => travelTo(b)
     }))
   );
-
 }
 
-
 function travelTo(b){
-
   if(state.inside || state.driving){
     showHintToast("Exit your current building/vehicle first.");
     return;
   }
-
   if(state.cash < 500){
     showHintToast("Fast travel costs ₦500.");
     return;
   }
-
   state.cash -= 500;
-
   player.position.set(b.door[0] + 2, 0, b.door[1]);
   state.location = b.name;
-
   showHintToast("Travelled to " + b.name + " −₦500");
-
 }
 
 
@@ -3746,7 +3088,6 @@ function travelTo(b){
 ========================================================= */
 
 function stats(){
-
   showModal("📊 Life Stats", "Your current progress.", [
     { label: "💰 Cash " + money(state.cash), action: () => {} },
     { label: "🏦 Bank " + money(state.bank), action: () => {} },
@@ -3754,18 +3095,14 @@ function stats(){
     { label: "💼 " + state.job, action: () => {} },
     { label: "🏠 Furniture " + state.furniture.length, action: () => {} }
   ]);
-
 }
 
-
 function help(){
-
   showModal(
     "🎮 Controls",
     "Mobile: joystick = move, RUN = sprint, ACTION = enter/interact, CAR = board/exit vehicle, CAM = camera. Swipe the world to look around. Keyboard: WASD/arrows, Shift, E, F, Q.",
     []
   );
-
 }
 
 
@@ -3774,13 +3111,8 @@ function help(){
 ========================================================= */
 
 function saveGame(){
-
-  try{
-    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
-  }catch(e){
-    console.warn("Save failed", e);
-  }
-
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }
+  catch(e){ console.warn("Save failed", e); }
 }
 
 
@@ -3788,33 +3120,19 @@ function saveGame(){
    PHONE MENU
 ========================================================= */
 
-$("phoneBtn").onclick = () => {
-  $("phone").style.display = "flex";
-};
-
+$("phoneBtn").onclick = () => { $("phone").style.display = "flex"; };
 
 for(const button of document.querySelectorAll("[data-phone]")){
-
   button.onclick = () => {
-
     const action = button.dataset.phone;
-
     closePhone();
-
     if(action === "map")      showMap();
     if(action === "jobs")     openJobs();
     if(action === "decorate") decorate();
     if(action === "stats")    stats();
-
-    if(action === "save"){
-      saveGame();
-      showHintToast("💾 Game saved.");
-    }
-
+    if(action === "save"){ saveGame(); showHintToast("💾 Game saved."); }
     if(action === "help") help();
-
   };
-
 }
 
 
@@ -3825,29 +3143,16 @@ for(const button of document.querySelectorAll("[data-phone]")){
 $("actionBtn").onclick = performAction;
 
 $("carBtn").onclick = () => {
-
-  if(state.driving){
-    exitVehicle();
-    return;
-  }
-
+  if(state.driving){ exitVehicle(); return; }
   const vehicle = nearestVehicle();
-
-  if(vehicle){
-    enterVehicle(vehicle);
-  }else{
-    showHintToast("No vehicle nearby.");
-  }
-
+  if(vehicle) enterVehicle(vehicle);
+  else showHintToast("No vehicle nearby.");
 };
 
 $("camBtn").onclick = () => {
-
   cameraMode = (cameraMode + 1) % 2;
   state.cameraMode = cameraMode;
-
   showHintToast(cameraMode ? "Camera: close" : "Camera: normal");
-
 };
 
 
@@ -3855,34 +3160,25 @@ $("camBtn").onclick = () => {
    HUD
 ========================================================= */
 
-const meterIds = ["health", "hunger", "energy", "hygiene", "fun"];
+const meterIds = ["health","hunger","energy","hygiene","fun"];
 
 function updateHUD(){
-
   $("cash").textContent = money(state.cash);
   $("bank").textContent = money(state.bank);
   $("level").textContent = "Lv " + state.level;
   $("time").textContent = timeText();
-
-  $("xpbar").style.width =
-    clamp(state.xp / (state.level * 100) * 100) + "%";
-
+  $("xpbar").style.width = clamp(state.xp / (state.level * 100) * 100) + "%";
   $("location").textContent = state.inside
     ? (buildings.find(b => b.id === state.building)?.name || "Building")
     : state.location;
 
   for(const key of meterIds){
-
     const el = $(key);
     const v = clamp(state[key]);
-
     el.style.width = v + "%";
-
     el.classList.toggle("warn", v < 45 && v >= 20);
     el.classList.toggle("bad", v < 20);
-
   }
-
 }
 
 
@@ -3893,37 +3189,21 @@ function updateHUD(){
 async function boot(){
 
   $("loadbar").style.width = "18%";
-
   await loadPlayer();
-
   $("loadbar").style.width = "55%";
-
   await loadRealCar();
-
   $("loadbar").style.width = "85%";
 
-  /* never restore inside a building */
   if(state.inside){
     state.inside = false;
     state.building = null;
   }
 
-  player.position.set(
-    state.lastOutside.x,
-    0,
-    state.lastOutside.z
-  );
-
+  player.position.set(state.lastOutside.x, 0, state.lastOutside.z);
   player.rotation.y = state.lastOutside.rot || 0;
+  state.location = getDistrict(player.position.x, player.position.z);
 
-  state.location = getDistrict(
-    player.position.x,
-    player.position.z
-  );
-
-  /* initial camera placement */
   cameraYaw = 0;
-
   camera.position.set(
     player.position.x,
     player.position.y + 7,
@@ -3933,19 +3213,12 @@ async function boot(){
   $("loadbar").style.width = "100%";
 
   setTimeout(() => {
-
     const l = $("loading");
-
     l.style.opacity = "0";
-
-    setTimeout(() => {
-      l.style.display = "none";
-    }, 520);
-
+    setTimeout(() => { l.style.display = "none"; }, 520);
   }, 220);
 
   saveGame();
-
 }
 
 
@@ -3954,12 +3227,9 @@ async function boot(){
 ========================================================= */
 
 const clock = new THREE.Clock();
-
 let hudAccumulator = 0;
 
-
 function loop(){
-
   const dt = Math.min(clock.getDelta(), 0.05);
 
   updateTime(dt);
@@ -3970,25 +3240,18 @@ function loop(){
   updateCamera(dt);
   updateHint(dt);
 
-  if(playerMixer){
-    playerMixer.update(dt);
-  }
+  if(playerMixer) playerMixer.update(dt);
 
-  /* sky follows camera */
   sky.position.copy(camera.position);
 
-  /* HUD at ~15 Hz for efficiency */
   hudAccumulator += dt;
-
   if(hudAccumulator > 0.066){
     hudAccumulator = 0;
     updateHUD();
   }
 
   renderer.render(scene, camera);
-
   requestAnimationFrame(loop);
-
 }
 
 
@@ -3999,22 +3262,14 @@ function loop(){
 let resizeTimer = null;
 
 window.addEventListener("resize", () => {
-
   clearTimeout(resizeTimer);
-
   resizeTimer = setTimeout(() => {
-
-    const w = innerWidth;
-    const h = innerHeight;
-
+    const w = innerWidth, h = innerHeight;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     renderer.setSize(w, h);
-
   }, 90);
-
 });
 
 window.addEventListener("orientationchange", () => {
@@ -4027,7 +3282,6 @@ window.addEventListener("orientationchange", () => {
 ========================================================= */
 
 window.addEventListener("beforeunload", saveGame);
-
 setInterval(saveGame, 30000);
 
 
@@ -4038,16 +3292,11 @@ setInterval(saveGame, 30000);
 boot()
   .then(() => loop())
   .catch(err => {
-
     console.error(err);
-
     $("loadbar").style.width = "100%";
     $("loading").style.display = "none";
-
     setHint("Game loaded with fallback 3D assets.");
-
     loop();
-
   });
 
 </script>
